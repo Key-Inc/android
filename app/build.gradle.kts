@@ -54,6 +54,8 @@ android {
 dependencies {
     val daggerVersion = "2.48"
     val hiltNavigationVersion = "1.1.0"
+    val securityCryptoVersion = "1.1.0-alpha06"
+    implementation("androidx.security:security-crypto:$securityCryptoVersion")
     implementation("com.google.dagger:hilt-android:$daggerVersion")
     implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationVersion")
     implementation("androidx.core:core-ktx:1.12.0")
