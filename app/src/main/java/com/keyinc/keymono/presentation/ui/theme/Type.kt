@@ -1,4 +1,4 @@
-package com.keyinc.keymono.ui.theme
+package com.keyinc.keymono.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
