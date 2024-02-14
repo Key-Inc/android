@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">KeyMono</string>
+    <string name="company_label">Key Inc.</string>
+    <string name="company_logo">Company logo</string>
 </resources>
