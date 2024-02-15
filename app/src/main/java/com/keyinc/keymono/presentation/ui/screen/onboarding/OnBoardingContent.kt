@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.keyinc.keymono.R
-import com.keyinc.keymono.presentation.ui.component.CustomButton
+import com.keyinc.keymono.presentation.ui.component.AccentButton
 import com.keyinc.keymono.presentation.ui.theme.DodgerBlue
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
@@ -79,7 +79,7 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
 
         }
 
-        CustomButton(
+        AccentButton(
             modifier = Modifier.padding(
                 top = largePadding,
                 start = largePadding,

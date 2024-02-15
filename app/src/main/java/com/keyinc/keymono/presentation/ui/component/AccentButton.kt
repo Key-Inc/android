@@ -10,16 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.keyinc.keymono.presentation.ui.theme.DodgerBlue
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
 import com.keyinc.keymono.presentation.ui.theme.mediumFont
 
 @Composable
-@Preview(showBackground = true)
-fun CustomButton(
+fun AccentButton(
     modifier: Modifier = Modifier,
-    text: String = "Registration",
+    text: String,
     onClick: () -> Unit = {}
 ) {
 
@@ -30,8 +29,8 @@ fun CustomButton(
             .height(61.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = androidx.compose.ui.graphics.Color(0xFF1690FF),
-            contentColor = androidx.compose.ui.graphics.Color.White
+            containerColor = DodgerBlue,
+            contentColor = Color.White
         )
     ) {
         Text(
