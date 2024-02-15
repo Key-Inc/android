@@ -1,5 +1,15 @@
 <resources>
     <string name="app_name">KeyMono</string>
+    <string name="company_label">Key Inc.</string>
+    <string name="company_logo">Company logo</string>
+    <string name="app_label">KeyMono.</string>
+    <string name="onboard_label">Откройте знания одним ключом.</string>
+    <string name="onboard_desc">Откройте дверь к кабинетам университета всего в пару кликов.</string>
+    <string name="onboard_button">Зарегистрироваться</string>
+    <string name="already_have_account">Вы уже с нами?</string>
+    <string name="log_in">Войдите в свой аккаунт</string>
+    <string name="on_during_request">Вашу заявку еще не одобрили, пожалуйста попробуйте позже</string>
+
     <string name="new_classroom_booking_request">Новая заявка на бронирование аудитории</string>
     <string name="classroom_short_desc">%1$d ауд.</string>
     <string name="choose_classroom">Выбрать аудиторию</string>
