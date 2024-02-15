@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.keyinc.keymono.R
+import com.keyinc.keymono.presentation.ui.component.AccentPasswordTextField
 import com.keyinc.keymono.presentation.ui.component.AccentTextField
 import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationUIState
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
@@ -33,14 +34,14 @@ fun RegistrationFirstSection(
             label = stringResource(id = R.string.email),
         )
         Spacer(modifier = Modifier.padding(20.dp))
-        AccentTextField(
+        AccentPasswordTextField(
             textFieldValue = uiState.password,
             onValueChange = { registrationViewModel.onPasswordChanged(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             label = stringResource(id = R.string.password),
         )
         Spacer(modifier = Modifier.padding(20.dp))
-        AccentTextField(
+        AccentPasswordTextField(
             textFieldValue = uiState.confirmPassword,
             onValueChange = { registrationViewModel.onConfirmPasswordChanged(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
