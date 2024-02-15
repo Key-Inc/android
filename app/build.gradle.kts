@@ -55,9 +55,11 @@ dependencies {
     val daggerVersion = "2.48"
     val hiltNavigationVersion = "1.1.0"
     val securityCryptoVersion = "1.1.0-alpha06"
+    val calendarVersion = "2.5.0"
     implementation("androidx.security:security-crypto:$securityCryptoVersion")
     implementation("com.google.dagger:hilt-android:$daggerVersion")
     implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationVersion")
+    implementation("com.kizitonwose.calendar:compose:$calendarVersion")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
