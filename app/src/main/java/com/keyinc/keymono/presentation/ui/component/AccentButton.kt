@@ -21,7 +21,6 @@ fun AccentButton(
     text: String,
     onClick: () -> Unit = {}
 ) {
-
     Button(
         onClick = onClick,
         modifier = modifier

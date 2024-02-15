@@ -41,9 +41,9 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
     ) {
 
         Image(
+            modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = R.drawable.cat_logo),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize()
+            contentDescription = null
         )
 
         Column(
@@ -52,29 +52,29 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
         ) {
             Text(
                 text = stringResource(id = R.string.onboard_label),
-                style = InterLabelBold,
-                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(
                         top = semiLargePadding,
                         start = largePadding,
                         end = largePadding
                     )
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                style = InterLabelBold,
+                textAlign = TextAlign.Center
             )
 
             Text(
                 text = stringResource(id = R.string.onboard_desc),
-                style = InterLogo,
-                textAlign = TextAlign.Center,
-                fontSize = normalFont,
                 modifier = Modifier
                     .padding(
                         top = mediumPadding,
                         start = largePadding,
                         end = largePadding
                     )
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                style = InterLogo,
+                textAlign = TextAlign.Center,
+                fontSize = normalFont
             )
 
         }

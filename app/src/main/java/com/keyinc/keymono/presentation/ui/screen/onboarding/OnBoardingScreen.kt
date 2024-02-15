@@ -13,7 +13,7 @@ import com.keyinc.keymono.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, device = "id:pixel_7_pro")
 @Composable
-fun OnBoardScreen() {
+fun OnBoardingScreen() {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(title = {
