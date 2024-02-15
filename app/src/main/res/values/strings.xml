@@ -9,8 +9,12 @@
     <string name="already_have_account">Вы уже с нами?</string>
     <string name="log_in">Войдите в свой аккаунт</string>
     <string name="on_during_request">Вашу заявку еще не одобрили, пожалуйста попробуйте позже</string>
-
+    <string name="email">Почта</string>
+    <string name="password">Пароль</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="next">Далее</string>
     <string name="new_classroom_booking_request">Новая заявка на бронирование аудитории</string>
     <string name="classroom_short_desc">%1$d ауд.</string>
+    <string name="first_registration_label">Зарегистрируйтесь и начните бронировать аудитории</string>
     <string name="choose_classroom">Выбрать аудиторию</string>
 </resources>

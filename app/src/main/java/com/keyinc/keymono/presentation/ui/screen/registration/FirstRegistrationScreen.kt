@@ -1,9 +1,9 @@
-package com.keyinc.keymono.presentation.ui.screen.request
+package com.keyinc.keymono.presentation.ui.screen.registration
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,65 +11,59 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.component.AccentButton
+import com.keyinc.keymono.presentation.ui.screen.registration.firstpage.RegistrationFirstSection
 import com.keyinc.keymono.presentation.ui.theme.Accent
 import com.keyinc.keymono.presentation.ui.theme.FontSmall
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
 import com.keyinc.keymono.presentation.ui.theme.Padding24
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
+import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
+
 
 @Composable
-fun RequestWaitingContent(
-    onClick: () -> Unit = {},
-    paddingValues: PaddingValues
-) {
+fun FirstRegistrationScreen(registrationViewModel: RegistrationViewModel) {
+
+    val focusManager = LocalFocusManager.current
+    val uiState by registrationViewModel.uiState.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
             .verticalScroll(rememberScrollState())
-            .padding(paddingValues),
-        verticalArrangement = Arrangement.SpaceBetween,
+            .padding(start = PaddingLarge, end = PaddingLarge),
+        verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Image(
-            painter = painterResource(id = R.drawable.cardinal_logo),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize()
-        )
-
-
         Text(
-            text = stringResource(id = R.string.on_during_request),
-            style = InterLabelBold,
+            text = stringResource(id = R.string.first_registration_label),
+            modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(
-                    top = Padding24,
-                    start = PaddingLarge,
-                    end = PaddingLarge
-                )
-                .fillMaxWidth()
+            style = InterLabelBold
         )
-
-
-
-
+        RegistrationFirstSection(
+            registrationViewModel = registrationViewModel,
+            uiState = uiState
+        )
+        Spacer(modifier = Modifier.padding(Padding24))
         AccentButton(
-            modifier = Modifier.padding(
-                top = PaddingLarge,
-                start = PaddingLarge,
-                end = PaddingLarge
-            ),
-            text = stringResource(id = R.string.onboard_button),
-            onClick = onClick
+            onClick = {},
+            text = stringResource(id = R.string.next)
         )
 
         Column(
@@ -94,4 +88,8 @@ fun RequestWaitingContent(
             )
         }
     }
+
+
 }
+
+

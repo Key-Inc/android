@@ -55,6 +55,11 @@ dependencies {
     val daggerVersion = "2.48"
     val hiltNavigationVersion = "1.1.0"
     val securityCryptoVersion = "1.1.0-alpha06"
+    val navVersion = "2.7.7"
+    val runtimeComposeVersion = "2.7.0"
+
+    implementation("androidx.navigation:navigation-compose:$navVersion")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$runtimeComposeVersion")
     implementation("androidx.security:security-crypto:$securityCryptoVersion")
     implementation("com.google.dagger:hilt-android:$daggerVersion")
     implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationVersion")

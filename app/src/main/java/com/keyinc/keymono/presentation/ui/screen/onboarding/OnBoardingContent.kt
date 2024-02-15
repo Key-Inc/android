@@ -29,7 +29,11 @@ import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 
 
 @Composable
-fun OnBoardingContent(paddingValues: PaddingValues) {
+fun OnBoardingContent(
+    paddingValues: PaddingValues,
+    onNavigateToRegistration: () -> Unit,
+    onNavigateToLogin: () -> Unit = {}
+) {
 
     Column(
         modifier = Modifier
@@ -86,7 +90,7 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
                 end = PaddingLarge
             ),
             text = stringResource(id = R.string.onboard_button),
-            onClick = {}
+            onClick = { onNavigateToRegistration() }
         )
 
         Column(
