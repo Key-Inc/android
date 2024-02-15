@@ -8,5 +8,6 @@
     <string name="onboard_button">Зарегистрироваться</string>
     <string name="already_have_account">Вы уже с нами?</string>
     <string name="log_in">Войдите в свой аккаунт</string>
+    <string name="on_during_request">Вашу заявку еще не одобрили, пожалуйста попробуйте позже</string>
 
 </resources>

@@ -11,3 +11,4 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val DodgerBlue = Color(0xFF1690FF)
+val Tomato = Color(0xFFFF5959)
