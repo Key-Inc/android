@@ -12,18 +12,21 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.keyinc.keymono.R
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@Preview
 fun RequestWaitingScreen() {
-    val showDialog = remember { mutableStateOf(false) }
-
+    var showDialog by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(title = {
@@ -34,13 +37,10 @@ fun RequestWaitingScreen() {
             Box(modifier = Modifier.padding(it)) {
                 RequestWaitingContent(
                     paddingValues = it,
-                    showDialog = showDialog,
-                    onClick = { showDialog.value = !showDialog.value }
+                    onClick = { showDialog = !showDialog }
                 )
-
-
                 AnimatedVisibility(
-                    visible = showDialog.value,
+                    visible = showDialog,
                     enter = slideInVertically(
                         initialOffsetY = { fullHeight -> -fullHeight },
                         animationSpec = tween(durationMillis = 300)
@@ -50,11 +50,10 @@ fun RequestWaitingScreen() {
                         animationSpec = tween(durationMillis = 400)
                     )
                 ) {
-
                     RequestAlert()
-                    LaunchedEffect(key1 = showDialog.value) {
+                    LaunchedEffect(key1 = showDialog) {
                         delay(3000L)
-                        showDialog.value = false
+                        showDialog = false
                     }
                 }
             }

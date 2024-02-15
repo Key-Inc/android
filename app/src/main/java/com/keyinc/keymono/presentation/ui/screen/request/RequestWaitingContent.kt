@@ -29,7 +29,6 @@ import com.keyinc.keymono.presentation.ui.theme.smallFont
 @Composable
 fun RequestWaitingContent(
     onClick: () -> Unit = {},
-    showDialog: MutableState<Boolean>,
     paddingValues: PaddingValues
 ) {
     Column(
