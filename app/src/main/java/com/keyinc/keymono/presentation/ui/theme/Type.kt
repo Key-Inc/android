@@ -1,6 +1,7 @@
-package com.keyinc.keymono.ui.theme
+package com.keyinc.keymono.presentation.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -31,4 +32,19 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     )
     */
+)
+
+
+val InterLogo = TextStyle(
+    fontFamily = InterRegular,
+    fontSize = 32.sp,
+    fontWeight = FontWeight.Normal,
+    color = Color.Black
+)
+
+val InterLabelBold = TextStyle(
+    fontFamily = InterSemiBold,
+    fontSize = 24.sp,
+    fontWeight = FontWeight.Bold,
+    color = Color.Black
 )
