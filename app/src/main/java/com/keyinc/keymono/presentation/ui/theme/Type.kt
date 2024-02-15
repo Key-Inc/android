@@ -36,14 +36,14 @@ val Typography = Typography(
 
 
 val InterLogo = TextStyle(
-    fontFamily = InternRegular,
+    fontFamily = InterRegular,
     fontSize = 32.sp,
     fontWeight = FontWeight.Normal,
     color = Color.Black
 )
 
 val InterLabelBold = TextStyle(
-    fontFamily = InternSemiBold,
+    fontFamily = InterSemiBold,
     fontSize = 24.sp,
     fontWeight = FontWeight.Bold,
     color = Color.Black

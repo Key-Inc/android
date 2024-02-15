@@ -12,6 +12,6 @@ internal val normalFont = 20.sp
 internal val smallFont = 16.sp
 
 
-internal val InternRegular = FontFamily(Font(R.font.inter_regular))
-internal val InternSemiBold = FontFamily(Font(R.font.inter_semibold))
+internal val InterRegular = FontFamily(Font(R.font.inter_regular))
+internal val InterSemiBold = FontFamily(Font(R.font.inter_semibold))
 

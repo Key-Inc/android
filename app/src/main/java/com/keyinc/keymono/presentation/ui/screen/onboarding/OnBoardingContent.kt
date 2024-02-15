@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.keyinc.keymono.R
-import com.keyinc.keymono.presentation.ui.component.CustomButton
+import com.keyinc.keymono.presentation.ui.component.AccentButton
 import com.keyinc.keymono.presentation.ui.theme.DodgerBlue
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
@@ -41,9 +41,9 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
     ) {
 
         Image(
+            modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = R.drawable.cat_logo),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize()
+            contentDescription = null
         )
 
         Column(
@@ -52,34 +52,34 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
         ) {
             Text(
                 text = stringResource(id = R.string.onboard_label),
-                style = InterLabelBold,
-                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(
                         top = semiLargePadding,
                         start = largePadding,
                         end = largePadding
                     )
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                style = InterLabelBold,
+                textAlign = TextAlign.Center
             )
 
             Text(
                 text = stringResource(id = R.string.onboard_desc),
-                style = InterLogo,
-                textAlign = TextAlign.Center,
-                fontSize = normalFont,
                 modifier = Modifier
                     .padding(
                         top = mediumPadding,
                         start = largePadding,
                         end = largePadding
                     )
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                style = InterLogo,
+                textAlign = TextAlign.Center,
+                fontSize = normalFont
             )
 
         }
 
-        CustomButton(
+        AccentButton(
             modifier = Modifier.padding(
                 top = largePadding,
                 start = largePadding,
