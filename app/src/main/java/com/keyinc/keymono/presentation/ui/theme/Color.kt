@@ -14,3 +14,4 @@ val Accent = Color(0xFF1690FF)
 val Tomato = Color(0xFFFF5959)
 val Gray62 = Color(0xFF9E9E9E)
 
+val LightGray = Color(0xFFF4F1F1)
