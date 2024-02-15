@@ -22,9 +22,6 @@ fun OnBoardScreen() {
         },
         content = {
             OnBoardingContent(paddingValues = it)
-        },
-        bottomBar = {
-
         }
     )
 }
