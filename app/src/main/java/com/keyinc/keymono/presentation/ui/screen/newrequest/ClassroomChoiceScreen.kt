@@ -25,18 +25,18 @@ fun ClassroomChoiceScreen(
     ) {
         item {
             Text(
+                modifier = Modifier.padding(PaddingLarge),
                 text = stringResource(id = R.string.new_classroom_booking_request),
                 style = Title,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(PaddingLarge)
+                textAlign = TextAlign.Center
             )
         }
 
         items(classrooms) { classroom ->
             ClassroomChoiceItem(
+                modifier = Modifier.padding(horizontal = PaddingMedium),
                 classroom = classroom,
-                onClassroomClick = { /* TODO */ },
-                modifier = Modifier.padding(horizontal = PaddingMedium)
+                onClassroomClick = { /* TODO */ }
             )
         }
     }
