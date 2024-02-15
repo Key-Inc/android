@@ -2,4 +2,11 @@
     <string name="app_name">KeyMono</string>
     <string name="company_label">Key Inc.</string>
     <string name="company_logo">Company logo</string>
+    <string name="app_label">KeyMono.</string>
+    <string name="onboard_label">Откройте знания одним ключом.</string>
+    <string name="onboard_desc">Откройте дверь к кабинетам университета всего в пару кликов.</string>
+    <string name="onboard_button">Зарегистрироваться</string>
+    <string name="already_have_account">Вы уже с нами?</string>
+    <string name="log_in">Войдите в свой аккаунт</string>
+
 </resources>

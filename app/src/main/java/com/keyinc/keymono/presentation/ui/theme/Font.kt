@@ -6,10 +6,12 @@ import androidx.compose.ui.unit.sp
 import com.keyinc.keymono.R
 
 
-object FontSize {
-    internal val largeFont = 32.sp
-}
+internal val largeFont = 32.sp
+internal val mediumFont = 24.sp
+internal val normalFont = 20.sp
+internal val smallFont = 16.sp
 
-object Font {
-    internal val InternRegular = FontFamily(Font(R.font.inter_regular))
-}
+
+internal val InternRegular = FontFamily(Font(R.font.inter_regular))
+internal val InternSemiBold = FontFamily(Font(R.font.inter_semibold))
+
