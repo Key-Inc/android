@@ -18,14 +18,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.component.AccentButton
-import com.keyinc.keymono.presentation.ui.theme.DodgerBlue
+import com.keyinc.keymono.presentation.ui.theme.Accent
+import com.keyinc.keymono.presentation.ui.theme.FontNormal
+import com.keyinc.keymono.presentation.ui.theme.FontSmall
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
-import com.keyinc.keymono.presentation.ui.theme.largePadding
-import com.keyinc.keymono.presentation.ui.theme.mediumPadding
-import com.keyinc.keymono.presentation.ui.theme.normalFont
-import com.keyinc.keymono.presentation.ui.theme.semiLargePadding
-import com.keyinc.keymono.presentation.ui.theme.smallFont
+import com.keyinc.keymono.presentation.ui.theme.Padding24
+import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
+import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 
 
 @Composable
@@ -54,9 +54,9 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
                 text = stringResource(id = R.string.onboard_label),
                 modifier = Modifier
                     .padding(
-                        top = semiLargePadding,
-                        start = largePadding,
-                        end = largePadding
+                        top = Padding24,
+                        start = PaddingLarge,
+                        end = PaddingLarge
                     )
                     .fillMaxWidth(),
                 style = InterLabelBold,
@@ -67,23 +67,23 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
                 text = stringResource(id = R.string.onboard_desc),
                 modifier = Modifier
                     .padding(
-                        top = mediumPadding,
-                        start = largePadding,
-                        end = largePadding
+                        top = PaddingMedium,
+                        start = PaddingLarge,
+                        end = PaddingLarge
                     )
                     .fillMaxWidth(),
                 style = InterLogo,
                 textAlign = TextAlign.Center,
-                fontSize = normalFont
+                fontSize = FontNormal
             )
 
         }
 
         AccentButton(
             modifier = Modifier.padding(
-                top = largePadding,
-                start = largePadding,
-                end = largePadding
+                top = PaddingLarge,
+                start = PaddingLarge,
+                end = PaddingLarge
             ),
             text = stringResource(id = R.string.onboard_button),
             onClick = {}
@@ -92,21 +92,21 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = semiLargePadding, top = largePadding),
+                .padding(bottom = Padding24, top = PaddingLarge),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = stringResource(id = R.string.already_have_account),
                 style = InterLogo,
-                fontSize = smallFont,
+                fontSize = FontSmall,
                 textAlign = TextAlign.Center
             )
             Text(
                 text = stringResource(id = R.string.log_in),
                 style = InterLogo,
-                fontSize = smallFont,
-                color = DodgerBlue,
+                fontSize = FontSmall,
+                color = Accent,
                 textAlign = TextAlign.Center,
             )
 

@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.ui.theme.Tomato
-import com.keyinc.keymono.presentation.ui.theme.largePadding
 
 @Composable
 fun RequestAlert(modifier: Modifier = Modifier) {
@@ -20,7 +20,7 @@ fun RequestAlert(modifier: Modifier = Modifier) {
         modifier = modifier
             .height(121.dp)
             .fillMaxWidth()
-            .padding(start = largePadding, end = largePadding)
+            .padding(start = PaddingLarge, end = PaddingLarge)
             .clip(RoundedCornerShape(12.dp)),
 
         colors = CardDefaults.cardColors(

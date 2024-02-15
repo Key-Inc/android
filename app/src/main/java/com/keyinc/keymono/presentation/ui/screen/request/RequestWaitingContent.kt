@@ -11,20 +11,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.keyinc.keymono.R
-import com.keyinc.keymono.presentation.ui.component.CustomButton
-import com.keyinc.keymono.presentation.ui.theme.DodgerBlue
+import com.keyinc.keymono.presentation.ui.component.AccentButton
+import com.keyinc.keymono.presentation.ui.theme.Accent
+import com.keyinc.keymono.presentation.ui.theme.FontSmall
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
-import com.keyinc.keymono.presentation.ui.theme.largePadding
-import com.keyinc.keymono.presentation.ui.theme.semiLargePadding
-import com.keyinc.keymono.presentation.ui.theme.smallFont
+import com.keyinc.keymono.presentation.ui.theme.Padding24
+import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 
 @Composable
 fun RequestWaitingContent(
@@ -53,9 +52,9 @@ fun RequestWaitingContent(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(
-                    top = semiLargePadding,
-                    start = largePadding,
-                    end = largePadding
+                    top = Padding24,
+                    start = PaddingLarge,
+                    end = PaddingLarge
                 )
                 .fillMaxWidth()
         )
@@ -63,11 +62,11 @@ fun RequestWaitingContent(
 
 
 
-        CustomButton(
+        AccentButton(
             modifier = Modifier.padding(
-                top = largePadding,
-                start = largePadding,
-                end = largePadding
+                top = PaddingLarge,
+                start = PaddingLarge,
+                end = PaddingLarge
             ),
             text = stringResource(id = R.string.onboard_button),
             onClick = onClick
@@ -76,21 +75,21 @@ fun RequestWaitingContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = semiLargePadding, top = largePadding),
+                .padding(bottom = Padding24, top = PaddingLarge),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = stringResource(id = R.string.already_have_account),
                 style = InterLogo,
-                fontSize = smallFont,
+                fontSize = FontSmall,
                 textAlign = TextAlign.Center
             )
             Text(
                 text = stringResource(id = R.string.log_in),
                 style = InterLogo,
-                fontSize = smallFont,
-                color = DodgerBlue,
+                fontSize = FontSmall,
+                color = Accent,
                 textAlign = TextAlign.Center,
             )
 

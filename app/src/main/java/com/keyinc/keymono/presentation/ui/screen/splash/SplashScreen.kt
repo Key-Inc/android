@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
-import com.keyinc.keymono.presentation.ui.theme.mediumPadding
+import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 
 @Composable
 @Preview(showBackground = true)
@@ -35,7 +35,7 @@ fun SplashScreen() {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = mediumPadding),
+                .padding(top = PaddingMedium),
             text = stringResource(id = R.string.company_label),
             style = InterLogo,
             textAlign = TextAlign.Center

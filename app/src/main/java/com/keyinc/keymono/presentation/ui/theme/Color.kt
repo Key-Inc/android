@@ -1,4 +1,4 @@
-package com.keyinc.keymono.ui.theme
+package com.keyinc.keymono.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -10,9 +10,7 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-val DodgerBlue = Color(0xFF1690FF)
+val Accent = Color(0xFF1690FF)
 val Tomato = Color(0xFFFF5959)
-
 val Gray62 = Color(0xFF9E9E9E)
 
-val Accent = Color(0xFF1690FF)

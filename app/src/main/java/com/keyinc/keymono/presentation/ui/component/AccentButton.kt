@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.keyinc.keymono.presentation.ui.theme.DodgerBlue
+import com.keyinc.keymono.presentation.ui.theme.Accent
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
-import com.keyinc.keymono.presentation.ui.theme.mediumFont
+import com.keyinc.keymono.presentation.ui.theme.FontMedium
 
 @Composable
 fun AccentButton(
@@ -28,7 +28,7 @@ fun AccentButton(
             .height(61.dp),
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = DodgerBlue,
+            containerColor = Accent,
             contentColor = Color.White
         )
     ) {
@@ -38,7 +38,7 @@ fun AccentButton(
             textAlign = TextAlign.Center,
             color = Color.White,
             style = InterLogo,
-            fontSize = mediumFont
+            fontSize = FontMedium
         )
     }
 }
