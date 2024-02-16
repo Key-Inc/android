@@ -59,16 +59,13 @@ fun RequestWaitingContent(
                 .fillMaxWidth()
         )
 
-
-
-
         AccentButton(
             modifier = Modifier.padding(
                 top = PaddingLarge,
                 start = PaddingLarge,
                 end = PaddingLarge
             ),
-            text = stringResource(id = R.string.onboard_button),
+            text = stringResource(id = R.string.check_status),
             onClick = onClick
         )
 

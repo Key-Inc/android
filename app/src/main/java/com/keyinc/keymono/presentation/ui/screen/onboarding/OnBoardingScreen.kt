@@ -11,12 +11,16 @@ import com.keyinc.keymono.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OnBoardingScreen(onNavigateToRegistration: () -> Unit, onNavigateToLogin: () -> Unit = {}) {
+fun OnBoardingScreen(
+    onNavigateToRegistration: () -> Unit,
+    onNavigateToLogin: () -> Unit = {},
+) {
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(title = {
-                Text(text = stringResource(id = R.string.app_label))
-            })
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(text = stringResource(id = R.string.app_label))
+                })
         },
         content = {
             OnBoardingContent(

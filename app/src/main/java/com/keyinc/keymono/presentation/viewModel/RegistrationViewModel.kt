@@ -20,7 +20,6 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
         get() = _registrationState
 
 
-
     fun onEmailChanged(email: String) {
         _uiState.value = _uiState.value.copy(email = email)
     }
@@ -29,8 +28,16 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
         _uiState.value = _uiState.value.copy(password = password)
     }
 
+    fun onFullNameChanged(fullName: String) {
+        _uiState.value = _uiState.value.copy(fullName = fullName)
+    }
+
     fun onConfirmPasswordChanged(confirmPassword: String) {
         _uiState.value = _uiState.value.copy(confirmPassword = confirmPassword)
+    }
+
+    fun onPhoneNumberChanged(phoneNumber: String) {
+        _uiState.value = _uiState.value.copy(phoneNumber = phoneNumber)
     }
 
 }

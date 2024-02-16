@@ -13,8 +13,14 @@
     <string name="password">Пароль</string>
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="next">Далее</string>
+    <string name="fullname">ФИО</string>
+    <string name="check_status">Посмотреть статус</string>
+    <string name="request_is_under_consideration">Ваша заявка еще рассматривается деканатом, пожалуйста ожидайте</string>
     <string name="new_classroom_booking_request">Новая заявка на бронирование аудитории</string>
     <string name="classroom_short_desc">%1$d ауд.</string>
+    <string name="birth_date">Дата рождения</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="second_registration_label">Последний шаг!</string>
     <string name="first_registration_label">Зарегистрируйтесь и начните бронировать аудитории</string>
     <string name="choose_classroom">Выбрать аудиторию</string>
 </resources>

@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.component.AccentPasswordTextField
 import com.keyinc.keymono.presentation.ui.component.AccentTextField
+import com.keyinc.keymono.presentation.ui.component.PhoneTextField
 import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationUIState
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 
@@ -46,6 +47,40 @@ fun RegistrationFirstSection(
             onValueChange = { registrationViewModel.onConfirmPasswordChanged(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             label = stringResource(id = R.string.confirm_password),
+        )
+    }
+}
+
+
+@Composable
+fun RegistrationSecondSection(
+    registrationViewModel: RegistrationViewModel,
+    uiState: RegistrationUIState
+) {
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        AccentTextField(
+            textFieldValue = uiState.fullName,
+            onValueChange = { registrationViewModel.onFullNameChanged(it) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            label = stringResource(id = R.string.fullname),
+        )
+        Spacer(modifier = Modifier.padding(20.dp))
+        AccentTextField(
+            textFieldValue = uiState.birthDate,
+            onValueChange = { registrationViewModel.onPasswordChanged(it) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            label = stringResource(id = R.string.birth_date),
+        )
+        Spacer(modifier = Modifier.padding(20.dp))
+        PhoneTextField(
+            textFieldValue = uiState.phoneNumber,
+            onValueChange = { registrationViewModel.onPhoneNumberChanged(it) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+            label = stringResource(id = R.string.phone_number),
         )
     }
 }

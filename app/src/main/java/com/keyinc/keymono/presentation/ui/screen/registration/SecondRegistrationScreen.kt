@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.keyinc.keymono.presentation.ui.screen.registration
 
 import androidx.compose.foundation.Image
@@ -29,7 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.component.AccentButton
-import com.keyinc.keymono.presentation.ui.screen.registration.firstpage.RegistrationFirstSection
+import com.keyinc.keymono.presentation.ui.screen.registration.firstpage.RegistrationSecondSection
 import com.keyinc.keymono.presentation.ui.theme.Accent
 import com.keyinc.keymono.presentation.ui.theme.FontSmall
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
@@ -38,14 +36,13 @@ import com.keyinc.keymono.presentation.ui.theme.Padding24
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FirstRegistrationScreen(
-    registrationViewModel: RegistrationViewModel,
+fun SecondRegistrationScreen(
     onNavigateToBack: () -> Unit,
-    onNavigateToSecondPart: () -> Unit
+    onNavigateToRequestWaiting: () -> Unit,
+    registrationViewModel: RegistrationViewModel
 ) {
-
     val focusManager = LocalFocusManager.current
     val uiState by registrationViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -80,19 +77,19 @@ fun FirstRegistrationScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(id = R.string.first_registration_label),
+                    text = stringResource(id = R.string.second_registration_label),
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     style = InterLabelBold
                 )
-                RegistrationFirstSection(
+                RegistrationSecondSection(
                     registrationViewModel = registrationViewModel,
                     uiState = uiState
                 )
                 Spacer(modifier = Modifier.padding(Padding24))
                 AccentButton(
-                    onClick = onNavigateToSecondPart,
-                    text = stringResource(id = R.string.next)
+                    onClick = onNavigateToRequestWaiting,
+                    text = stringResource(id = R.string.onboard_button)
                 )
                 Column(
                     modifier = Modifier
@@ -119,5 +116,3 @@ fun FirstRegistrationScreen(
         }
     )
 }
-
-
