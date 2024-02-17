@@ -5,11 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,20 +23,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.keyinc.keymono.data.MockSchedule.schedule
+import com.keyinc.keymono.presentation.model.ScheduleElement
+import com.keyinc.keymono.presentation.ui.screen.newrequest.components.ScheduleElement
 import com.keyinc.keymono.presentation.ui.theme.Accent
 import com.keyinc.keymono.presentation.ui.theme.CalendarDate
 import com.keyinc.keymono.presentation.ui.theme.CalendarDayOfWeek
 import com.keyinc.keymono.presentation.ui.theme.LightGray
+import com.keyinc.keymono.presentation.ui.theme.Padding24
 import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
+import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
 import com.keyinc.keymono.presentation.ui.utils.displayText
 import com.keyinc.keymono.presentation.ui.utils.formatCalendarDay
 import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun DateTimeChoiceScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    schedule: List<ScheduleElement>
 ) {
     val startDate = remember { LocalDate.now() }
     val endDate = remember { startDate.plusDays(6) }
@@ -65,6 +74,15 @@ fun DateTimeChoiceScreen(
                     )
                 }
             )
+            Spacer(modifier = Modifier.height(Padding24))
+        }
+
+        items(schedule) { scheduleElement ->
+            ScheduleElement(
+                modifier = Modifier.padding(horizontal = PaddingMedium),
+                scheduleElement = scheduleElement
+            )
+            Spacer(modifier = Modifier.height(PaddingSmall))
         }
     }
 }
@@ -112,5 +130,15 @@ private fun Day(
 @Preview
 @Composable
 fun DateTimeChoiceScreenPreview() {
-    DateTimeChoiceScreen()
+    val formatter = DateTimeFormatter.ofPattern("H:mm")
+    val scheduleElementsDto = schedule
+    val scheduleElements = scheduleElementsDto.map {
+        ScheduleElement(
+            startTime = it.startDate.format(formatter),
+            endTime = it.endDate.format(formatter),
+            status = it.status
+        )
+    }
+
+    DateTimeChoiceScreen(schedule = scheduleElements)
 }

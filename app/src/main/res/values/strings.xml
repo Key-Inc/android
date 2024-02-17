@@ -13,4 +13,7 @@
     <string name="new_classroom_booking_request">Новая заявка на бронирование аудитории</string>
     <string name="classroom_short_desc">%1$d ауд.</string>
     <string name="choose_classroom">Выбрать аудиторию</string>
+    <string name="time_range">%1$s - %2$s</string>
+    <string name="available">Свободно</string>
+    <string name="busy">Занято</string>
 </resources>
