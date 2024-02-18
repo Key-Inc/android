@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+
 
 package com.keyinc.keymono.presentation.ui.screen.registration
 
@@ -39,6 +39,7 @@ import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FirstRegistrationScreen(
     registrationViewModel: RegistrationViewModel,
@@ -56,7 +57,7 @@ fun FirstRegistrationScreen(
                     IconButton(onClick = onNavigateToBack) {
                         Image(
                             painter = painterResource(id = R.drawable.back_button_icon),
-                            contentDescription = "Button for navigate back"
+                            contentDescription = stringResource(id = R.string.navigate_back_button_description)
                         )
                     }
                 },

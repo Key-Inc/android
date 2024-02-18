@@ -24,7 +24,7 @@ fun SplashScreen(onNavigateToOnBoarding: () -> Unit) {
 
     LaunchedEffect(Unit) {
         delay(1000L)
-        onNavigateToOnBoarding.invoke()
+        onNavigateToOnBoarding()
     }
 
     Column(

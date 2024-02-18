@@ -86,8 +86,8 @@ fun AccentPasswordTextField(
         },
         singleLine = singleLine,
         enabled = true,
-        cursorBrush = SolidColor(Color.Black),
-        decorationBox = @Composable { innerTextField ->
+        cursorBrush = SolidColor(Color.Black))
+        { innerTextField ->
             Row(
                 modifier = modifier
                     .fillMaxWidth()
@@ -106,5 +106,4 @@ fun AccentPasswordTextField(
                 )
             }
         }
-    )
 }

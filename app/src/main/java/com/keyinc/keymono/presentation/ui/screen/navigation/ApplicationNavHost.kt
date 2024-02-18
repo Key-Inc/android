@@ -1,7 +1,10 @@
 package com.keyinc.keymono.presentation.ui.screen.navigation
 
+
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -22,11 +25,10 @@ fun ApplicationNavHost(
         composable(Routes.SplashScreen.route) {
             SplashScreen(onNavigateToOnBoarding = {
                 navController.popBackStack()
-                navController.navigate(Routes.OnBoardingScreen.route) {
-                    launchSingleTop = true
-                }
+                navController.navigate(Routes.OnBoardingScreen.route)
             })
         }
+
         composable(Routes.FirstRegistrationScreen.route) {
             FirstRegistrationScreen(
                 registrationViewModel = registrationViewModel,
@@ -38,18 +40,19 @@ fun ApplicationNavHost(
                 }
             )
         }
+
         composable(Routes.OnBoardingScreen.route) {
             OnBoardingScreen(
                 onNavigateToRegistration = {
-                    navController.navigate(Routes.FirstRegistrationScreen.route) {
-                        launchSingleTop = true
-                    }
+                    navController.navigate(Routes.FirstRegistrationScreen.route)
                 }
             )
         }
+
         composable(Routes.RequestWaitingScreen.route) {
             RequestWaitingScreen()
         }
+
         composable(Routes.SecondRegistrationScreen.route) {
             SecondRegistrationScreen(
                 registrationViewModel = registrationViewModel,
@@ -57,13 +60,22 @@ fun ApplicationNavHost(
                     navController.popBackStack()
                 },
                 onNavigateToRequestWaiting = {
-                    navController.popBackStack()
                     navController.navigate(Routes.RequestWaitingScreen.route) {
-                        launchSingleTop = true
+                        clearAllBackStack(navController = navController)
                     }
                 }
             )
         }
     }
+}
 
+
+//TODO подумать о том, нужно ли сохранять стейт всегда
+fun NavOptionsBuilder.clearAllBackStack(navController: NavController) {
+    popUpTo(
+        navController.graph.id
+    ) {
+        inclusive = true
+        saveState = true
+    }
 }

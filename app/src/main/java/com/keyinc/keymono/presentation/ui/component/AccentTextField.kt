@@ -60,16 +60,16 @@ fun AccentTextField(
         keyboardOptions = keyboardOptions,
         singleLine = singleLine,
         enabled = true,
-        cursorBrush = SolidColor(Color.Black),
-        decorationBox = @Composable { innerTextField ->
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                innerTextField()
-            }
-        }
+        cursorBrush = SolidColor(Color.Black)
     )
+    { innerTextField ->
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            innerTextField()
+        }
+    }
 }

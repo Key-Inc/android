@@ -75,18 +75,17 @@ fun PhoneTextField(
             maskDigitCharacter = maskDigitCharacter
         ),
         enabled = true,
-        cursorBrush = SolidColor(Color.Black),
-        decorationBox = @Composable { innerTextField ->
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(PaddingMedium),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                innerTextField()
-            }
+        cursorBrush = SolidColor(Color.Black)
+    ) { innerTextField ->
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(PaddingMedium),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            innerTextField()
         }
-    )
+    }
 }
 
 

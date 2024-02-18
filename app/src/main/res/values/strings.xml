@@ -11,6 +11,7 @@
     <string name="on_during_request">Вашу заявку еще не одобрили, пожалуйста попробуйте позже</string>
     <string name="email">Почта</string>
     <string name="password">Пароль</string>
+    <string name="navigate_back_button_description">Кнопка для навигации назад</string>
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="next">Далее</string>
     <string name="fullname">ФИО</string>
