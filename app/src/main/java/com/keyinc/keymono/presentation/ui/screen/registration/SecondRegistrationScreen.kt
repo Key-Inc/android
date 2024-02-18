@@ -53,7 +53,7 @@ fun SecondRegistrationScreen(
                     IconButton(onClick = onNavigateToBack) {
                         Image(
                             painter = painterResource(id = R.drawable.back_button_icon),
-                            contentDescription = "Button for navigate back"
+                            contentDescription = stringResource(id = R.string.navigate_back_button_description)
                         )
                     }
                 },
