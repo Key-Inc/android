@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import com.keyinc.keymono.presentation.ui.screen.navigation.ApplicationNavHost
+import com.keyinc.keymono.presentation.ui.navigation.ApplicationNavHost
 import com.keyinc.keymono.presentation.ui.theme.KeyMonoTheme
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 import dagger.hilt.android.AndroidEntryPoint

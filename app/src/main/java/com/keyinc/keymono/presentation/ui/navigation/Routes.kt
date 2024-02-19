@@ -1,4 +1,4 @@
-package com.keyinc.keymono.presentation.ui.screen.navigation
+package com.keyinc.keymono.presentation.ui.navigation
 
 sealed class Routes(val route: String) {
     data object SplashScreen : Routes("splash_screen")

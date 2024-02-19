@@ -1,4 +1,4 @@
-package com.keyinc.keymono.presentation.ui.screen.navigation
+package com.keyinc.keymono.presentation.ui.navigation
 
 
 import androidx.compose.runtime.Composable
