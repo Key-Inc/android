@@ -93,7 +93,7 @@ fun ScheduleElement(
                     Icon(
                         modifier = Modifier.size(Padding24),
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_add),
-                        contentDescription = null
+                        contentDescription = stringResource(id = R.string.book_classroom)
                     )
                 }
             }

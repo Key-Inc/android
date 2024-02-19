@@ -16,4 +16,5 @@
     <string name="time_range">%1$s - %2$s</string>
     <string name="available">Свободно</string>
     <string name="busy">Занято</string>
+    <string name="book_classroom">Забронировать аудиторию</string>
 </resources>
