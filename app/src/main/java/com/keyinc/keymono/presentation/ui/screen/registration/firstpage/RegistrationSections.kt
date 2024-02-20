@@ -86,7 +86,7 @@ fun RegistrationSecondSection(
         )
         Spacer(modifier = Modifier.padding(20.dp))
         AccentClickableElement(
-            value = selectedDate.value,
+            date = uiState.birthDate,
             onOpenSelection = { datePickerState = true })
         Spacer(modifier = Modifier.padding(20.dp))
         PhoneTextField(
@@ -98,9 +98,12 @@ fun RegistrationSecondSection(
     }
 
     if (datePickerState) {
-        DatePicker(selectedDate = selectedDate, onCloseSelection = {
+        DatePicker(onCloseSelection = {
             datePickerState = false
-        }
+        },
+            onDateChange = {
+                registrationViewModel.onBirthDateChanged(it)
+            }
         )
     }
 }

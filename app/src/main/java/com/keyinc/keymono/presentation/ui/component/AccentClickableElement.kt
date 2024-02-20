@@ -21,12 +21,10 @@ import com.keyinc.keymono.presentation.ui.theme.LightBlue
 import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
 import com.keyinc.keymono.presentation.ui.theme.PaddingTiny
-import com.keyinc.keymono.presentation.ui.util.DateConverterUtil
-import java.time.LocalDate
 
 
 @Composable
-fun AccentClickableElement(value: LocalDate?, onOpenSelection: () -> Unit) {
+fun AccentClickableElement(date: String, onOpenSelection: () -> Unit) {
     Text(
         text = stringResource(id = R.string.birth_date),
         modifier = Modifier
@@ -57,7 +55,7 @@ fun AccentClickableElement(value: LocalDate?, onOpenSelection: () -> Unit) {
                 .padding(PaddingMedium)
         ) {
             Text(
-                text = DateConverterUtil.convertDateToString(value),
+                text = date,
                 style = InterLabelBold,
             )
         }

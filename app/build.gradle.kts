@@ -2,13 +2,13 @@ plugins {
     id("com.android.application")
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.android")
+    kotlin("plugin.serialization") version "1.9.0"
     kotlin("kapt")
 }
 
 android {
     namespace = "com.keyinc.keymono"
     compileSdk = 34
-
     defaultConfig {
         applicationId = "com.keyinc.keymono"
         minSdk = 26
@@ -58,8 +58,16 @@ dependencies {
     val sheetsComposeVersion = "1.3.0"
     val navVersion = "2.7.7"
     val runtimeComposeVersion = "2.7.0"
+    val kotlinSerializationVersion = "1.6.0"
+    val retrofitVersion = "2.8.9"
+    val gsonConverterVersion = "2.9.0"
+    val okHttpVersion = "4.12.0"
 
     implementation("androidx.navigation:navigation-compose:$navVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$gsonConverterVersion")
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:$runtimeComposeVersion")
     implementation("androidx.security:security-crypto:$securityCryptoVersion")
     implementation("com.maxkeppeler.sheets-compose-dialogs:core:$sheetsComposeVersion")

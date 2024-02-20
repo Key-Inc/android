@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -19,13 +21,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
+import com.keyinc.keymono.presentation.state.RegistrationState
 import com.keyinc.keymono.presentation.ui.component.AccentButton
 import com.keyinc.keymono.presentation.ui.screen.registration.firstpage.RegistrationSecondSection
 import com.keyinc.keymono.presentation.ui.theme.Accent
@@ -34,6 +39,8 @@ import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
 import com.keyinc.keymono.presentation.ui.theme.Padding24
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
+import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
+import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +52,7 @@ fun SecondRegistrationScreen(
 ) {
     val focusManager = LocalFocusManager.current
     val uiState by registrationViewModel.uiState.collectAsStateWithLifecycle()
+    val registrationState by registrationViewModel.registrationState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -87,10 +95,65 @@ fun SecondRegistrationScreen(
                     uiState = uiState
                 )
                 Spacer(modifier = Modifier.padding(Padding24))
-                AccentButton(
-                    onClick = onNavigateToRequestWaiting,
-                    text = stringResource(id = R.string.onboard_button)
-                )
+
+
+                var registrationError: String? = null
+                var buttonClick: () -> Unit = {}
+                var buttonContent: @Composable (() -> Unit)? = null
+
+                when (registrationState) {
+                    RegistrationState.Initial -> {
+                        buttonClick = { registrationViewModel.registerUser() }
+                    }
+
+                    RegistrationState.Loading -> {
+                        buttonContent = {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(PaddingMedium),
+                                color = Color.White,
+                                strokeWidth = 3.dp,
+                            )
+                        }
+                    }
+
+                    RegistrationState.Success -> {
+                       onNavigateToRequestWaiting()
+                    }
+
+                    else -> {
+
+                        registrationError = when (registrationState) {
+                            is RegistrationState.Error -> {
+                                (registrationState as RegistrationState.Error).message
+                            }
+
+                            else -> null
+                        }
+                    }
+                }
+
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    AccentButton(
+                        onClick = buttonClick,
+                        text = stringResource(id = R.string.onboard_button)
+                    ) {
+                        buttonContent?.invoke()
+                    }
+                    if (registrationError != null) {
+                        Text(
+                            modifier = Modifier.padding(top = PaddingSmall),
+                            text = registrationError,
+                            style = InterLogo,
+                            fontSize = FontSmall,
+                            color = Color.Red,
+                        )
+                    }
+                }
+
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -20,8 +20,10 @@ fun AccentButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     text: String,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit = {}
 ) {
+
     Button(
         onClick = onClick,
         modifier = modifier
@@ -34,6 +36,7 @@ fun AccentButton(
             contentColor = Color.White
         )
     ) {
+        content()
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = text,
@@ -42,5 +45,7 @@ fun AccentButton(
             style = InterLogo,
             fontSize = FontMedium
         )
+
+
     }
 }

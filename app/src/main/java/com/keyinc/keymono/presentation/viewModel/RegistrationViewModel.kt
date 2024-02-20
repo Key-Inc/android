@@ -1,34 +1,56 @@
 package com.keyinc.keymono.presentation.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.keyinc.keymono.R
+import com.keyinc.keymono.domain.usecase.account.RegisterUserUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateConfirmPasswordUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateEmailUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidatePasswordUseCase
+import com.keyinc.keymono.presentation.state.RegistrationState
 import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationUIState
-import com.keyinc.keymono.presentation.ui.screen.state.registration.firstRegistrationSectionIsCorrect
-import com.keyinc.keymono.presentation.ui.util.PresentationConstants.EMPTY_STRING
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
     private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val registrationUseCase: RegisterUserUseCase,
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validateConfirmPasswordUseCase: ValidateConfirmPasswordUseCase
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RegistrationUIState())
     val uiState = _uiState.asStateFlow()
 
-    private val _registrationState = MutableStateFlow(EMPTY_STRING)
-    val registrationState: StateFlow<String>
+    private val _registrationState = MutableStateFlow<RegistrationState>(RegistrationState.Initial)
+    val registrationState: StateFlow<RegistrationState>
         get() = _registrationState
+
+
+    fun registerUser() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _registrationState.value = RegistrationState.Loading
+            try {
+                registrationUseCase(
+                    email = _uiState.value.email,
+                    fullName = _uiState.value.fullName,
+                    password = _uiState.value.password,
+                    birthDate = _uiState.value.birthDate,
+                    phoneNumber = _uiState.value.phoneNumber
+                )
+                _registrationState.value = RegistrationState.Success
+            }
+            catch (e: Exception) {
+                _registrationState.value = RegistrationState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
 
 
     fun onEmailChanged(email: String) {
@@ -37,10 +59,8 @@ class RegistrationViewModel @Inject constructor(
             emailErrorId = validateEmailUseCase(
                 validationProperty = email,
                 errorId = R.string.email_error
-            ).errorId,
-            firstSectionPassed = isFirstRegistrationSectionPassed()
+            ).errorId
         )
-        Log.d("RegistrationViewModel", "onConfirmPasswordChanged: ${_uiState.value.firstSectionPassed}")
     }
 
     fun onPasswordChanged(password: String) {
@@ -49,10 +69,12 @@ class RegistrationViewModel @Inject constructor(
             passwordErrorId = validatePasswordUseCase(
                 validationProperty = password,
                 errorId = R.string.password_error
-            ).errorId,
-            firstSectionPassed = isFirstRegistrationSectionPassed()
+            ).errorId
         )
-        Log.d("RegistrationViewModel", "onConfirmPasswordChanged: ${_uiState.value.firstSectionPassed}")
+    }
+
+    fun onBirthDateChanged(birthDate: String) {
+        _uiState.value = _uiState.value.copy(birthDate = birthDate)
     }
 
     fun onFullNameChanged(fullName: String) {
@@ -66,21 +88,13 @@ class RegistrationViewModel @Inject constructor(
                 password = _uiState.value.password,
                 validationProperty = confirmPassword,
                 errorId = R.string.confirm_password_error
-            ).errorId,
-            firstSectionPassed = isFirstRegistrationSectionPassed()
+            ).errorId
         )
-        Log.d("RegistrationViewModel", "onConfirmPasswordChanged: ${_uiState.value.firstSectionPassed}")
     }
 
     fun onPhoneNumberChanged(phoneNumber: String) {
         _uiState.value = _uiState.value.copy(phoneNumber = phoneNumber)
     }
 
-    private fun isFirstRegistrationSectionPassed(): Boolean {
-        return _uiState.value.firstRegistrationSectionIsCorrect() &&
-                _uiState.value.email.isNotBlank() &&
-                _uiState.value.password.isNotBlank() &&
-                _uiState.value.confirmPassword.isNotBlank()
-    }
 
 }
