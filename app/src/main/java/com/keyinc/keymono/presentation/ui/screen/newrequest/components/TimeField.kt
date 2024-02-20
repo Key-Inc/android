@@ -22,6 +22,7 @@ import com.keyinc.keymono.presentation.ui.theme.RequestFieldText
 fun TimeField(
     isStartingTime: Boolean,
     time: String,
+    onEditClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val iconId = if (isStartingTime) R.drawable.ic_keyboard_backspace_forward else R.drawable.ic_keyboard_backspace
@@ -40,7 +41,7 @@ fun TimeField(
         trailingIcon = {
             IconButton(
                 modifier = Modifier.padding(end = PaddingSmall),
-                onClick = { /*TODO navigate to time choice screen*/ }
+                onClick = onEditClick
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_edit),

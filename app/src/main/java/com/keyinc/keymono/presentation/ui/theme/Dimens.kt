@@ -8,4 +8,4 @@ internal val PaddingMedium = 16.dp
 internal val PaddingLarge = 32.dp
 
 internal val Padding24 = 24.dp
-internal val Padding128 = 128.dp
+internal val Padding64 = 64.dp
