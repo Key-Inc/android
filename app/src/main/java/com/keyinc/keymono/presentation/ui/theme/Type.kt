@@ -34,6 +34,15 @@ val Typography = Typography(
     */
 )
 
+val DatePickerTypography = Typography(
+    bodyLarge = TextStyle(
+        fontFamily = Inter,
+        fontSize = FontSmall,
+        fontWeight = FontWeight.Normal,
+        color = Color.Black
+    )
+)
+
 
 val InterLogo = TextStyle(
     fontFamily = Inter,
@@ -44,7 +53,7 @@ val InterLogo = TextStyle(
 
 val InterLabelBold = TextStyle(
     fontFamily = Inter,
-    fontSize = 24.sp,
+    fontSize = 20.sp,
     fontWeight = FontWeight.SemiBold,
     color = Color.Black
 )

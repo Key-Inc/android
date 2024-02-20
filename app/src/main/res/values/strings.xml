@@ -15,8 +15,11 @@
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="next">Далее</string>
     <string name="fullname">ФИО</string>
+    <string name="password_error">Пароль должен содержать в себе от 8-ми символов</string>
     <string name="check_status">Посмотреть статус</string>
     <string name="request_is_under_consideration">Ваша заявка еще рассматривается деканатом, пожалуйста ожидайте</string>
+    <string name="email_error">Почта должна соотвествовать стандарту</string>
+    <string name="confirm_password_error">Пароли не совпадают</string>
     <string name="new_classroom_booking_request">Новая заявка на бронирование аудитории</string>
     <string name="classroom_short_desc">%1$d ауд.</string>
     <string name="birth_date">Дата рождения</string>

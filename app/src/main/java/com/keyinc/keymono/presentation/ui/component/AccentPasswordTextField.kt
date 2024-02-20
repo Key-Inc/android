@@ -41,6 +41,7 @@ fun AccentPasswordTextField(
     modifier: Modifier = Modifier,
     textFieldValue: String,
     label: String,
+    errorId: Int?,
     singleLine: Boolean = true,
     onValueChange: (String) -> Unit,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
@@ -86,24 +87,28 @@ fun AccentPasswordTextField(
         },
         singleLine = singleLine,
         enabled = true,
-        cursorBrush = SolidColor(Color.Black))
-        { innerTextField ->
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(PaddingMedium),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                innerTextField()
-                Icon(
-                    imageVector = visibilityIconState,
-                    modifier = Modifier
-                        .clickable(onClick = {
-                            isPasswordVisible = !isPasswordVisible
-                        })
-                        .size(PaddingLarge),
-                    contentDescription = null,
-                )
-            }
+        cursorBrush = SolidColor(Color.Black)
+    )
+    { innerTextField ->
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(PaddingMedium),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            innerTextField()
+            Icon(
+                imageVector = visibilityIconState,
+                modifier = Modifier
+                    .clickable(onClick = {
+                        isPasswordVisible = !isPasswordVisible
+                    })
+                    .size(PaddingLarge),
+                contentDescription = null,
+            )
         }
+    }
+
+    AccentTextFieldValidationAnim(errorId = errorId)
+
 }

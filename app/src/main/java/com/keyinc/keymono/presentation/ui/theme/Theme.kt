@@ -10,6 +10,8 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -37,6 +39,7 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+
 @Composable
 fun KeyMonoTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -61,10 +64,51 @@ fun KeyMonoTheme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
 }
+
+
+private val DatePickerPallet = lightColorScheme(
+    primary = LightBlue,
+    onPrimary = Color.White,
+    secondary = LightBlue,
+    onSecondary = Color.White,
+    error = Red,
+    onError = Color.White,
+    surface = Color.White,
+    onSurface = Color.Black,
+)
+
+
+@Composable
+fun DatePickerTheme(content: @Composable () -> Unit) {
+    MaterialTheme(
+    ) {
+        MaterialTheme(
+            colorScheme = MaterialTheme.colorScheme.copy(
+                primary = DatePickerPallet.primary,
+                primaryContainer = DatePickerPallet.primary,
+                secondary = DatePickerPallet.primary,
+                secondaryContainer = DatePickerPallet.primary,
+                tertiary = DatePickerPallet.secondary,
+                tertiaryContainer = DatePickerPallet.secondary,
+                onPrimary = DatePickerPallet.onPrimary,
+                onSecondary = DatePickerPallet.onPrimary,
+                onTertiary = DatePickerPallet.onSecondary,
+                error = DatePickerPallet.error,
+                onError = DatePickerPallet.onError,
+                surface = DatePickerPallet.surface,
+                background = DatePickerPallet.background
+            ),
+            typography = DatePickerTypography,
+            content = content
+        )
+    }
+}
+
+
+
+
+
+
+
+

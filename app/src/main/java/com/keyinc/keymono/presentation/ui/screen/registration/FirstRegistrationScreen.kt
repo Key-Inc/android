@@ -1,5 +1,3 @@
-
-
 package com.keyinc.keymono.presentation.ui.screen.registration
 
 import androidx.compose.foundation.Image
@@ -92,6 +90,7 @@ fun FirstRegistrationScreen(
                 )
                 Spacer(modifier = Modifier.padding(Padding24))
                 AccentButton(
+                    enabled = !uiState.firstSectionPassed,
                     onClick = onNavigateToSecondPart,
                     text = stringResource(id = R.string.next)
                 )

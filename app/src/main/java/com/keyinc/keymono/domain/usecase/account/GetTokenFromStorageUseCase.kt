@@ -1,4 +1,4 @@
-package com.keyinc.keymono.domain.usecase
+package com.keyinc.keymono.domain.usecase.account
 
 import com.keyinc.keymono.domain.repository.AuthRepository
 import javax.inject.Inject
