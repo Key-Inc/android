@@ -74,6 +74,7 @@ dependencies {
     implementation("androidx.security:security-crypto:$securityCryptoVersion")
     implementation("com.maxkeppeler.sheets-compose-dialogs:core:$sheetsComposeVersion")
     implementation("com.maxkeppeler.sheets-compose-dialogs:date-time:$sheetsComposeVersion")
+    implementation("com.maxkeppeler.sheets-compose-dialogs:clock:$sheetsComposeVersion")
     //не обновлять!
     implementation("com.google.dagger:hilt-android:$daggerVersion")
     implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationVersion")
