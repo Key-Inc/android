@@ -2,23 +2,32 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="DateTimeChoiceScreenPreview">
+      <entry key="AccentButton">
+        <State />
+      </entry>
+      <entry key="AccentClickableElement">
+        <State />
+      </entry>
+      <entry key="ExampleInstrumentedTest">
+        <State />
+      </entry>
+      <entry key="RegistrationFirstScreen">
         <State>
-          <runningDeviceTargetSelectedWithDropDown>
+          <targetSelectedWithDropDown>
             <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
+              <type value="QUICK_BOOT_TARGET" />
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Lantt\.android\avd\Pixel_7_Pro_API_33.avd" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_7_Pro_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-17T09:51:20.586774100Z" />
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-02-15T16:44:20.746304Z" />
         </State>
       </entry>
-      <entry key="ScheduleElementPreview">
+      <entry key="RequestWaitingScreen">
         <State />
       </entry>
       <entry key="app">
@@ -29,12 +38,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Lantt\.android\avd\Pixel_7_Pro_API_33.avd" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_7_Pro_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-17T06:24:45.878089Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-02-15T14:23:51.069661Z" />
         </State>
       </entry>
     </value>

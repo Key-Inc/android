@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.component.AccentButton
 import com.keyinc.keymono.presentation.ui.theme.Accent
+import com.keyinc.keymono.presentation.ui.theme.FontMedium
 import com.keyinc.keymono.presentation.ui.theme.FontNormal
 import com.keyinc.keymono.presentation.ui.theme.FontSmall
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
@@ -29,7 +30,11 @@ import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 
 
 @Composable
-fun OnBoardingContent(paddingValues: PaddingValues) {
+fun OnBoardingContent(
+    paddingValues: PaddingValues,
+    onNavigateToRegistration: () -> Unit,
+    onNavigateToLogin: () -> Unit = {}
+) {
 
     Column(
         modifier = Modifier
@@ -60,6 +65,7 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
                     )
                     .fillMaxWidth(),
                 style = InterLabelBold,
+                fontSize = FontMedium,
                 textAlign = TextAlign.Center
             )
 
@@ -86,7 +92,8 @@ fun OnBoardingContent(paddingValues: PaddingValues) {
                 end = PaddingLarge
             ),
             text = stringResource(id = R.string.onboard_button),
-            onClick = {}
+            onClick = { onNavigateToRegistration() },
+            enabled = true
         )
 
         Column(
