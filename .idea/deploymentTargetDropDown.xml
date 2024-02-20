@@ -2,16 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="AccentButton">
-        <State />
-      </entry>
-      <entry key="AccentClickableElement">
-        <State />
-      </entry>
-      <entry key="ExampleInstrumentedTest">
-        <State />
-      </entry>
-      <entry key="RegistrationFirstScreen">
+      <entry key="DateTimeChoiceScreenPreview">
         <State>
           <targetSelectedWithDropDown>
             <Target>
@@ -19,16 +10,13 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Pixel_7_Pro_API_34.avd" />
+                  <value value="C:\Users\Lantt\.android\avd\Pixel_7_Pro_API_33.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-15T16:44:20.746304Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-02-20T11:46:22.677759500Z" />
         </State>
-      </entry>
-      <entry key="RequestWaitingScreen">
-        <State />
       </entry>
       <entry key="app">
         <State>

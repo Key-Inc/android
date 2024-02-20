@@ -31,4 +31,11 @@
     <string name="available">Свободно</string>
     <string name="busy">Занято</string>
     <string name="book_classroom">Забронировать аудиторию</string>
+    <string name="classroom_description">%1$d ауд.</string>
+    <string name="classroom_number">Номер аудитории</string>
+    <string name="booking_start_time">Начало времени бронирования</string>
+    <string name="booking_end_time">Конец времени бронирования</string>
+    <string name="edit">Редактировать</string>
+    <string name="recurring">Повторяющаяся</string>
+    <string name="send_a_request">Отправить заявку</string>
 </resources>
