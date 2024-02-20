@@ -9,6 +9,7 @@ plugins {
 android {
     namespace = "com.keyinc.keymono"
     compileSdk = 34
+
     defaultConfig {
         applicationId = "com.keyinc.keymono"
         minSdk = 26
@@ -55,6 +56,7 @@ dependencies {
     val daggerVersion = "2.48"
     val hiltNavigationVersion = "1.1.0"
     val securityCryptoVersion = "1.1.0-alpha06"
+    val calendarVersion = "2.5.0"
     val sheetsComposeVersion = "1.3.0"
     val navVersion = "2.7.7"
     val runtimeComposeVersion = "2.7.0"
@@ -72,8 +74,10 @@ dependencies {
     implementation("androidx.security:security-crypto:$securityCryptoVersion")
     implementation("com.maxkeppeler.sheets-compose-dialogs:core:$sheetsComposeVersion")
     implementation("com.maxkeppeler.sheets-compose-dialogs:date-time:$sheetsComposeVersion")
+    //не обновлять!
     implementation("com.google.dagger:hilt-android:$daggerVersion")
     implementation("androidx.hilt:hilt-navigation-compose:$hiltNavigationVersion")
+    implementation("com.kizitonwose.calendar:compose:$calendarVersion")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
