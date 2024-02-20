@@ -50,7 +50,7 @@ fun RequestWaitingScreen() {
                         animationSpec = tween(durationMillis = 400)
                     )
                 ) {
-                    RequestAlert()
+                    RequestAlert(text = stringResource(id = R.string.request_is_under_consideration))
                     LaunchedEffect(key1 = showDialog) {
                         delay(3000L)
                         showDialog = false

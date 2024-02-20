@@ -14,3 +14,15 @@ val Regular = TextStyle(
     fontFamily = Inter,
     fontWeight = FontWeight.Normal
 )
+
+val CalendarDayOfWeek = TextStyle(
+    fontSize = FontRegular,
+    fontFamily = Inter,
+    fontWeight = FontWeight.Medium
+)
+
+val CalendarDate = TextStyle(
+    fontSize = FontRegular,
+    fontFamily = Inter,
+    fontWeight = FontWeight.SemiBold
+)
