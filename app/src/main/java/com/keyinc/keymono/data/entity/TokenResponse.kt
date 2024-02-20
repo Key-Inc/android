@@ -1,4 +1,4 @@
-package com.keyinc.keymono.domain.entity
+package com.keyinc.keymono.data.entity
 
 import kotlinx.serialization.Serializable
 

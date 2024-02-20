@@ -2,8 +2,8 @@ package com.keyinc.keymono.di
 
 import com.keyinc.keymono.data.TokenStorage
 import com.keyinc.keymono.data.api.AccountApi
-import com.keyinc.keymono.data.repository.AuthRepositoryImpl
-import com.keyinc.keymono.domain.repository.AuthRepository
+import com.keyinc.keymono.data.repository.AccountRepositoryImpl
+import com.keyinc.keymono.domain.repository.AccountRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ import dagger.hilt.components.SingletonComponent
 object DomainModule {
 
     @Provides
-    fun provideAuthRepository(tokenStorage: TokenStorage, accountApi: AccountApi): AuthRepository {
-        return AuthRepositoryImpl(tokenStorage, accountApi)
+    fun provideAuthRepository(tokenStorage: TokenStorage, accountApi: AccountApi): AccountRepository {
+        return AccountRepositoryImpl(tokenStorage, accountApi)
     }
 }

@@ -2,6 +2,7 @@ package com.keyinc.keymono.presentation.ui.navigation
 
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
@@ -21,12 +22,16 @@ fun ApplicationNavHost(
     navController: NavHostController = rememberNavController()
 ) {
 
+
     NavHost(navController = navController, startDestination = Routes.SplashScreen.route) {
         composable(Routes.SplashScreen.route) {
-            SplashScreen(onNavigateToOnBoarding = {
-                navController.popBackStack()
-                navController.navigate(Routes.OnBoardingScreen.route)
-            })
+            SplashScreen(
+                onNavigateToOnBoarding = { route ->
+                    navController.popBackStack()
+                    navController.navigate(route)
+                },
+                splashViewModel = hiltViewModel()
+            )
         }
 
         composable(Routes.FirstRegistrationScreen.route) {
@@ -70,7 +75,6 @@ fun ApplicationNavHost(
 }
 
 
-//TODO подумать о том, нужно ли сохранять стейт всегда
 fun NavOptionsBuilder.clearAllBackStack(navController: NavController) {
     popUpTo(
         navController.graph.id
