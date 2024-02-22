@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.keyinc.keymono.presentation.ui.theme.themes.BlueLightColors
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -105,7 +106,28 @@ fun DatePickerTheme(content: @Composable () -> Unit) {
     }
 }
 
-
+@Composable
+fun TimePickerTheme(content: @Composable () -> Unit) {
+    MaterialTheme(
+        colorScheme = MaterialTheme.colorScheme.copy(
+            primary = BlueLightColors.primary,
+            primaryContainer = BlueLightColors.primaryContainer,
+            secondary = BlueLightColors.secondary,
+            secondaryContainer = BlueLightColors.secondaryContainer,
+            tertiary = BlueLightColors.tertiary,
+            tertiaryContainer = BlueLightColors.tertiaryContainer,
+            onPrimary = BlueLightColors.onPrimary,
+            onSecondary = BlueLightColors.onPrimary,
+            onTertiary = BlueLightColors.onTertiary,
+            error = BlueLightColors.error,
+            onError = BlueLightColors.onError,
+            surface = BlueLightColors.surface,
+            background = BlueLightColors.background
+        ),
+        typography = DatePickerTypography,
+        content = content
+    )
+}
 
 
 

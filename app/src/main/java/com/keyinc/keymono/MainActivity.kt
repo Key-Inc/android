@@ -15,8 +15,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
-            ApplicationNavHost(registrationViewModel = registrationViewModel)
+            ApplicationNavHost(
+                registrationViewModel = registrationViewModel
+            )
         }
     }
 }

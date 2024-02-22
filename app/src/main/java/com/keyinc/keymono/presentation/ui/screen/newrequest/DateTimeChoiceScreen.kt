@@ -33,8 +33,8 @@ import com.keyinc.keymono.presentation.ui.theme.LightGray
 import com.keyinc.keymono.presentation.ui.theme.Padding24
 import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
-import com.keyinc.keymono.presentation.ui.utils.displayText
-import com.keyinc.keymono.presentation.ui.utils.formatCalendarDay
+import com.keyinc.keymono.presentation.ui.util.displayText
+import com.keyinc.keymono.presentation.ui.util.formatCalendarDay
 import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import java.time.LocalDate

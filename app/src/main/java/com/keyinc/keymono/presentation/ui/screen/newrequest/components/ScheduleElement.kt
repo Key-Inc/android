@@ -33,7 +33,7 @@ import com.keyinc.keymono.presentation.ui.theme.Padding24
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
 import com.keyinc.keymono.presentation.ui.theme.Title
-import com.keyinc.keymono.presentation.ui.utils.noRippleClickable
+import com.keyinc.keymono.presentation.ui.util.noRippleClickable
 import java.time.format.DateTimeFormatter
 
 @Composable
