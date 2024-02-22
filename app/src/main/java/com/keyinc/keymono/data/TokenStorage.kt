@@ -3,9 +3,7 @@ package com.keyinc.keymono.data
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import javax.inject.Singleton
 
-@Singleton
 class TokenStorage(context: Context)  {
 
     private companion object {

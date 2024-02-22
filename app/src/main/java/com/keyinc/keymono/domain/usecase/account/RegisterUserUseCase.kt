@@ -4,22 +4,18 @@ import com.keyinc.keymono.domain.entity.RegistrationRequest
 import com.keyinc.keymono.domain.repository.AccountRepository
 import javax.inject.Inject
 
-class RegisterUserUseCase @Inject constructor(private val authRepository: AccountRepository) {
+class RegisterUserUseCase @Inject constructor(private val accountRepository: AccountRepository) {
+
+    private companion object {
+        const val PHONE_NUMBER_PREFIX = "+7"
+    }
 
     suspend operator fun invoke(
-        email: String,
-        fullName: String,
-        password: String,
-        birthDate: String,
-        phoneNumber: String,
+        registrationRequest: RegistrationRequest
     ) {
-        val registrationRequest = RegistrationRequest(
-            email = email,
-            fullName = fullName,
-            password = password,
-            birthDate = "2024-02-20T09:11:17.004Z" ,
-            phoneNumber = "+7$phoneNumber"
+        val updatedRequest = registrationRequest.copy(
+            phoneNumber = PHONE_NUMBER_PREFIX + registrationRequest.phoneNumber
         )
-        authRepository.register(registrationRequest)
+        accountRepository.register(updatedRequest)
     }
 }

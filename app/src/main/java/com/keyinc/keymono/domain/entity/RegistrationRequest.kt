@@ -11,5 +11,3 @@ data class RegistrationRequest(
     val phoneNumber: String,
     val email: String
 )
-
-

@@ -26,3 +26,9 @@ val CalendarDate = TextStyle(
     fontFamily = Inter,
     fontWeight = FontWeight.SemiBold
 )
+
+val RequestFieldText = TextStyle(
+    fontSize = FontMedium,
+    fontFamily = Inter,
+    fontWeight = FontWeight.SemiBold
+)

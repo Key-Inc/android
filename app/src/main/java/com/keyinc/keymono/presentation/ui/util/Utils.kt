@@ -1,4 +1,4 @@
-package com.keyinc.keymono.presentation.ui.utils
+package com.keyinc.keymono.presentation.ui.util
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

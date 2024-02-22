@@ -9,6 +9,8 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.keyinc.keymono.presentation.ui.screen.login.LoginScreen
+import com.keyinc.keymono.presentation.ui.screen.newrequest.ClassroomChoiceScreen
 import com.keyinc.keymono.presentation.ui.screen.onboarding.OnBoardingScreen
 import com.keyinc.keymono.presentation.ui.screen.registration.FirstRegistrationScreen
 import com.keyinc.keymono.presentation.ui.screen.registration.SecondRegistrationScreen
@@ -21,8 +23,6 @@ fun ApplicationNavHost(
     registrationViewModel: RegistrationViewModel,
     navController: NavHostController = rememberNavController()
 ) {
-
-
     NavHost(navController = navController, startDestination = Routes.SplashScreen.route) {
         composable(Routes.SplashScreen.route) {
             SplashScreen(
@@ -34,6 +34,17 @@ fun ApplicationNavHost(
             )
         }
 
+        composable(Routes.LoginScreen.route) {
+            LoginScreen(
+                onNavigateToClassroomChoice = {
+                    navController.navigate(Routes.ClassroomChoiceScreen.route)
+                },
+                onNavigateToRegister = {
+                    navController.navigateBackOrToAvoidingBackStack(Routes.FirstRegistrationScreen.route)
+                }
+            )
+        }
+
         composable(Routes.FirstRegistrationScreen.route) {
             FirstRegistrationScreen(
                 registrationViewModel = registrationViewModel,
@@ -42,6 +53,9 @@ fun ApplicationNavHost(
                 },
                 onNavigateToSecondPart = {
                     navController.navigate(Routes.SecondRegistrationScreen.route)
+                },
+                onNavigateToLogin = {
+                    navController.navigateBackOrToAvoidingBackStack(Routes.LoginScreen.route)
                 }
             )
         }
@@ -55,7 +69,11 @@ fun ApplicationNavHost(
         }
 
         composable(Routes.RequestWaitingScreen.route) {
-            RequestWaitingScreen()
+            RequestWaitingScreen(
+                onNavigateToClassroomChoice = {
+                    navController.navigate(Routes.ClassroomChoiceScreen.route)
+                }
+            )
         }
 
         composable(Routes.SecondRegistrationScreen.route) {
@@ -68,12 +86,26 @@ fun ApplicationNavHost(
                     navController.navigate(Routes.RequestWaitingScreen.route) {
                         clearAllBackStack(navController = navController)
                     }
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LoginScreen.route)
                 }
             )
+        }
+
+        composable(Routes.ClassroomChoiceScreen.route) {
+            ClassroomChoiceScreen()
         }
     }
 }
 
+
+fun NavController.navigateBackOrToAvoidingBackStack(backStackRoute: String) {
+    if (previousBackStackEntry?.destination?.route == backStackRoute)
+        popBackStack()
+    else
+        navigate(backStackRoute)
+}
 
 fun NavOptionsBuilder.clearAllBackStack(navController: NavController) {
     popUpTo(
