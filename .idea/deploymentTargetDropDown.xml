@@ -2,23 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="DateTimeChoiceScreenPreview">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Lantt\.android\avd\Pixel_7_Pro_API_33.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-20T11:46:22.677759500Z" />
-        </State>
-      </entry>
-      <entry key="SendRequestScreenPreview">
+      <entry key="LoginScreenPreview">
         <State />
       </entry>
       <entry key="app">
