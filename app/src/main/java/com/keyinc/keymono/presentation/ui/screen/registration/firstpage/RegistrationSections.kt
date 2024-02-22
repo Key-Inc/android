@@ -23,7 +23,6 @@ import com.keyinc.keymono.presentation.ui.component.PhoneTextField
 import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationUIState
 import com.keyinc.keymono.presentation.ui.theme.Padding20
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
-import java.time.LocalDate
 
 @Composable
 fun RegistrationFirstSection(
@@ -71,7 +70,7 @@ fun RegistrationSecondSection(
     var datePickerState by remember {
         mutableStateOf(false)
     }
-    val selectedDate = remember { mutableStateOf<LocalDate?>(null) }
+
 
     Column(
         verticalArrangement = Arrangement.Center,
