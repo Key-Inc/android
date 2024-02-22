@@ -3,6 +3,7 @@ package com.keyinc.keymono.data.repository
 import android.util.Log
 import com.keyinc.keymono.data.TokenStorage
 import com.keyinc.keymono.data.api.AccountApi
+import com.keyinc.keymono.domain.entity.LoginRequest
 import com.keyinc.keymono.domain.entity.ProfileResponse
 import com.keyinc.keymono.domain.entity.RegistrationRequest
 import com.keyinc.keymono.domain.repository.AccountRepository
@@ -14,7 +15,6 @@ class AccountRepositoryImpl @Inject constructor(
     private val tokenStorage: TokenStorage,
     private val accountApi: AccountApi
 ) : AccountRepository {
-
 
     override suspend fun getRegistrationStatus(): String {
         val token = getTokenFromStorage()
@@ -35,7 +35,6 @@ class AccountRepositoryImpl @Inject constructor(
         return tokenStorage.getToken().isNotEmpty()
     }
 
-
     override suspend fun saveTokenToStorage(token: String) {
         tokenStorage.saveToken(token)
     }
@@ -45,5 +44,9 @@ class AccountRepositoryImpl @Inject constructor(
         saveTokenToStorage(tokenResponse.token)
     }
 
+    override suspend fun login(loginRequest: LoginRequest) {
+        val tokenResponse = accountApi.login(loginRequest)
+        saveTokenToStorage(tokenResponse.token)
+    }
 
 }

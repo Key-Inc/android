@@ -2,6 +2,7 @@ package com.keyinc.keymono.data.api
 
 import com.keyinc.keymono.data.api.NetworkConstants.ACCOUNT_SERVICE_URL
 import com.keyinc.keymono.data.entity.TokenResponse
+import com.keyinc.keymono.domain.entity.LoginRequest
 import com.keyinc.keymono.domain.entity.ProfileResponse
 import com.keyinc.keymono.domain.entity.RegistrationRequest
 import retrofit2.http.Body
@@ -15,6 +16,8 @@ interface AccountApi {
     @POST("$ACCOUNT_SERVICE_URL/register")
     suspend fun register(@Body registrationRequest: RegistrationRequest): TokenResponse
 
+    @POST("$ACCOUNT_SERVICE_URL/login")
+    suspend fun login(@Body loginRequest: LoginRequest): TokenResponse
 
     @GET("$ACCOUNT_SERVICE_URL/profile")
     suspend fun getProfile(@Header("Authorization") token: String): ProfileResponse
