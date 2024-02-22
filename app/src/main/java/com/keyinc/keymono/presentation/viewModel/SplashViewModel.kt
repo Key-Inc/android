@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.keyinc.keymono.domain.usecase.account.GetUserRequestStatus
 import com.keyinc.keymono.domain.usecase.account.IsUserLoggedInUseCase
-import com.keyinc.keymono.presentation.state.UserState
+import com.keyinc.keymono.presentation.ui.screen.state.splashscreen.SplashScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,18 +20,18 @@ class SplashViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val _userState = MutableStateFlow<UserState>(UserState.Initial)
-    val userState: StateFlow<UserState>
-        get() = _userState.asStateFlow()
+    private val _splashScreenState = MutableStateFlow<SplashScreenState>(SplashScreenState.Initial)
+    val splashScreenState: StateFlow<SplashScreenState>
+        get() = _splashScreenState.asStateFlow()
 
 
     fun isUserLoggedIn() {
         viewModelScope.launch {
-            _userState.value = UserState.Loading
-            _userState.value = if (isUserLoggedInUseCase()) {
-                UserState.UserLoggedIn
+            _splashScreenState.value = SplashScreenState.Loading
+            _splashScreenState.value = if (isUserLoggedInUseCase()) {
+                SplashScreenState.UserLoggedIn
             } else {
-                UserState.UserNotLoggedIn
+                SplashScreenState.UserNotLoggedIn
             }
         }
     }
@@ -40,14 +40,14 @@ class SplashViewModel @Inject constructor(
     fun getRequestStatus() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _userState.value = UserState.Loading
-                _userState.value = if (getRequestStatusUseCase()) {
-                    UserState.RequestConfirmed
+                _splashScreenState.value = SplashScreenState.Loading
+                _splashScreenState.value = if (getRequestStatusUseCase()) {
+                    SplashScreenState.RequestConfirmed
                 } else {
-                    UserState.Idling
+                    SplashScreenState.Idling
                 }
             } catch (e: Exception) {
-                _userState.value = UserState.Error(e.message ?: "Unknown error")
+                _splashScreenState.value = SplashScreenState.Error(e.message ?: "Unknown error")
             }
 
         }

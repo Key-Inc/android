@@ -1,4 +1,4 @@
-package com.keyinc.keymono.presentation.state
+package com.keyinc.keymono.presentation.ui.screen.state.registration
 
 sealed class RegistrationState {
     data object Initial : RegistrationState()

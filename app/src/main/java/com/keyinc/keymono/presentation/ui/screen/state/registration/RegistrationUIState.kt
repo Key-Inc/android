@@ -14,7 +14,3 @@ data class RegistrationUIState(
     var confirmPasswordErrorId: Int? = null,
     var firstSectionPassed: Boolean = false
 )
-
-fun RegistrationUIState.firstRegistrationSectionIsCorrect(): Boolean {
-    return listOf(passwordErrorId, confirmPasswordErrorId, emailErrorId).all { it == null }
-}

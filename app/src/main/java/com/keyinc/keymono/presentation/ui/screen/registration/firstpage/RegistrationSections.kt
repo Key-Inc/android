@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.component.AccentClickableElement
 import com.keyinc.keymono.presentation.ui.component.AccentPasswordTextField
@@ -22,6 +21,7 @@ import com.keyinc.keymono.presentation.ui.component.AccentTextField
 import com.keyinc.keymono.presentation.ui.component.DatePicker
 import com.keyinc.keymono.presentation.ui.component.PhoneTextField
 import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationUIState
+import com.keyinc.keymono.presentation.ui.theme.Padding20
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 import java.time.LocalDate
 
@@ -43,7 +43,7 @@ fun RegistrationFirstSection(
             label = stringResource(id = R.string.email),
             errorId = uiState.emailErrorId
         )
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.padding(Padding20))
         AccentPasswordTextField(
             textFieldValue = uiState.password,
             onValueChange = { registrationViewModel.onPasswordChanged(it) },
@@ -51,7 +51,7 @@ fun RegistrationFirstSection(
             label = stringResource(id = R.string.password),
             errorId = uiState.passwordErrorId
         )
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.padding(Padding20))
         AccentPasswordTextField(
             textFieldValue = uiState.confirmPassword,
             onValueChange = { registrationViewModel.onConfirmPasswordChanged(it) },
@@ -84,11 +84,11 @@ fun RegistrationSecondSection(
             label = stringResource(id = R.string.fullname),
             errorId = null
         )
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.padding(Padding20))
         AccentClickableElement(
             date = uiState.birthDate,
             onOpenSelection = { datePickerState = true })
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.padding(Padding20))
         PhoneTextField(
             textFieldValue = uiState.phoneNumber,
             onValueChange = { registrationViewModel.onPhoneNumberChanged(it) },
