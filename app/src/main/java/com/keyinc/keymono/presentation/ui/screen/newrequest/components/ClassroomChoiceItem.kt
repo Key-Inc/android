@@ -57,6 +57,7 @@ fun ClassroomChoiceItem(
             )
         }
 
+        //TODO remove to HorizontalDivider
         Divider(
             thickness = (0.5).dp,
             color = Gray62

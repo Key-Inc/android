@@ -13,4 +13,10 @@ object DateConverterUtil {
         } ?: ""
     }
 
+
+    fun convertDateToServerFormat(date: String): String {
+        val dateParts = date.split(".")
+        return "${dateParts[2]}-${dateParts[1]}-${dateParts[0]}"
+    }
+
 }

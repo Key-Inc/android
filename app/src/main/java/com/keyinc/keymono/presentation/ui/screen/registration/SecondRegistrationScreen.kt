@@ -30,7 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
-import com.keyinc.keymono.presentation.state.RegistrationState
+import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationState
 import com.keyinc.keymono.presentation.ui.component.AccentButton
 import com.keyinc.keymono.presentation.ui.screen.registration.firstpage.RegistrationSecondSection
 import com.keyinc.keymono.presentation.ui.theme.Accent

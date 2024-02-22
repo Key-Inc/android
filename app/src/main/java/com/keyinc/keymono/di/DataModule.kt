@@ -34,7 +34,9 @@ object DataModule {
         .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
         .build()
 
+
     @Provides
+    @Singleton
     fun provideTokenStorage(@ApplicationContext context: Context): TokenStorage {
         return TokenStorage(context = context)
     }

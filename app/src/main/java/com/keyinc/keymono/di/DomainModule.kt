@@ -19,6 +19,7 @@ import javax.inject.Singleton
 object DomainModule {
 
     @Provides
+    @Singleton
     fun provideAuthRepository(tokenStorage: TokenStorage, accountApi: AccountApi): AccountRepository {
         return AccountRepositoryImpl(tokenStorage, accountApi)
     }

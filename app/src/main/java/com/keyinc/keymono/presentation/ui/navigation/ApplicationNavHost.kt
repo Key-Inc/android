@@ -40,7 +40,7 @@ fun ApplicationNavHost(
                     navController.navigate(Routes.ClassroomChoiceScreen.route)
                 },
                 onNavigateToRegister = {
-                    navController.navigate(Routes.FirstRegistrationScreen.route)
+                    navController.navigateBackOrToAvoidingBackStack(Routes.FirstRegistrationScreen.route)
                 }
             )
         }
@@ -55,7 +55,7 @@ fun ApplicationNavHost(
                     navController.navigate(Routes.SecondRegistrationScreen.route)
                 },
                 onNavigateToLogin = {
-                    navController.navigate(Routes.LoginScreen.route)
+                    navController.navigateBackOrToAvoidingBackStack(Routes.LoginScreen.route)
                 }
             )
         }
@@ -99,6 +99,13 @@ fun ApplicationNavHost(
     }
 }
 
+
+fun NavController.navigateBackOrToAvoidingBackStack(backStackRoute: String) {
+    if (previousBackStackEntry?.destination?.route == backStackRoute)
+        popBackStack()
+    else
+        navigate(backStackRoute)
+}
 
 fun NavOptionsBuilder.clearAllBackStack(navController: NavController) {
     popUpTo(

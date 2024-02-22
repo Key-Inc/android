@@ -3,12 +3,14 @@ package com.keyinc.keymono.presentation.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.keyinc.keymono.R
+import com.keyinc.keymono.domain.entity.RegistrationRequest
 import com.keyinc.keymono.domain.usecase.account.RegisterUserUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateConfirmPasswordUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateEmailUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidatePasswordUseCase
-import com.keyinc.keymono.presentation.state.RegistrationState
+import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationState
 import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationUIState
+import com.keyinc.keymono.presentation.ui.util.DateConverterUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,15 +40,20 @@ class RegistrationViewModel @Inject constructor(
             _registrationState.value = RegistrationState.Loading
             try {
                 registrationUseCase(
-                    email = _uiState.value.email,
-                    fullName = _uiState.value.fullName,
-                    password = _uiState.value.password,
-                    birthDate = _uiState.value.birthDate,
-                    phoneNumber = _uiState.value.phoneNumber
+                    RegistrationRequest(
+                        email = _uiState.value.email,
+                        fullName = _uiState.value.fullName,
+                        password = _uiState.value.password,
+                        birthDate = DateConverterUtil.convertDateToServerFormat(
+                            _uiState.value.birthDate
+                        ),
+                        phoneNumber = _uiState.value.phoneNumber
+                    )
                 )
                 _registrationState.value = RegistrationState.Success
             }
             catch (e: Exception) {
+                //TODO replace hardcoded string to resource
                 _registrationState.value = RegistrationState.Error(e.message ?: "Unknown error")
             }
         }

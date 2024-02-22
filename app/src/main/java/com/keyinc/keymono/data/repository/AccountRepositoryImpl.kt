@@ -1,6 +1,5 @@
 package com.keyinc.keymono.data.repository
 
-import android.util.Log
 import com.keyinc.keymono.data.TokenStorage
 import com.keyinc.keymono.data.api.AccountApi
 import com.keyinc.keymono.domain.entity.LoginRequest
@@ -8,22 +7,23 @@ import com.keyinc.keymono.domain.entity.ProfileResponse
 import com.keyinc.keymono.domain.entity.RegistrationRequest
 import com.keyinc.keymono.domain.repository.AccountRepository
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class AccountRepositoryImpl @Inject constructor(
     private val tokenStorage: TokenStorage,
     private val accountApi: AccountApi
 ) : AccountRepository {
 
-    override suspend fun getRegistrationStatus(): String {
+    private suspend fun getBearerToken(): String {
         val token = getTokenFromStorage()
-        return accountApi.getRegistrationStatus("Bearer $token")
+        return "Bearer $token"
+    }
+
+    override suspend fun getRegistrationStatus(): String {
+        return accountApi.getRegistrationStatus(getBearerToken())
     }
 
     override suspend fun getProfile(): ProfileResponse {
-        val token = getTokenFromStorage()
-        return accountApi.getProfile("Bearer $token")
+        return accountApi.getProfile(getBearerToken())
     }
 
     override suspend fun getTokenFromStorage(): String {
@@ -31,7 +31,6 @@ class AccountRepositoryImpl @Inject constructor(
     }
 
     override suspend fun isUserLoggedIn(): Boolean {
-        Log.d("tag", "isUserLoggedIn: ${tokenStorage.getToken()}")
         return tokenStorage.getToken().isNotEmpty()
     }
 
@@ -48,5 +47,4 @@ class AccountRepositoryImpl @Inject constructor(
         val tokenResponse = accountApi.login(loginRequest)
         saveTokenToStorage(tokenResponse.token)
     }
-
 }
