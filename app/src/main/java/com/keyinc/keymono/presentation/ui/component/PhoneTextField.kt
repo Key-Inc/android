@@ -27,14 +27,16 @@ import com.keyinc.keymono.presentation.ui.theme.LightBlue
 import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
 import com.keyinc.keymono.presentation.ui.theme.PaddingTiny
+import com.keyinc.keymono.presentation.ui.util.PresentationConstants.MASK_DIGIT_CHARACTER
+import com.keyinc.keymono.presentation.ui.util.PresentationConstants.PHONE_NUMBER_MASK
 
 @Composable
 fun PhoneTextField(
     modifier: Modifier = Modifier,
     textFieldValue: String,
     label: String,
-    phoneNumberMask: String = "+7(000)000-00-00",
-    maskDigitCharacter: Char = '0',
+    phoneNumberMask: String = PHONE_NUMBER_MASK,
+    maskDigitCharacter: Char = MASK_DIGIT_CHARACTER,
     singleLine: Boolean = true,
     onValueChange: (String) -> Unit,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default

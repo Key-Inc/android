@@ -1,31 +1,48 @@
 <resources>
+
+    <!-- Strings used for company label and logo desc. -->
     <string name="app_name">KeyMono</string>
     <string name="company_label">Key Inc.</string>
     <string name="company_logo">Company logo</string>
     <string name="app_label">KeyMono.</string>
-    <string name="onboard_label">Откройте знания одним ключом.</string>
-    <string name="onboard_desc">Откройте дверь к кабинетам университета всего в пару кликов.</string>
+
+    <!-- Common strings used for registration, login and onBoarding screen -->
     <string name="onboard_button">Зарегистрироваться</string>
     <string name="already_have_account">Вы уже с нами?</string>
     <string name="log_in">Войдите в свой аккаунт</string>
-    <string name="on_during_request">Вашу заявку еще не одобрили, пожалуйста попробуйте позже</string>
     <string name="email">Почта</string>
+    <string name="login_label">Рады вас видеть!</string>
     <string name="password">Пароль</string>
-    <string name="navigate_back_button_description">Кнопка для навигации назад</string>
+    <string name="no_account">Еще нет аккаунта?</string>
+    <string name="register">Зарегистрируйтесь</string>
+
+    <!-- Strings used for registration -->
+    <string name="first_registration_label">Зарегистрируйтесь и начните бронировать аудитории</string>
     <string name="confirm_password">Подтвердите пароль</string>
     <string name="next">Далее</string>
     <string name="fullname">ФИО</string>
-    <string name="password_error">Пароль должен содержать в себе от 8-ми символов</string>
-    <string name="check_status">Посмотреть статус</string>
-    <string name="request_is_under_consideration">Ваша заявка еще рассматривается деканатом, пожалуйста ожидайте</string>
-    <string name="email_error">Почта должна соотвествовать стандарту</string>
-    <string name="confirm_password_error">Пароли не совпадают</string>
-    <string name="new_classroom_booking_request">Новая заявка на бронирование аудитории</string>
-    <string name="classroom_short_desc">%1$d ауд.</string>
     <string name="birth_date">Дата рождения</string>
     <string name="phone_number">Номер телефона</string>
     <string name="second_registration_label">Последний шаг!</string>
-    <string name="first_registration_label">Зарегистрируйтесь и начните бронировать аудитории</string>
+    <string name="password_error">Пароль должен содержать в себе от 8-ми символов</string>
+    <string name="email_error">Почта должна соотвествовать стандарту</string>
+    <string name="confirm_password_error">Пароли не совпадают</string>
+
+    <!-- Strings used for button description in registrations screen -->
+    <string name="navigate_back_button_description">Кнопка для навигации назад</string>
+
+    <!-- Strings used for onboarding screen -->
+    <string name="onboard_label">Откройте знания одним ключом.</string>
+    <string name="onboard_desc">Откройте дверь к кабинетам университета всего в пару кликов.</string>
+
+    <!-- Strings used for request waiting screen -->
+    <string name="check_status">Посмотреть статус</string>
+    <string name="request_is_under_consideration">Ваша заявка еще рассматривается деканатом, пожалуйста ожидайте</string>
+    <string name="on_during_request">Вашу заявку еще не одобрили, пожалуйста попробуйте позже</string>
+
+    <!-- Strings used for classrooms and request creating -->
+    <string name="new_classroom_booking_request">Новая заявка на бронирование аудитории</string>
+    <string name="classroom_short_desc">%1$d ауд.</string>
     <string name="choose_classroom">Выбрать аудиторию</string>
     <string name="time_range">%1$s - %2$s</string>
     <string name="available">Свободно</string>
@@ -38,4 +55,8 @@
     <string name="edit">Редактировать</string>
     <string name="recurring">Повторяющаяся</string>
     <string name="send_a_request">Отправить заявку</string>
+    <string name="log_in_short">Войти</string>
+
+
+
 </resources>

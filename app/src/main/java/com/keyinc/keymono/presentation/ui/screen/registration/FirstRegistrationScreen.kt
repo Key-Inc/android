@@ -34,6 +34,7 @@ import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
 import com.keyinc.keymono.presentation.ui.theme.Padding24
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
+import com.keyinc.keymono.presentation.ui.util.noRippleClickable
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 
 
@@ -42,7 +43,8 @@ import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 fun FirstRegistrationScreen(
     registrationViewModel: RegistrationViewModel,
     onNavigateToBack: () -> Unit,
-    onNavigateToSecondPart: () -> Unit
+    onNavigateToSecondPart: () -> Unit,
+    onNavigateToLogin: () -> Unit
 ) {
 
     val focusManager = LocalFocusManager.current
@@ -108,6 +110,7 @@ fun FirstRegistrationScreen(
                         textAlign = TextAlign.Center
                     )
                     Text(
+                        modifier = Modifier.noRippleClickable { onNavigateToLogin() },
                         text = stringResource(id = R.string.log_in),
                         style = InterLogo,
                         fontSize = FontSmall,

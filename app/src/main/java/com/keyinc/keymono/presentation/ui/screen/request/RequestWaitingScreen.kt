@@ -18,14 +18,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.keyinc.keymono.R
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Preview
-fun RequestWaitingScreen() {
+fun RequestWaitingScreen(
+    onNavigateToClassroomChoice: () -> Unit
+) {
     var showDialog by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
@@ -37,7 +37,11 @@ fun RequestWaitingScreen() {
             Box(modifier = Modifier.padding(it)) {
                 RequestWaitingContent(
                     paddingValues = it,
-                    onClick = { showDialog = !showDialog }
+                    onClick = {
+                        showDialog = !showDialog
+                        // TODO only for testing purposes
+                        onNavigateToClassroomChoice()
+                    }
                 )
                 AnimatedVisibility(
                     visible = showDialog,
