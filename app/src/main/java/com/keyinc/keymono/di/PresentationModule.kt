@@ -5,6 +5,7 @@ import com.keyinc.keymono.domain.repository.ClassroomRepository
 import com.keyinc.keymono.domain.repository.RequestRepository
 import com.keyinc.keymono.domain.usecase.account.LoginUserUseCase
 import com.keyinc.keymono.domain.usecase.classroom.GetClassroomsUseCase
+import com.keyinc.keymono.domain.usecase.request.CreateNewKeyRequestUseCase
 import com.keyinc.keymono.domain.usecase.request.GetScheduleUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateConfirmPasswordUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateEmailUseCase
@@ -39,5 +40,9 @@ object PresentationModule {
     @Provides
     fun provideGetScheduleUseCase(requestRepository: RequestRepository)
         = GetScheduleUseCase(requestRepository)
+
+    @Provides
+    fun provideCreateNewKeyRequestUseCase(requestRepository: RequestRepository)
+        = CreateNewKeyRequestUseCase(requestRepository)
 
 }
