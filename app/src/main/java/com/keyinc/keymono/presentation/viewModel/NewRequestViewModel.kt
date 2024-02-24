@@ -12,6 +12,7 @@ import com.keyinc.keymono.presentation.ui.screen.state.newrequest.CalendarState
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.ClassroomPaginationState
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.NewRequestState
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.ScheduleUiState
+import com.keyinc.keymono.presentation.ui.screen.state.newrequest.TimeDialogState
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.changeTimeInLocalDateTime
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.convertTimeToHoursAndMinutes
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.joinLocalDateAndStringTime
@@ -39,6 +40,10 @@ class NewRequestViewModel @Inject constructor(
         private set
     var scheduleElementMaxTime: LocalTime? = null
         private set
+
+    private val _timeDialogState = MutableStateFlow<TimeDialogState>(TimeDialogState.DialogHidden)
+    val timeDialogState: StateFlow<TimeDialogState>
+        get() = _timeDialogState
 
     private val _newRequestState = MutableStateFlow(NewRequestState())
     val newRequestState: StateFlow<NewRequestState>
@@ -172,6 +177,18 @@ class NewRequestViewModel @Inject constructor(
         _newRequestState.value = _newRequestState.value.copy(
             isRecurring = !_newRequestState.value.isRecurring
         )
+    }
+
+    fun onCloseTimeDialog() {
+        _timeDialogState.value = TimeDialogState.DialogHidden
+    }
+
+    fun onPickingStartTime() {
+        _timeDialogState.value = TimeDialogState.PickingStartTime
+    }
+
+    fun onPickingEndTime() {
+        _timeDialogState.value = TimeDialogState.PickingEndTime
     }
 
     private companion object {

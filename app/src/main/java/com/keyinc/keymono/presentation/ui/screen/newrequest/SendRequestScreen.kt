@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -21,6 +18,7 @@ import com.keyinc.keymono.presentation.ui.screen.newrequest.components.Classroom
 import com.keyinc.keymono.presentation.ui.screen.newrequest.components.IsRecurringField
 import com.keyinc.keymono.presentation.ui.screen.newrequest.components.TimeField
 import com.keyinc.keymono.presentation.ui.screen.newrequest.components.TimePickerDialog
+import com.keyinc.keymono.presentation.ui.screen.state.newrequest.TimeDialogState
 import com.keyinc.keymono.presentation.ui.theme.Padding64
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
@@ -32,9 +30,7 @@ fun SendRequestScreen(
     modifier: Modifier = Modifier
 ) {
     val newRequestState by viewModel.newRequestState.collectAsStateWithLifecycle()
-    // TODO add sealed class with states of DialogHidden, PickingStartTime, PickingEndTime
-    var isTimePickerShown by remember { mutableStateOf(false) }
-    var isStartTimePicking by remember { mutableStateOf(false) }
+    val timeDialogState by viewModel.timeDialogState.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -47,19 +43,12 @@ fun SendRequestScreen(
         TimeField(
             isStartingTime = true,
             time = newRequestState.startDate?.toLocalTime().toString(),
-            onEditClick = {
-                // TODO change sealed class state in vm
-                isTimePickerShown = !isTimePickerShown
-                isStartTimePicking = true
-            }
+            onEditClick = viewModel::onPickingStartTime
         )
         TimeField(
             isStartingTime = false,
             time = newRequestState.endDate?.toLocalTime().toString(),
-            onEditClick = {
-                isTimePickerShown = !isTimePickerShown
-                isStartTimePicking = false
-            }
+            onEditClick = viewModel::onPickingEndTime
         )
         IsRecurringField(
             isRecurring = newRequestState.isRecurring,
@@ -78,29 +67,30 @@ fun SendRequestScreen(
             }
         )
 
-        if (!isTimePickerShown) return
+        if (timeDialogState is TimeDialogState.DialogHidden) return
+
         viewModel.scheduleElementMinTime?.let { minTime ->
             viewModel.scheduleElementMaxTime?.let { maxTime ->
-                if (isStartTimePicking) {
-                    TimePickerDialog(
-                        minAvailableTime = minTime,
-                        maxAvailableTime = maxTime,
-                        initiallySelectedTime = minTime,
-                        onClose = {
-                            isTimePickerShown = !isTimePickerShown
-                        },
-                        onTimeChoice = viewModel::onStartTimeChoice
-                    )
-                } else {
-                    TimePickerDialog(
-                        minAvailableTime = minTime,
-                        maxAvailableTime = maxTime,
-                        initiallySelectedTime = maxTime,
-                        onClose = {
-                            isTimePickerShown = !isTimePickerShown
-                        },
-                        onTimeChoice = viewModel::onEndTimeChoice
-                    )
+                when (timeDialogState) {
+                    TimeDialogState.DialogHidden -> return
+                    TimeDialogState.PickingStartTime -> {
+                        TimePickerDialog(
+                            minAvailableTime = minTime,
+                            maxAvailableTime = maxTime,
+                            initiallySelectedTime = maxTime,
+                            onClose = viewModel::onCloseTimeDialog,
+                            onTimeChoice = viewModel::onStartTimeChoice
+                        )
+                    }
+                    TimeDialogState.PickingEndTime -> {
+                        TimePickerDialog(
+                            minAvailableTime = minTime,
+                            maxAvailableTime = maxTime,
+                            initiallySelectedTime = minTime,
+                            onClose = viewModel::onCloseTimeDialog,
+                            onTimeChoice = viewModel::onEndTimeChoice
+                        )
+                    }
                 }
             }
         }
