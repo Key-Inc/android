@@ -13,8 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.component.AccentButton
 import com.keyinc.keymono.presentation.ui.screen.newrequest.components.ClassroomField
@@ -24,16 +24,14 @@ import com.keyinc.keymono.presentation.ui.screen.newrequest.components.TimePicke
 import com.keyinc.keymono.presentation.ui.theme.Padding64
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
-import java.time.LocalTime
+import com.keyinc.keymono.presentation.viewModel.NewRequestViewModel
 
 @Composable
 fun SendRequestScreen(
-    classroomNumber: Int,
-    startTime: LocalTime,
-    endTime: LocalTime,
-    isRecurring: Boolean,
+    viewModel: NewRequestViewModel,
     modifier: Modifier = Modifier
 ) {
+    val newRequestState by viewModel.newRequestState.collectAsStateWithLifecycle()
     // TODO add sealed class with states of DialogHidden, PickingStartTime, PickingEndTime
     var isTimePickerShown by remember { mutableStateOf(false) }
     var isStartTimePicking by remember { mutableStateOf(false) }
@@ -45,10 +43,10 @@ fun SendRequestScreen(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Spacer(modifier = Modifier.height(PaddingLarge))
-        ClassroomField(classroomNumber = classroomNumber)
+        ClassroomField(classroomNumber = newRequestState.classroomNumber ?: 0)
         TimeField(
             isStartingTime = true,
-            time = startTime.toString(),
+            time = newRequestState.startDate?.toLocalTime().toString(),
             onEditClick = {
                 // TODO change sealed class state in vm
                 isTimePickerShown = !isTimePickerShown
@@ -57,13 +55,16 @@ fun SendRequestScreen(
         )
         TimeField(
             isStartingTime = false,
-            time = endTime.toString(),
+            time = newRequestState.endDate?.toLocalTime().toString(),
             onEditClick = {
                 isTimePickerShown = !isTimePickerShown
                 isStartTimePicking = false
             }
         )
-        IsRecurringField(isRecurring = isRecurring)
+        IsRecurringField(
+            isRecurring = newRequestState.isRecurring,
+            onChangeRecurring = viewModel::onChangeRecurring
+        )
         Spacer(modifier = Modifier.weight(1f))
         AccentButton(
             modifier = Modifier.padding(
@@ -72,28 +73,36 @@ fun SendRequestScreen(
                 end = PaddingLarge
             ),
             text = stringResource(id = R.string.send_a_request),
-            onClick = { /* TODO navigate */ }
+            onClick = {
+                /* TODO navigate to main screen */
+            }
         )
 
         if (!isTimePickerShown) return
-        TimePickerDialog(
-            isStartTimePicking = isStartTimePicking,
-            startTime = startTime,
-            endTime = endTime,
-            onClose = {
-                isTimePickerShown = !isTimePickerShown
+        viewModel.scheduleElementMinTime?.let { minTime ->
+            viewModel.scheduleElementMaxTime?.let { maxTime ->
+                if (isStartTimePicking) {
+                    TimePickerDialog(
+                        minAvailableTime = minTime,
+                        maxAvailableTime = maxTime,
+                        initiallySelectedTime = minTime,
+                        onClose = {
+                            isTimePickerShown = !isTimePickerShown
+                        },
+                        onTimeChoice = viewModel::onStartTimeChoice
+                    )
+                } else {
+                    TimePickerDialog(
+                        minAvailableTime = minTime,
+                        maxAvailableTime = maxTime,
+                        initiallySelectedTime = maxTime,
+                        onClose = {
+                            isTimePickerShown = !isTimePickerShown
+                        },
+                        onTimeChoice = viewModel::onEndTimeChoice
+                    )
+                }
             }
-        )
+        }
     }
-}
-
-@Preview
-@Composable
-fun SendRequestScreenPreview() {
-    SendRequestScreen(
-        classroomNumber = 220,
-        startTime = LocalTime.of(8, 45),
-        endTime = LocalTime.of(14, 45),
-        isRecurring = true
-    )
 }

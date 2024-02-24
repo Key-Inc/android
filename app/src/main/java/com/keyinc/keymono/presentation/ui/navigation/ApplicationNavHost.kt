@@ -11,16 +11,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.keyinc.keymono.presentation.ui.screen.login.LoginScreen
 import com.keyinc.keymono.presentation.ui.screen.newrequest.ClassroomChoiceScreen
+import com.keyinc.keymono.presentation.ui.screen.newrequest.DateTimeChoiceScreen
+import com.keyinc.keymono.presentation.ui.screen.newrequest.SendRequestScreen
 import com.keyinc.keymono.presentation.ui.screen.onboarding.OnBoardingScreen
 import com.keyinc.keymono.presentation.ui.screen.registration.FirstRegistrationScreen
 import com.keyinc.keymono.presentation.ui.screen.registration.SecondRegistrationScreen
 import com.keyinc.keymono.presentation.ui.screen.request.RequestWaitingScreen
 import com.keyinc.keymono.presentation.ui.screen.splash.SplashScreen
+import com.keyinc.keymono.presentation.viewModel.NewRequestViewModel
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 
 @Composable
 fun ApplicationNavHost(
     registrationViewModel: RegistrationViewModel,
+    newRequestViewModel: NewRequestViewModel,
     navController: NavHostController = rememberNavController()
 ) {
     NavHost(navController = navController, startDestination = Routes.SplashScreen.route) {
@@ -94,7 +98,27 @@ fun ApplicationNavHost(
         }
 
         composable(Routes.ClassroomChoiceScreen.route) {
-            ClassroomChoiceScreen()
+            ClassroomChoiceScreen(
+                viewModel = newRequestViewModel,
+                onNavigateToDateTimeChoice = {
+                    navController.navigate(Routes.DateTimeChoiceScreen.route)
+                }
+            )
+        }
+
+        composable(Routes.DateTimeChoiceScreen.route) {
+            DateTimeChoiceScreen(
+                viewModel = newRequestViewModel,
+                onNavigateToSendRequest = {
+                    navController.navigate(Routes.SendRequestScreen.route)
+                }
+            )
+        }
+
+        composable(Routes.SendRequestScreen.route) {
+            SendRequestScreen(
+                viewModel = newRequestViewModel
+            )
         }
     }
 }
