@@ -5,17 +5,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.keyinc.keymono.data.paginator.PaginatorImpl
 import com.keyinc.keymono.domain.entity.Classroom
+import com.keyinc.keymono.domain.entity.KeyRequestCreateDto
 import com.keyinc.keymono.domain.usecase.classroom.GetClassroomsUseCase
+import com.keyinc.keymono.domain.usecase.request.CreateNewKeyRequestUseCase
 import com.keyinc.keymono.domain.usecase.request.GetScheduleUseCase
 import com.keyinc.keymono.presentation.model.ScheduleElement
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.CalendarState
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.ClassroomPaginationState
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.NewRequestState
+import com.keyinc.keymono.presentation.ui.screen.state.newrequest.NewRequestUiState
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.ScheduleUiState
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.TimeDialogState
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.changeTimeInLocalDateTime
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.convertTimeToHoursAndMinutes
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.joinLocalDateAndStringTime
+import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.toServerLocalDateTime
 import com.keyinc.keymono.presentation.ui.util.NetworkErrorCodes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -26,6 +30,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.UUID
 import javax.inject.Inject
@@ -33,7 +38,8 @@ import javax.inject.Inject
 @HiltViewModel
 class NewRequestViewModel @Inject constructor(
     private val getClassroomsUseCase: GetClassroomsUseCase,
-    private val getScheduleUseCase: GetScheduleUseCase
+    private val getScheduleUseCase: GetScheduleUseCase,
+    private val createNewKeyRequestUseCase: CreateNewKeyRequestUseCase
 ) : ViewModel() {
 
     var scheduleElementMinTime: LocalTime? = null
@@ -48,6 +54,10 @@ class NewRequestViewModel @Inject constructor(
     private val _newRequestState = MutableStateFlow(NewRequestState())
     val newRequestState: StateFlow<NewRequestState>
         get() = _newRequestState.asStateFlow()
+
+    private val _newRequestUiState = MutableStateFlow<NewRequestUiState>(NewRequestUiState.Initial)
+    val newRequestUiState: StateFlow<NewRequestUiState>
+        get() = _newRequestUiState.asStateFlow()
 
     private val _scheduleUiState = MutableStateFlow<ScheduleUiState>(ScheduleUiState.Initial)
     val scheduleUiState: StateFlow<ScheduleUiState>
@@ -68,6 +78,17 @@ class NewRequestViewModel @Inject constructor(
                 else -> _scheduleUiState.value = ScheduleUiState.Error(exception.message ?: "Unknown exception")
             }
             else -> _scheduleUiState.value = ScheduleUiState.Error(exception.message ?: "Unknown exception")
+        }
+    }
+
+    // TODO create parametrized exceptionHandler?
+    private val newRequestExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        when (exception) {
+            is HttpException -> when (exception.code()) {
+                NetworkErrorCodes.UNAUTHORIZED -> _newRequestUiState.value = NewRequestUiState.Error(exception.message ?: "Unknown exception")
+                else -> _newRequestUiState.value = NewRequestUiState.Error(exception.message ?: "Unknown exception")
+            }
+            else -> _newRequestUiState.value = NewRequestUiState.Error(exception.message ?: "Unknown exception")
         }
     }
 
@@ -191,9 +212,25 @@ class NewRequestViewModel @Inject constructor(
         _timeDialogState.value = TimeDialogState.PickingEndTime
     }
 
+    fun onCreateNewKeyRequest() {
+        _newRequestUiState.value = NewRequestUiState.Loading
+        viewModelScope.launch(Dispatchers.IO + newRequestExceptionHandler) {
+            createNewKeyRequestUseCase(
+                KeyRequestCreateDto(
+                    startDate = toServerLocalDateTime(_newRequestState.value.startDate ?: ERROR_LOCAL_DATE_TIME),
+                    endDate = toServerLocalDateTime(_newRequestState.value.endDate ?: ERROR_LOCAL_DATE_TIME),
+                    isRecurring = _newRequestState.value.isRecurring,
+                    classroomId = _newRequestState.value.classroomId.toString()
+                )
+            )
+            _newRequestUiState.value = NewRequestUiState.Success
+        }
+    }
+
     private companion object {
         const val TAG = "NewRequestViewModel"
         val ERROR_UUID: UUID = UUID(0L, 0L)
+        val ERROR_LOCAL_DATE_TIME: LocalDateTime = LocalDateTime.MIN
     }
 
 }

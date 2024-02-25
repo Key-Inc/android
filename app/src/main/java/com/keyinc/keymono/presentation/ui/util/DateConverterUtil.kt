@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter
 object DateConverterUtil {
 
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+    private val toServerDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
     fun convertDateToString(date: LocalDate?): String {
         return date?.let {
@@ -37,5 +38,8 @@ object DateConverterUtil {
     fun changeTimeInLocalDateTime(localDateTime: LocalDateTime, time: LocalTime): LocalDateTime {
         return LocalDateTime.of(localDateTime.toLocalDate(), time)
     }
+
+    fun toServerLocalDateTime(localDateTime: LocalDateTime): String
+        = toServerDateTimeFormatter.format(localDateTime)
 
 }

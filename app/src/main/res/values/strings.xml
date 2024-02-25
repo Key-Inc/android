@@ -56,6 +56,7 @@
     <string name="recurring">Повторяющаяся</string>
     <string name="send_a_request">Отправить заявку</string>
     <string name="log_in_short">Войти</string>
+    <string name="request_successfully_created">Заявка была успешно создана!</string>
 
 
 
