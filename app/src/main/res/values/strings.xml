@@ -27,6 +27,8 @@
     <string name="password_error">Пароль должен содержать в себе от 8-ми символов</string>
     <string name="email_error">Почта должна соотвествовать стандарту</string>
     <string name="confirm_password_error">Пароли не совпадают</string>
+    <string name="fullname_error">Имя должно содержать в себе более 2-х символов</string>
+    <string name="phone_number_error">Телефон должен соотвествовать международному формату</string>
 
     <!-- Strings used for button description in registrations screen -->
     <string name="navigate_back_button_description">Кнопка для навигации назад</string>
@@ -57,7 +59,6 @@
     <string name="send_a_request">Отправить заявку</string>
     <string name="log_in_short">Войти</string>
     <string name="request_successfully_created">Заявка была успешно создана!</string>
-
 
 
 </resources>
