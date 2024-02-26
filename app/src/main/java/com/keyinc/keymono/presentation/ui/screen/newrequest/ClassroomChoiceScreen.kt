@@ -14,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.screen.newrequest.components.ClassroomChoiceItem
@@ -28,8 +27,9 @@ private const val TAG = "ClassroomChoiceScreen"
 
 @Composable
 fun ClassroomChoiceScreen(
+    onNavigateToDateTimeChoice: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: NewRequestViewModel = hiltViewModel()
+    viewModel: NewRequestViewModel
 ) {
     val classroomPaginationState by viewModel.classroomPaginationState.collectAsStateWithLifecycle()
     val scrollState = rememberLazyListState()
@@ -62,7 +62,10 @@ fun ClassroomChoiceScreen(
             ClassroomChoiceItem(
                 modifier = Modifier.padding(horizontal = PaddingMedium),
                 classroom = classroom,
-                onClassroomClick = { /* TODO */ }
+                onClassroomClick = {
+                    viewModel.onClassroomChoice(it)
+                    onNavigateToDateTimeChoice()
+                }
             )
         }
 

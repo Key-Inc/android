@@ -21,6 +21,7 @@ import com.keyinc.keymono.presentation.ui.theme.RequestFieldText
 @Composable
 fun IsRecurringField(
     isRecurring: Boolean,
+    onChangeRecurring: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val trailingIconId = if (isRecurring) R.drawable.ic_checkbox_checked else R.drawable.ic_checkbox_unchecked
@@ -39,7 +40,7 @@ fun IsRecurringField(
         trailingIcon = {
             IconButton(
                 modifier = Modifier.padding(end = PaddingSmall),
-                onClick = { /*TODO change vm state*/ }
+                onClick = onChangeRecurring
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = trailingIconId),

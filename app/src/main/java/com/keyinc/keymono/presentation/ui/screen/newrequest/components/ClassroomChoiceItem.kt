@@ -28,12 +28,12 @@ import com.keyinc.keymono.presentation.ui.theme.Regular
 @Composable
 fun ClassroomChoiceItem(
     classroom: Classroom,
-    onClassroomClick: () -> Unit,
+    onClassroomClick: (Classroom) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.clickable {
-            onClassroomClick()
+            onClassroomClick(classroom)
         }
     ) {
         Row(
@@ -44,7 +44,7 @@ fun ClassroomChoiceItem(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = stringResource(id = R.string.classroom_short_desc, classroom.number),
+                text = stringResource(id = R.string.classroom_short_desc, classroom.number, classroom.building),
                 style = Regular
             )
 

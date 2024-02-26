@@ -1,5 +1,6 @@
 package com.keyinc.keymono.presentation.ui.screen.newrequest
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,20 +13,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.keyinc.keymono.data.MockSchedule.schedule
-import com.keyinc.keymono.presentation.model.ScheduleElement
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.presentation.ui.screen.newrequest.components.ScheduleElement
+import com.keyinc.keymono.presentation.ui.screen.state.newrequest.ScheduleUiState
 import com.keyinc.keymono.presentation.ui.theme.Accent
 import com.keyinc.keymono.presentation.ui.theme.CalendarDate
 import com.keyinc.keymono.presentation.ui.theme.CalendarDayOfWeek
@@ -35,26 +33,25 @@ import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
 import com.keyinc.keymono.presentation.ui.util.displayText
 import com.keyinc.keymono.presentation.ui.util.formatCalendarDay
+import com.keyinc.keymono.presentation.viewModel.NewRequestViewModel
 import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun DateTimeChoiceScreen(
     modifier: Modifier = Modifier,
-    schedule: List<ScheduleElement>
+    viewModel: NewRequestViewModel,
+    onNavigateToSendRequest: () -> Unit
 ) {
-    val startDate = remember { LocalDate.now() }
-    val endDate = remember { startDate.plusDays(6) }
-    val firstDayOfWeek = remember { startDate.dayOfWeek }
-    var selection by remember { mutableStateOf(startDate) }
+    val scheduleUiState by viewModel.scheduleUiState.collectAsStateWithLifecycle()
+    val calendarState by viewModel.calendarState.collectAsStateWithLifecycle()
 
     val state = rememberWeekCalendarState(
-        startDate = startDate,
-        endDate = endDate,
-        firstVisibleWeekDate = startDate,
-        firstDayOfWeek = firstDayOfWeek
+        startDate = calendarState.startDate,
+        endDate = calendarState.endDate,
+        firstVisibleWeekDate = calendarState.startDate,
+        firstDayOfWeek = calendarState.startDate.dayOfWeek
     )
 
     LazyColumn(
@@ -69,20 +66,45 @@ fun DateTimeChoiceScreen(
                 dayContent = { day ->
                     Day(
                         date = day.date,
-                        isSelected = selection == day.date,
-                        onClick = { selection = it }
+                        isSelected = calendarState.selectedDate == day.date,
+                        onClick = viewModel::onDateChoice
                     )
                 }
             )
             Spacer(modifier = Modifier.height(Padding24))
         }
 
-        items(schedule) { scheduleElement ->
-            ScheduleElement(
-                modifier = Modifier.padding(horizontal = PaddingMedium),
-                scheduleElement = scheduleElement
-            )
-            Spacer(modifier = Modifier.height(PaddingSmall))
+        when (scheduleUiState) {
+            ScheduleUiState.Initial -> Unit
+            is ScheduleUiState.Content -> {
+                val schedule = (scheduleUiState as ScheduleUiState.Content).schedule
+                items(schedule) { scheduleElement ->
+                    ScheduleElement(
+                        modifier = Modifier.padding(horizontal = PaddingMedium),
+                        scheduleElement = scheduleElement,
+                        onScheduleElementClick = {
+                            viewModel.onTimeRangeChoice(it)
+                            onNavigateToSendRequest()
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(PaddingSmall))
+                }
+            }
+            ScheduleUiState.Loading -> {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+            }
+            is ScheduleUiState.Error -> {
+                // TODO
+                Log.e("DateTimeChoiceScreen", (scheduleUiState as ScheduleUiState.Error).errorMessage ?: "error")
+            }
         }
     }
 }
@@ -125,20 +147,4 @@ private fun Day(
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun DateTimeChoiceScreenPreview() {
-    val formatter = DateTimeFormatter.ofPattern("H:mm")
-    val scheduleElementsDto = schedule
-    val scheduleElements = scheduleElementsDto.map {
-        ScheduleElement(
-            startTime = it.startDate.format(formatter),
-            endTime = it.endDate.format(formatter),
-            status = it.status
-        )
-    }
-
-    DateTimeChoiceScreen(schedule = scheduleElements)
 }

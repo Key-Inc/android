@@ -42,7 +42,7 @@
 
     <!-- Strings used for classrooms and request creating -->
     <string name="new_classroom_booking_request">Новая заявка на бронирование аудитории</string>
-    <string name="classroom_short_desc">%1$d ауд.</string>
+    <string name="classroom_short_desc">%1$d (%2$d) ауд.</string>
     <string name="choose_classroom">Выбрать аудиторию</string>
     <string name="time_range">%1$s - %2$s</string>
     <string name="available">Свободно</string>
@@ -56,6 +56,7 @@
     <string name="recurring">Повторяющаяся</string>
     <string name="send_a_request">Отправить заявку</string>
     <string name="log_in_short">Войти</string>
+    <string name="request_successfully_created">Заявка была успешно создана!</string>
 
 
 

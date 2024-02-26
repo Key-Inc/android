@@ -90,7 +90,7 @@ fun LoginScreen(
         AccentButton(
             enabled = true,
             onClick = {
-                // TODO login
+                viewModel.loginUser()
                 onNavigateToClassroomChoice()
             },
             text = stringResource(id = R.string.log_in_short)

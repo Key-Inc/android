@@ -1,5 +1,6 @@
 package com.keyinc.keymono.presentation.ui.screen.splash
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -55,6 +56,7 @@ fun SplashScreen(onNavigateToOnBoarding: (String) -> Unit, splashViewModel: Spla
         }
 
         is SplashScreenState.Error -> {
+            Log.e("SplashScreen", (userState.value as SplashScreenState.Error).errorMessage ?: "error")
             Text("Error occurred")
         }
     }

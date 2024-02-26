@@ -1,6 +1,5 @@
 package com.keyinc.keymono.presentation.ui.screen.newrequest.components
 
-import android.util.Log
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,12 +16,13 @@ import java.time.LocalTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimePickerDialog(
-    isStartTimePicking: Boolean,
-    startTime: LocalTime,
-    endTime: LocalTime,
-    onClose: () -> Unit
+    minAvailableTime: LocalTime,
+    maxAvailableTime: LocalTime,
+    initiallySelectedTime: LocalTime,
+    onClose: () -> Unit,
+    onTimeChoice: (LocalTime) -> Unit
 ) {
-    var selectedTime by remember { mutableStateOf(startTime) }
+    var selectedTime by remember { mutableStateOf(initiallySelectedTime) }
 
     TimePickerTheme {
         ClockDialog(
@@ -32,17 +32,10 @@ fun TimePickerDialog(
             ),
             selection = ClockSelection.HoursMinutes { hours, minutes ->
                 selectedTime = LocalTime.of(hours, minutes)
-
-                if (isStartTimePicking) {
-                    // TODO change vm state
-                    Log.d("TimePickerDialog", "Changed the start time")
-                } else {
-                    // TODO change vm state
-                    Log.d("TimePickerDialog", "Changed the end time")
-                }
+                onTimeChoice(selectedTime)
             },
             config = ClockConfig(
-                boundary = startTime..endTime,
+                boundary = minAvailableTime..maxAvailableTime,
                 defaultTime = selectedTime,
                 is24HourFormat = true
             )

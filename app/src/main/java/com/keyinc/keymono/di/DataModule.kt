@@ -10,6 +10,7 @@ import com.keyinc.keymono.data.api.NetworkConstants
 import com.keyinc.keymono.data.api.NetworkConstants.CONNECT_TIMEOUT
 import com.keyinc.keymono.data.api.NetworkConstants.READ_TIMEOUT
 import com.keyinc.keymono.data.api.NetworkConstants.WRITE_TIMEOUT
+import com.keyinc.keymono.data.api.RequestApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,6 +60,11 @@ object DataModule {
     @Provides
     fun provideClassroomApi(retrofit: Retrofit): ClassroomApi {
         return retrofit.create(ClassroomApi::class.java)
+    }
+
+    @Provides
+    fun provideRequestApi(retrofit: Retrofit): RequestApi {
+        return retrofit.create(RequestApi::class.java)
     }
 
 }

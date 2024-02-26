@@ -1,42 +1,68 @@
 package com.keyinc.keymono.presentation.ui.screen.newrequest
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.component.AccentButton
 import com.keyinc.keymono.presentation.ui.screen.newrequest.components.ClassroomField
 import com.keyinc.keymono.presentation.ui.screen.newrequest.components.IsRecurringField
 import com.keyinc.keymono.presentation.ui.screen.newrequest.components.TimeField
 import com.keyinc.keymono.presentation.ui.screen.newrequest.components.TimePickerDialog
+import com.keyinc.keymono.presentation.ui.screen.state.newrequest.NewRequestUiState
+import com.keyinc.keymono.presentation.ui.screen.state.newrequest.TimeDialogState
 import com.keyinc.keymono.presentation.ui.theme.Padding64
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
-import java.time.LocalTime
+import com.keyinc.keymono.presentation.viewModel.NewRequestViewModel
 
 @Composable
 fun SendRequestScreen(
-    classroomNumber: Int,
-    startTime: LocalTime,
-    endTime: LocalTime,
-    isRecurring: Boolean,
+    viewModel: NewRequestViewModel,
     modifier: Modifier = Modifier
 ) {
-    // TODO add sealed class with states of DialogHidden, PickingStartTime, PickingEndTime
-    var isTimePickerShown by remember { mutableStateOf(false) }
-    var isStartTimePicking by remember { mutableStateOf(false) }
+    val newRequestUiState by viewModel.newRequestUiState.collectAsStateWithLifecycle()
+    val newRequestState by viewModel.newRequestState.collectAsStateWithLifecycle()
+    val timeDialogState by viewModel.timeDialogState.collectAsStateWithLifecycle()
+
+    when (newRequestUiState) {
+        NewRequestUiState.Initial -> Unit
+        NewRequestUiState.Loading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        NewRequestUiState.Success -> {
+            Toast.makeText(
+                LocalContext.current,
+                stringResource(id = R.string.request_successfully_created),
+                Toast.LENGTH_SHORT
+            ).show()
+            // TODO remove toast (or add one-time event) and navigate to main screen
+        }
+        is NewRequestUiState.Error -> {
+            // TODO
+            Log.e("SendRequestScreen", (newRequestUiState as NewRequestUiState.Error).errorMessage ?: "error")
+        }
+    }
 
     Column(
         modifier = modifier
@@ -45,25 +71,21 @@ fun SendRequestScreen(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Spacer(modifier = Modifier.height(PaddingLarge))
-        ClassroomField(classroomNumber = classroomNumber)
+        ClassroomField(classroomNumber = newRequestState.classroomNumber ?: 0)
         TimeField(
             isStartingTime = true,
-            time = startTime.toString(),
-            onEditClick = {
-                // TODO change sealed class state in vm
-                isTimePickerShown = !isTimePickerShown
-                isStartTimePicking = true
-            }
+            time = newRequestState.startDate?.toLocalTime().toString(),
+            onEditClick = viewModel::onPickingStartTime
         )
         TimeField(
             isStartingTime = false,
-            time = endTime.toString(),
-            onEditClick = {
-                isTimePickerShown = !isTimePickerShown
-                isStartTimePicking = false
-            }
+            time = newRequestState.endDate?.toLocalTime().toString(),
+            onEditClick = viewModel::onPickingEndTime
         )
-        IsRecurringField(isRecurring = isRecurring)
+        IsRecurringField(
+            isRecurring = newRequestState.isRecurring,
+            onChangeRecurring = viewModel::onChangeRecurring
+        )
         Spacer(modifier = Modifier.weight(1f))
         AccentButton(
             modifier = Modifier.padding(
@@ -72,28 +94,35 @@ fun SendRequestScreen(
                 end = PaddingLarge
             ),
             text = stringResource(id = R.string.send_a_request),
-            onClick = { /* TODO navigate */ }
+            onClick = viewModel::onCreateNewKeyRequest
         )
 
-        if (!isTimePickerShown) return
-        TimePickerDialog(
-            isStartTimePicking = isStartTimePicking,
-            startTime = startTime,
-            endTime = endTime,
-            onClose = {
-                isTimePickerShown = !isTimePickerShown
+        if (timeDialogState is TimeDialogState.DialogHidden) return
+
+        viewModel.scheduleElementMinTime?.let { minTime ->
+            viewModel.scheduleElementMaxTime?.let { maxTime ->
+                when (timeDialogState) {
+                    TimeDialogState.DialogHidden -> return
+                    TimeDialogState.PickingStartTime -> {
+                        TimePickerDialog(
+                            minAvailableTime = minTime,
+                            maxAvailableTime = maxTime,
+                            initiallySelectedTime = minTime,
+                            onClose = viewModel::onCloseTimeDialog,
+                            onTimeChoice = viewModel::onStartTimeChoice
+                        )
+                    }
+                    TimeDialogState.PickingEndTime -> {
+                        TimePickerDialog(
+                            minAvailableTime = minTime,
+                            maxAvailableTime = maxTime,
+                            initiallySelectedTime = maxTime,
+                            onClose = viewModel::onCloseTimeDialog,
+                            onTimeChoice = viewModel::onEndTimeChoice
+                        )
+                    }
+                }
             }
-        )
+        }
     }
-}
-
-@Preview
-@Composable
-fun SendRequestScreenPreview() {
-    SendRequestScreen(
-        classroomNumber = 220,
-        startTime = LocalTime.of(8, 45),
-        endTime = LocalTime.of(14, 45),
-        isRecurring = true
-    )
 }
