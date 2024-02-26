@@ -92,7 +92,7 @@ fun FirstRegistrationScreen(
                 )
                 Spacer(modifier = Modifier.padding(Padding24))
                 AccentButton(
-                    enabled = !uiState.firstSectionPassed,
+                    enabled = uiState.firstSectionPassed,
                     onClick = onNavigateToSecondPart,
                     text = stringResource(id = R.string.next)
                 )

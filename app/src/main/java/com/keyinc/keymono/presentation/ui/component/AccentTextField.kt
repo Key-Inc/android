@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
+import com.keyinc.keymono.domain.entity.ValidationResult
 import com.keyinc.keymono.presentation.ui.theme.Accent
 import com.keyinc.keymono.presentation.ui.theme.FontSmall
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
@@ -28,7 +29,7 @@ fun AccentTextField(
     modifier: Modifier = Modifier,
     textFieldValue: String,
     label: String,
-    errorId: Int?,
+    errorId: ValidationResult?,
     singleLine: Boolean = true,
     onValueChange: (String) -> Unit,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
@@ -74,5 +75,5 @@ fun AccentTextField(
         }
     }
 
-    AccentTextFieldValidationAnim(errorId = errorId)
+    AccentTextFieldValidationAnim(validationState = errorId)
 }

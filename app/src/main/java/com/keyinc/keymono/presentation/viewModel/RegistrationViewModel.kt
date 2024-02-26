@@ -8,14 +8,15 @@ import com.keyinc.keymono.domain.usecase.account.RegisterUserUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateConfirmPasswordUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateEmailUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidatePasswordUseCase
+import com.keyinc.keymono.presentation.ui.errorHandler.RequestExceptionHandler
 import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationState
 import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationUIState
+import com.keyinc.keymono.presentation.ui.screen.state.registration.firstValidationIsPassed
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,34 +29,38 @@ class RegistrationViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RegistrationUIState())
-    val uiState = _uiState.asStateFlow()
+    val uiState: StateFlow<RegistrationUIState>
+        get() = _uiState
 
     private val _registrationState = MutableStateFlow<RegistrationState>(RegistrationState.Initial)
     val registrationState: StateFlow<RegistrationState>
         get() = _registrationState
 
+    private val exceptionHandler = RequestExceptionHandler(
+        onUnauthorizedException = {
+            _registrationState.value = RegistrationState.UnauthorizedError
+        },
+        onBaseException = {
+            _registrationState.value = RegistrationState.Error("Неизвестная ошибка")
+        },
+    )
+
 
     fun registerUser() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
             _registrationState.value = RegistrationState.Loading
-            try {
-                registrationUseCase(
-                    RegistrationRequest(
-                        email = _uiState.value.email,
-                        fullName = _uiState.value.fullName,
-                        password = _uiState.value.password,
-                        birthDate = DateConverterUtil.convertDateToServerFormat(
-                            _uiState.value.birthDate
-                        ),
-                        phoneNumber = _uiState.value.phoneNumber
-                    )
+            registrationUseCase(
+                RegistrationRequest(
+                    email = _uiState.value.email,
+                    fullName = _uiState.value.fullName,
+                    password = _uiState.value.password,
+                    birthDate = DateConverterUtil.convertDateToServerFormat(
+                        _uiState.value.birthDate
+                    ),
+                    phoneNumber = _uiState.value.phoneNumber
                 )
-                _registrationState.value = RegistrationState.Success
-            }
-            catch (e: Exception) {
-                //TODO replace hardcoded string to resource
-                _registrationState.value = RegistrationState.Error(e.message ?: "Unknown error")
-            }
+            )
+            _registrationState.value = RegistrationState.Success
         }
     }
 
@@ -63,21 +68,40 @@ class RegistrationViewModel @Inject constructor(
     fun onEmailChanged(email: String) {
         _uiState.value = _uiState.value.copy(
             email = email,
-            emailErrorId = validateEmailUseCase(
+            emailValidation = validateEmailUseCase(
                 validationProperty = email,
                 errorId = R.string.email_error
-            ).errorId
+            )
         )
+        _uiState.value.firstValidationIsPassed()
     }
 
     fun onPasswordChanged(password: String) {
         _uiState.value = _uiState.value.copy(
             password = password,
-            passwordErrorId = validatePasswordUseCase(
+            passwordValidation = validatePasswordUseCase(
                 validationProperty = password,
                 errorId = R.string.password_error
-            ).errorId
+            ),
+            confirmPasswordValidation = validateConfirmPasswordUseCase(
+                password = password,
+                validationProperty = _uiState.value.confirmPassword,
+                errorId = R.string.confirm_password_error
+            )
         )
+        _uiState.value.firstValidationIsPassed()
+    }
+
+    fun onConfirmPasswordChanged(confirmPassword: String) {
+        _uiState.value = _uiState.value.copy(
+            confirmPassword = confirmPassword,
+            confirmPasswordValidation = validateConfirmPasswordUseCase(
+                password = _uiState.value.password,
+                validationProperty = confirmPassword,
+                errorId = R.string.confirm_password_error
+            )
+        )
+        _uiState.value.firstValidationIsPassed()
     }
 
     fun onBirthDateChanged(birthDate: String) {
@@ -88,20 +112,7 @@ class RegistrationViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(fullName = fullName)
     }
 
-    fun onConfirmPasswordChanged(confirmPassword: String) {
-        _uiState.value = _uiState.value.copy(
-            confirmPassword = confirmPassword,
-            confirmPasswordErrorId = validateConfirmPasswordUseCase(
-                password = _uiState.value.password,
-                validationProperty = confirmPassword,
-                errorId = R.string.confirm_password_error
-            ).errorId
-        )
-    }
-
     fun onPhoneNumberChanged(phoneNumber: String) {
         _uiState.value = _uiState.value.copy(phoneNumber = phoneNumber)
     }
-
-
 }

@@ -40,7 +40,7 @@ fun RegistrationFirstSection(
             onValueChange = { registrationViewModel.onEmailChanged(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             label = stringResource(id = R.string.email),
-            errorId = uiState.emailErrorId
+            errorId = uiState.emailValidation
         )
         Spacer(modifier = Modifier.padding(Padding20))
         AccentPasswordTextField(
@@ -48,7 +48,7 @@ fun RegistrationFirstSection(
             onValueChange = { registrationViewModel.onPasswordChanged(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             label = stringResource(id = R.string.password),
-            errorId = uiState.passwordErrorId
+            errorId = uiState.passwordValidation
         )
         Spacer(modifier = Modifier.padding(Padding20))
         AccentPasswordTextField(
@@ -56,7 +56,7 @@ fun RegistrationFirstSection(
             onValueChange = { registrationViewModel.onConfirmPasswordChanged(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             label = stringResource(id = R.string.confirm_password),
-            errorId = uiState.confirmPasswordErrorId
+            errorId = uiState.confirmPasswordValidation
         )
     }
 }

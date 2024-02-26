@@ -30,9 +30,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
-import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationState
 import com.keyinc.keymono.presentation.ui.component.AccentButton
 import com.keyinc.keymono.presentation.ui.screen.registration.firstpage.RegistrationSecondSection
+import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationState
 import com.keyinc.keymono.presentation.ui.theme.Accent
 import com.keyinc.keymono.presentation.ui.theme.FontSmall
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
@@ -50,6 +50,7 @@ fun SecondRegistrationScreen(
     onNavigateToBack: () -> Unit,
     onNavigateToRequestWaiting: () -> Unit,
     onNavigateToLogin: () -> Unit,
+    onUnauthorizedError: () -> Unit,
     registrationViewModel: RegistrationViewModel
 ) {
     val focusManager = LocalFocusManager.current
@@ -122,15 +123,13 @@ fun SecondRegistrationScreen(
                        onNavigateToRequestWaiting()
                     }
 
-                    else -> {
+                    is RegistrationState.Error -> {
+                        registrationError = (registrationState as RegistrationState.Error).message
 
-                        registrationError = when (registrationState) {
-                            is RegistrationState.Error -> {
-                                (registrationState as RegistrationState.Error).message
-                            }
+                    }
 
-                            else -> null
-                        }
+                    is RegistrationState.UnauthorizedError -> {
+
                     }
                 }
 
@@ -140,7 +139,8 @@ fun SecondRegistrationScreen(
                 ) {
                     AccentButton(
                         onClick = buttonClick,
-                        text = stringResource(id = R.string.onboard_button)
+                        text = stringResource(id = R.string.onboard_button),
+                        enabled = true,
                     ) {
                         buttonContent?.invoke()
                     }

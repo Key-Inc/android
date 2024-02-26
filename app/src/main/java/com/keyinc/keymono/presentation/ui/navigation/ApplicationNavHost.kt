@@ -93,6 +93,11 @@ fun ApplicationNavHost(
                 },
                 onNavigateToLogin = {
                     navController.navigate(Routes.LoginScreen.route)
+                },
+                onUnauthorizedError = {
+                    navController.navigate(Routes.LoginScreen.route) {
+                        clearAllBackStack(navController = navController)
+                    }
                 }
             )
         }

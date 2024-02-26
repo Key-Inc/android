@@ -94,7 +94,8 @@ fun SendRequestScreen(
                 end = PaddingLarge
             ),
             text = stringResource(id = R.string.send_a_request),
-            onClick = viewModel::onCreateNewKeyRequest
+            onClick = viewModel::onCreateNewKeyRequest,
+            enabled = true
         )
 
         if (timeDialogState is TimeDialogState.DialogHidden) return

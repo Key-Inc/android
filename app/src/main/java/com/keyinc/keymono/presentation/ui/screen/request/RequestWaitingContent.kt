@@ -66,7 +66,8 @@ fun RequestWaitingContent(
                 end = PaddingLarge
             ),
             text = stringResource(id = R.string.check_status),
-            onClick = onClick
+            onClick = onClick,
+            enabled = true
         )
 
         Column(
