@@ -81,7 +81,7 @@ fun RegistrationSecondSection(
             onValueChange = { registrationViewModel.onFullNameChanged(it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             label = stringResource(id = R.string.fullname),
-            errorId = null
+            errorId = uiState.fullNameValidation
         )
         Spacer(modifier = Modifier.padding(Padding20))
         AccentClickableElement(
