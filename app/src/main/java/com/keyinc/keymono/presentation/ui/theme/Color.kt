@@ -11,6 +11,7 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val Accent = Color(0xFF1690FF)
+val Secondary = Color(0xFF91C8FF)
 val Tomato = Color(0xFFFF5959)
 val Gray62 = Color(0xFF9E9E9E)
 val LightBlue = Color(0xFFD9EDFF)
