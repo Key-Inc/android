@@ -84,6 +84,11 @@ fun ApplicationNavHost(
             RequestWaitingScreen(
                 onNavigateToClassroomChoice = {
                     navController.navigate(Routes.ClassroomChoiceScreen.route)
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LoginScreen.route) {
+                        clearAllBackStack(navController = navController)
+                    }
                 }
             )
         }

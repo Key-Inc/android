@@ -132,6 +132,7 @@ fun LoginScreen(
             }
 
             is LoginUiState.WrongRole -> {
+                viewModel.logoutUser()
                 loginError = stringResource(id = R.string.wrong_role_error)
                 buttonClick = { viewModel.loginUser() }
             }
