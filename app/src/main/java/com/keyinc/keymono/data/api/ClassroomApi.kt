@@ -9,8 +9,8 @@ interface ClassroomApi {
 
     @GET(CLASSROOM_SERVICE_URL)
     suspend fun getClassrooms(
-        @Query("number") number: Int? = null,
         @Query("building") building: Int? = null,
+        @Query("number") number: Int? = null,
         @Query("page") page: Int? = null,
         @Query("size") size: Int? = null
     ): ClassroomPagedListDto

@@ -9,6 +9,8 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.keyinc.keymono.presentation.ui.SearchUserScreen
+import com.keyinc.keymono.presentation.ui.screen.UserKeysScreen
 import com.keyinc.keymono.presentation.ui.screen.login.LoginScreen
 import com.keyinc.keymono.presentation.ui.screen.newrequest.ClassroomChoiceScreen
 import com.keyinc.keymono.presentation.ui.screen.newrequest.DateTimeChoiceScreen
@@ -20,7 +22,7 @@ import com.keyinc.keymono.presentation.ui.screen.registration.FirstRegistrationS
 import com.keyinc.keymono.presentation.ui.screen.registration.SecondRegistrationScreen
 import com.keyinc.keymono.presentation.ui.screen.request.RequestWaitingScreen
 import com.keyinc.keymono.presentation.ui.screen.splash.SplashScreen
-import com.keyinc.keymono.presentation.ui.userRequest.UserRequestScreen
+import com.keyinc.keymono.presentation.ui.screen.userRequest.UserRequestScreen
 import com.keyinc.keymono.presentation.viewModel.NewRequestViewModel
 import com.keyinc.keymono.presentation.viewModel.ProfileViewModel
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
@@ -40,6 +42,19 @@ fun ApplicationNavHost(
                     navController.navigate(route)
                 },
                 splashViewModel = hiltViewModel()
+            )
+        }
+
+        composable(Routes.UserKeysScreen.route) {
+            UserKeysScreen(
+                navigateOnSearchUser = {
+                    navController.navigate(Routes.SearchUserScreen.route.replace("{requestId}", it))
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LoginScreen.route) {
+                        clearAllBackStack(navController)
+                    }
+                }
             )
         }
 
@@ -72,6 +87,11 @@ fun ApplicationNavHost(
                     navController.navigateBackOrToAvoidingBackStack(Routes.LoginScreen.route)
                 }
             )
+        }
+
+        composable(Routes.SearchUserScreen.route) { backStackEntry ->
+            val requestId = backStackEntry.arguments?.getString("requestId") ?: ""
+            SearchUserScreen(requestId = requestId)
         }
 
         composable(Routes.UserRequestScreen.route) {
