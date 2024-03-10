@@ -7,11 +7,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.component.AccentButton
 import com.keyinc.keymono.presentation.ui.component.SecondaryButton
@@ -22,11 +23,16 @@ import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
 import com.keyinc.keymono.presentation.ui.theme.ProfileRegular
 import com.keyinc.keymono.presentation.ui.theme.Title
+import com.keyinc.keymono.presentation.viewModel.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
+    viewModel: ProfileViewModel,
+    onNavigateToEditProfile: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val profileState by viewModel.profileState.collectAsStateWithLifecycle()
+
     Column(
         modifier = modifier
     ) {
@@ -41,24 +47,25 @@ fun ProfileScreen(
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.profile_greetings, "Змеев Денис Олегович"),
+            text = stringResource(id = R.string.profile_greetings, profileState.fullName),
             style = ProfileRegular,
             textAlign = TextAlign.Center
         )
 
         ProfileItems(
             modifier = Modifier.padding(vertical = Padding64, horizontal = PaddingMedium),
-            role = "Преподаватель",
-            email = "zmeev@gmail.com",
-            phone = "88005553535",
-            dateOfBirth = "31.02.1990"
+            role = profileState.role,
+            email = profileState.email,
+            phone = "+7${profileState.phoneNumber}",
+            dateOfBirth = profileState.dateOfBirth
         )
 
         AccentButton(
             enabled = true,
             modifier = Modifier.padding(horizontal = PaddingLarge),
             text = stringResource(id = R.string.change_data),
-            onClick = { /* TODO */ }
+            onClick = onNavigateToEditProfile,
+            enabled = true
         )
 
         Spacer(modifier = Modifier.height(PaddingMedium))
@@ -69,10 +76,4 @@ fun ProfileScreen(
             onClick = { /* TODO */ }
         )
     }
-}
-
-@Preview
-@Composable
-fun ProfileScreenPreview() {
-    ProfileScreen()
 }

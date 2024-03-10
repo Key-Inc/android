@@ -14,18 +14,22 @@ import com.keyinc.keymono.presentation.ui.screen.newrequest.ClassroomChoiceScree
 import com.keyinc.keymono.presentation.ui.screen.newrequest.DateTimeChoiceScreen
 import com.keyinc.keymono.presentation.ui.screen.newrequest.SendRequestScreen
 import com.keyinc.keymono.presentation.ui.screen.onboarding.OnBoardingScreen
+import com.keyinc.keymono.presentation.ui.screen.profile.EditProfileScreen
+import com.keyinc.keymono.presentation.ui.screen.profile.ProfileScreen
 import com.keyinc.keymono.presentation.ui.screen.registration.FirstRegistrationScreen
 import com.keyinc.keymono.presentation.ui.screen.registration.SecondRegistrationScreen
 import com.keyinc.keymono.presentation.ui.screen.request.RequestWaitingScreen
 import com.keyinc.keymono.presentation.ui.screen.splash.SplashScreen
 import com.keyinc.keymono.presentation.ui.userRequest.UserRequestScreen
 import com.keyinc.keymono.presentation.viewModel.NewRequestViewModel
+import com.keyinc.keymono.presentation.viewModel.ProfileViewModel
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 
 @Composable
 fun ApplicationNavHost(
     registrationViewModel: RegistrationViewModel,
     newRequestViewModel: NewRequestViewModel,
+    profileViewModel: ProfileViewModel,
     navController: NavHostController = rememberNavController()
 ) {
     NavHost(navController = navController, startDestination = Routes.SplashScreen.route) {
@@ -147,6 +151,24 @@ fun ApplicationNavHost(
         composable(Routes.SendRequestScreen.route) {
             SendRequestScreen(
                 viewModel = newRequestViewModel
+            )
+        }
+
+        composable(Routes.ProfileScreen.route) {
+            ProfileScreen(
+                viewModel = profileViewModel,
+                onNavigateToEditProfile = {
+                    navController.navigate(Routes.EditProfileScreen.route)
+                }
+            )
+        }
+
+        composable(Routes.EditProfileScreen.route) {
+            EditProfileScreen(
+                viewModel = profileViewModel,
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
             )
         }
     }

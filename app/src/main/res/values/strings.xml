@@ -69,6 +69,9 @@
     <string name="your_profile">Ваш профиль</string>
     <string name="profile_greetings">Здравствуйте, \n%1$s</string>
     <string name="change_data">Изменить данные</string>
+    <string name="update_data">Обновить данные</string>
     <string name="request_history">История заявок</string>
+    <string name="edit_profile_label">Хотите перемен? Мы вам поможем</string>
+    <string name="edit_profile_successful">Профиль успешно обновлен</string>
 
 </resources>
