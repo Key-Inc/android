@@ -38,3 +38,9 @@ val ScheduleTitle = TextStyle(
     fontFamily = Inter,
     fontWeight = FontWeight.SemiBold
 )
+
+val ProfileRegular = TextStyle(
+    fontSize = FontNormal,
+    fontFamily = Inter,
+    fontWeight = FontWeight.Medium
+)

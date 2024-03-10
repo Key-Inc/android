@@ -60,5 +60,10 @@
     <string name="log_in_short">Войти</string>
     <string name="request_successfully_created">Заявка была успешно создана!</string>
 
+    <!-- Strings used for profile screen -->
+    <string name="your_profile">Ваш профиль</string>
+    <string name="profile_greetings">Здравствуйте, \n%1$s</string>
+    <string name="change_data">Изменить данные</string>
+    <string name="request_history">История заявок</string>
 
 </resources>
