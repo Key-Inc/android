@@ -48,7 +48,7 @@ fun SplashScreen(onNavigateToOnBoarding: (String) -> Unit, splashViewModel: Spla
         }
 
         SplashScreenState.RequestConfirmed -> {
-            onNavigateToOnBoarding(Routes.RequestWaitingScreen.route)
+            onNavigateToOnBoarding(Routes.UserRequestScreen.route)
         }
 
         SplashScreenState.Idling -> {

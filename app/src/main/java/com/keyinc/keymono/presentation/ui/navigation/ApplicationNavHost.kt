@@ -18,6 +18,7 @@ import com.keyinc.keymono.presentation.ui.screen.registration.FirstRegistrationS
 import com.keyinc.keymono.presentation.ui.screen.registration.SecondRegistrationScreen
 import com.keyinc.keymono.presentation.ui.screen.request.RequestWaitingScreen
 import com.keyinc.keymono.presentation.ui.screen.splash.SplashScreen
+import com.keyinc.keymono.presentation.ui.userRequest.UserRequestScreen
 import com.keyinc.keymono.presentation.viewModel.NewRequestViewModel
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 
@@ -41,7 +42,7 @@ fun ApplicationNavHost(
         composable(Routes.LoginScreen.route) {
             LoginScreen(
                 onNavigateToClassroomChoice = {
-                    navController.navigate(Routes.ClassroomChoiceScreen.route)
+                    navController.navigate(Routes.UserRequestScreen.route)
                 },
                 onNavigateToRegister = {
                     navController.navigateBackOrToAvoidingBackStack(Routes.FirstRegistrationScreen.route)
@@ -69,6 +70,16 @@ fun ApplicationNavHost(
             )
         }
 
+        composable(Routes.UserRequestScreen.route) {
+            UserRequestScreen(
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LoginScreen.route) {
+                        clearAllBackStack(navController = navController)
+                    }
+                }
+            )
+        }
+
         composable(Routes.OnBoardingScreen.route) {
             OnBoardingScreen(
                 onNavigateToRegistration = {
@@ -84,6 +95,11 @@ fun ApplicationNavHost(
             RequestWaitingScreen(
                 onNavigateToClassroomChoice = {
                     navController.navigate(Routes.ClassroomChoiceScreen.route)
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LoginScreen.route) {
+                        clearAllBackStack(navController = navController)
+                    }
                 }
             )
         }
