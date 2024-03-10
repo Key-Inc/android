@@ -26,7 +26,10 @@ import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 import com.keyinc.keymono.presentation.viewModel.SplashViewModel
 
 @Composable
-fun SplashScreen(onNavigateToOnBoarding: (String) -> Unit, splashViewModel: SplashViewModel) {
+fun SplashScreen(
+    onNavigateToOnBoarding: (String) -> Unit,
+    splashViewModel: SplashViewModel
+) {
 
     val userState = splashViewModel.splashScreenState.collectAsStateWithLifecycle()
 

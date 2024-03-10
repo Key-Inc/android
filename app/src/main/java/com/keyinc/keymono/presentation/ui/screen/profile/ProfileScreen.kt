@@ -27,9 +27,9 @@ import com.keyinc.keymono.presentation.viewModel.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
+    modifier: Modifier = Modifier,
     viewModel: ProfileViewModel,
-    onNavigateToEditProfile: () -> Unit,
-    modifier: Modifier = Modifier
+    onNavigateToEditProfile: () -> Unit
 ) {
     val profileState by viewModel.profileState.collectAsStateWithLifecycle()
 

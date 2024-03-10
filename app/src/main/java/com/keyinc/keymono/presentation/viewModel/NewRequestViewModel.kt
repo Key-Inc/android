@@ -90,7 +90,10 @@ class NewRequestViewModel @Inject constructor(
 
     private val _isRecurringAllowed = mutableStateOf(false)
     val isRecurringAllowed: State<Boolean>
-        get() = _isRecurringAllowed
+        get() {
+            Log.d(TAG, _isRecurringAllowed.toString())
+            return _isRecurringAllowed
+        }
 
     // TODO create parametrized exceptionHandler?
     private val newRequestExceptionHandler = CoroutineExceptionHandler { _, exception ->
@@ -131,9 +134,7 @@ class NewRequestViewModel @Inject constructor(
 
     init {
         loadNextClassrooms()
-        // TODO use and inject in nested navhost
-//        val userRole = getUserRole()
-//        _isRecurringAllowed.value = userRole != "Student"
+        getUserRole()
     }
 
     fun loadNextClassrooms() {
@@ -143,17 +144,19 @@ class NewRequestViewModel @Inject constructor(
         }
     }
 
-//    private fun getUserRole(): String {
-//        var userRole = EMPTY_STRING
-//        viewModelScope.launch(Dispatchers.IO) {
-//            userRole = getUserRoleUseCase.execute()
-//        }
-//        return userRole
-//    }
+    private fun getUserRole() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userRole = getUserRoleUseCase.execute()
+            _isRecurringAllowed.value = userRole != "Student"
+        }
+    }
 
     private fun loadSchedule() {
+        Log.d(TAG, "loadSchedule triggered")
         _scheduleUiState.value = ScheduleUiState.Loading
+        Log.d(TAG, "loadSchedule loading")
         viewModelScope.launch(Dispatchers.IO + scheduleExceptionHandler) {
+            Log.d(TAG, "loadSchedule entered coroutine")
             val selectedDate = _calendarState.value.selectedDate
 
             val scheduleResponse = getScheduleUseCase(
@@ -169,6 +172,7 @@ class NewRequestViewModel @Inject constructor(
                     status = it.status
                 )
             }
+            Log.d(TAG, "loadSchedule success")
 
             _scheduleUiState.value = ScheduleUiState.Content(
                 schedule = schedule
@@ -177,6 +181,7 @@ class NewRequestViewModel @Inject constructor(
     }
 
     fun onClassroomChoice(classroom: Classroom) {
+        Log.d(TAG, classroom.id.toString())
         _newRequestState.value = _newRequestState.value.copy(
             classroomId = classroom.id,
             classroomNumber = classroom.number
