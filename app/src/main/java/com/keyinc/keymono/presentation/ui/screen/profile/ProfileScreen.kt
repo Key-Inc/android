@@ -55,6 +55,7 @@ fun ProfileScreen(
         )
 
         AccentButton(
+            enabled = true,
             modifier = Modifier.padding(horizontal = PaddingLarge),
             text = stringResource(id = R.string.change_data),
             onClick = { /* TODO */ }

@@ -28,6 +28,4 @@ interface AccountApi {
     @GET("$ACCOUNT_SERVICE_URL/registration-status")
     suspend fun getRegistrationStatus(@Header("Authorization") token: String): String
 
-    @GET("$ACCOUNT_SERVICE_URL/role")
-    suspend fun getUserRole(@Header("Authorization") token: String): String
 }

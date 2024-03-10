@@ -22,10 +22,6 @@ class AccountRepositoryImpl @Inject constructor(
         return accountApi.getRegistrationStatus(getBearerToken())
     }
 
-    override suspend fun getUserRole(): String {
-        return accountApi.getUserRole(getBearerToken())
-    }
-
     override fun clearToken() {
         tokenStorage.deleteToken()
     }
