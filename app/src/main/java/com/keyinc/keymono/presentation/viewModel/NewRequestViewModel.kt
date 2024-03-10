@@ -1,11 +1,14 @@
 package com.keyinc.keymono.presentation.viewModel
 
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.keyinc.keymono.data.paginator.PaginatorImpl
 import com.keyinc.keymono.domain.entity.Classroom
 import com.keyinc.keymono.domain.entity.KeyRequestCreateDto
+import com.keyinc.keymono.domain.usecase.account.GetUserRoleUseCase
 import com.keyinc.keymono.domain.usecase.classroom.GetClassroomsUseCase
 import com.keyinc.keymono.domain.usecase.request.CreateNewKeyRequestUseCase
 import com.keyinc.keymono.domain.usecase.request.GetScheduleUseCase
@@ -16,11 +19,13 @@ import com.keyinc.keymono.presentation.ui.screen.state.newrequest.NewRequestStat
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.NewRequestUiState
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.ScheduleUiState
 import com.keyinc.keymono.presentation.ui.screen.state.newrequest.TimeDialogState
+import com.keyinc.keymono.presentation.ui.util.DateConverterUtil
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.changeTimeInLocalDateTime
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.convertTimeToHoursAndMinutes
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.joinLocalDateAndStringTime
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.toServerLocalDateTime
 import com.keyinc.keymono.presentation.ui.util.NetworkErrorCodes
+import com.keyinc.keymono.presentation.ui.util.PresentationConstants.EMPTY_STRING
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +44,8 @@ import javax.inject.Inject
 class NewRequestViewModel @Inject constructor(
     private val getClassroomsUseCase: GetClassroomsUseCase,
     private val getScheduleUseCase: GetScheduleUseCase,
-    private val createNewKeyRequestUseCase: CreateNewKeyRequestUseCase
+    private val createNewKeyRequestUseCase: CreateNewKeyRequestUseCase,
+    private val getUserRoleUseCase: GetUserRoleUseCase
 ) : ViewModel() {
 
     var scheduleElementMinTime: LocalTime? = null
@@ -81,6 +87,10 @@ class NewRequestViewModel @Inject constructor(
         }
     }
 
+    private val _isRecurringAllowed = mutableStateOf(false)
+    val isRecurringAllowed: State<Boolean>
+        get() = _isRecurringAllowed
+
     // TODO create parametrized exceptionHandler?
     private val newRequestExceptionHandler = CoroutineExceptionHandler { _, exception ->
         when (exception) {
@@ -120,6 +130,9 @@ class NewRequestViewModel @Inject constructor(
 
     init {
         loadNextClassrooms()
+        // TODO use and inject in nested navhost
+//        val userRole = getUserRole()
+//        _isRecurringAllowed.value = userRole != "Student"
     }
 
     fun loadNextClassrooms() {
@@ -128,6 +141,14 @@ class NewRequestViewModel @Inject constructor(
             paginator.loadNextItems()
         }
     }
+
+//    private fun getUserRole(): String {
+//        var userRole = EMPTY_STRING
+//        viewModelScope.launch(Dispatchers.IO) {
+//            userRole = getUserRoleUseCase.execute()
+//        }
+//        return userRole
+//    }
 
     private fun loadSchedule() {
         _scheduleUiState.value = ScheduleUiState.Loading
@@ -194,9 +215,15 @@ class NewRequestViewModel @Inject constructor(
         )
     }
 
-    fun onChangeRecurring() {
+    fun onEndDateOfRecurrenceChoice(date: String) {
         _newRequestState.value = _newRequestState.value.copy(
-            isRecurring = !_newRequestState.value.isRecurring
+            endDateOfRecurrence = date
+        )
+    }
+
+    fun onCancelRecurrence() {
+        _newRequestState.value = _newRequestState.value.copy(
+            endDateOfRecurrence = null
         )
     }
 
@@ -219,7 +246,7 @@ class NewRequestViewModel @Inject constructor(
                 KeyRequestCreateDto(
                     startDate = toServerLocalDateTime(_newRequestState.value.startDate ?: ERROR_LOCAL_DATE_TIME),
                     endDate = toServerLocalDateTime(_newRequestState.value.endDate ?: ERROR_LOCAL_DATE_TIME),
-                    isRecurring = _newRequestState.value.isRecurring,
+                    endDateOfRecurrence = DateConverterUtil.convertDateToServerFormat(_newRequestState.value.endDateOfRecurrence ?: EMPTY_STRING),
                     classroomId = _newRequestState.value.classroomId.toString()
                 )
             )

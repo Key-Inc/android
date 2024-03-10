@@ -8,6 +8,8 @@ interface AccountRepository {
 
     suspend fun getProfile(): ProfileResponse
 
+    suspend fun getUserRole(): String
+
     suspend fun getRegistrationStatus(): String
 
     suspend fun getTokenFromStorage(): String

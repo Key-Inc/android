@@ -6,7 +6,9 @@ import java.util.UUID
 data class NewRequestState(
     val startDate: LocalDateTime? = null,
     val endDate: LocalDateTime? = null,
-    val isRecurring: Boolean = false,
+    val endDateOfRecurrence: String? = null,
     val classroomId: UUID? = null,
     val classroomNumber: Int? = null
-)
+) {
+    val isRecurring = endDateOfRecurrence != null
+}

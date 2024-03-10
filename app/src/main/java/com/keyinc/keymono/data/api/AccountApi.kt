@@ -19,6 +19,9 @@ interface AccountApi {
     @POST("$ACCOUNT_SERVICE_URL/login")
     suspend fun login(@Body loginRequest: LoginRequest): TokenResponse
 
+    @GET("$ACCOUNT_SERVICE_URL/role")
+    suspend fun getUserRole(@Header("Authorization") token: String): String
+
     @GET("$ACCOUNT_SERVICE_URL/profile")
     suspend fun getProfile(@Header("Authorization") token: String): ProfileResponse
 
