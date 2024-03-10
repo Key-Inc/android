@@ -6,10 +6,16 @@ import javax.inject.Inject
 class GetUserRequestStatus @Inject constructor(
     private val accountRepository: AccountRepository
 ) {
+
+    private companion object {
+        private const val ACCEPTED_STATUS = "Accepted"
+    }
+
     suspend operator fun invoke(): Boolean {
         return when (accountRepository.getRegistrationStatus()) {
-            "Accepted" -> true
+            ACCEPTED_STATUS -> true
             else -> false
         }
     }
+
 }

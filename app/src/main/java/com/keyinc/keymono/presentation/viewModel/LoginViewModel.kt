@@ -2,24 +2,34 @@ package com.keyinc.keymono.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.keyinc.keymono.R
 import com.keyinc.keymono.domain.entity.LoginRequest
+import com.keyinc.keymono.domain.usecase.account.GetUserRequestStatus
+import com.keyinc.keymono.domain.usecase.account.GetUserRoleUseCase
 import com.keyinc.keymono.domain.usecase.account.LoginUserUseCase
+import com.keyinc.keymono.domain.usecase.account.LogoutUserUseCase
+import com.keyinc.keymono.domain.usecase.validation.ValidateEmailUseCase
+import com.keyinc.keymono.domain.usecase.validation.ValidatePasswordUseCase
+import com.keyinc.keymono.presentation.ui.errorHandler.RequestExceptionHandler
 import com.keyinc.keymono.presentation.ui.screen.state.login.LoginState
 import com.keyinc.keymono.presentation.ui.screen.state.login.LoginUiState
-import com.keyinc.keymono.presentation.ui.util.NetworkErrorCodes.UNAUTHORIZED
+import com.keyinc.keymono.presentation.ui.screen.state.login.validationIsPassed
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUserUseCase: LoginUserUseCase
-): ViewModel() {
+    private val loginUserUseCase: LoginUserUseCase,
+    private val getUserRole: GetUserRoleUseCase,
+    private val logoutUserUseCase: LogoutUserUseCase,
+    private val validateEmailUseCase: ValidateEmailUseCase,
+    private val registrationStatusUse: GetUserRequestStatus,
+    private val validatePasswordUseCase: ValidatePasswordUseCase
+) : ViewModel() {
 
     private val _loginUiState = MutableStateFlow<LoginUiState>(LoginUiState.Initial)
     val loginUiState = _loginUiState.asStateFlow()
@@ -27,36 +37,80 @@ class LoginViewModel @Inject constructor(
     private val _loginState = MutableStateFlow(LoginState())
     val loginState = _loginState.asStateFlow()
 
-    private val loginExceptionHandler = CoroutineExceptionHandler { _, exception ->
-        when (exception) {
-            is HttpException -> when (exception.code()) {
-                UNAUTHORIZED -> _loginUiState.value = LoginUiState.Error(exception.message ?: "Unknown exception")
-                else -> _loginUiState.value = LoginUiState.Error(exception.message ?: "Unknown exception")
-            }
-            else -> _loginUiState.value = LoginUiState.Error(exception.message ?: "Unknown exception")
+    private val exceptionHandler = RequestExceptionHandler(
+        onUnauthorizedException = {
+            _loginUiState.value = LoginUiState.Error("Неверный логин или пароль")
+        },
+        onBaseException = {
+            _loginUiState.value = LoginUiState.Error("Неизвестная ошибка")
+        },
+        onBadRegistrationRequest = {
+            _loginUiState.value =
+                LoginUiState.Error("Пользователь с таким email уже существует")
         }
-    }
+    )
 
     fun loginUser() {
         _loginUiState.value = LoginUiState.Loading
-        viewModelScope.launch(Dispatchers.IO + loginExceptionHandler) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
             loginUserUseCase(
                 LoginRequest(
                     email = _loginState.value.email,
                     password = _loginState.value.password
                 )
             )
-            _loginUiState.value = LoginUiState.Success
+            _loginUiState.value = LoginUiState.RegistrationPassed
         }
     }
 
-    // TODO validate all the fields
+    fun getRegistrationStatus() {
+        _loginUiState.value = LoginUiState.Loading
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
+            val registrationStatus = registrationStatusUse.invoke()
+            when (registrationStatus) {
+                true -> _loginUiState.value = LoginUiState.Accepted
+                false -> _loginUiState.value = LoginUiState.InConsideration
+            }
+        }
+    }
+
+    fun logoutUser() {
+        logoutUserUseCase.execute()
+    }
+
+    fun getUserRole() {
+        _loginUiState.value = LoginUiState.Loading
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
+            val userRole = getUserRole.execute()
+            if (userRole != "Teacher" && userRole != "Student") {
+                _loginUiState.value = LoginUiState.WrongRole
+            } else {
+                _loginUiState.value = LoginUiState.Success
+            }
+
+        }
+    }
+
     fun onEmailChanged(email: String) {
-        _loginState.value = _loginState.value.copy(email = email)
+        _loginState.value = _loginState.value.copy(
+            email = email,
+            emailValidation = validateEmailUseCase(
+                validationProperty = email,
+                errorId = R.string.email_error
+            )
+        )
+        _loginState.value.validationIsPassed()
     }
 
     fun onPasswordChanged(password: String) {
-        _loginState.value = _loginState.value.copy(password = password)
+        _loginState.value = _loginState.value.copy(
+            password = password,
+            passwordValidation = validatePasswordUseCase(
+                validationProperty = password,
+                errorId = R.string.password_error
+            ),
+        )
+        _loginState.value.validationIsPassed()
     }
 
 }

@@ -27,7 +27,12 @@
     <string name="password_error">Пароль должен содержать в себе от 8-ми символов</string>
     <string name="email_error">Почта должна соотвествовать стандарту</string>
     <string name="confirm_password_error">Пароли не совпадают</string>
+    <string name="fullname_error">Имя должно содержать в себе более 2-х символов</string>
+    <string name="phone_number_error">Телефон должен соотвествовать международному формату</string>
 
+
+    <!-- Strings used for registration -->
+    <string name="wrong_role_error">Функционал пользователей с вашей ролью не доступен в приложении, пожалуйста воспользуйтесь веб-клиентом</string>
     <!-- Strings used for button description in registrations screen -->
     <string name="navigate_back_button_description">Кнопка для навигации назад</string>
 
@@ -63,5 +68,6 @@
     <string name="profile_greetings">Здравствуйте, \n%1$s</string>
     <string name="change_data">Изменить данные</string>
     <string name="request_history">История заявок</string>
+
 
 </resources>

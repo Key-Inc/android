@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -27,11 +26,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.keyinc.keymono.R
+import com.keyinc.keymono.domain.entity.ValidationResult
 import com.keyinc.keymono.presentation.ui.theme.Accent
 import com.keyinc.keymono.presentation.ui.theme.FontSmall
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
 import com.keyinc.keymono.presentation.ui.theme.LightBlue
-import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
 import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
 import com.keyinc.keymono.presentation.ui.theme.PaddingTiny
@@ -41,7 +40,7 @@ fun AccentPasswordTextField(
     modifier: Modifier = Modifier,
     textFieldValue: String,
     label: String,
-    errorId: Int?,
+    errorId: ValidationResult?,
     singleLine: Boolean = true,
     onValueChange: (String) -> Unit,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
@@ -102,13 +101,12 @@ fun AccentPasswordTextField(
                 modifier = Modifier
                     .clickable(onClick = {
                         isPasswordVisible = !isPasswordVisible
-                    })
-                    .size(PaddingLarge),
+                    }),
                 contentDescription = null,
             )
         }
     }
 
-    AccentTextFieldValidationAnim(errorId = errorId)
+    AccentTextFieldValidationAnim(validationState = errorId)
 
 }

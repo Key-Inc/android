@@ -39,7 +39,6 @@ fun RequestWaitingScreen(
                     paddingValues = it,
                     onClick = {
                         showDialog = !showDialog
-                        // TODO only for testing purposes
                         onNavigateToClassroomChoice()
                     }
                 )

@@ -27,6 +27,7 @@ import com.keyinc.keymono.presentation.ui.theme.InterLogo
 import com.keyinc.keymono.presentation.ui.theme.Padding24
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.ui.theme.PaddingMedium
+import com.keyinc.keymono.presentation.ui.util.noRippleClickable
 
 
 @Composable
@@ -111,6 +112,7 @@ fun OnBoardingContent(
             )
             Text(
                 text = stringResource(id = R.string.log_in),
+                modifier = Modifier.noRippleClickable { onNavigateToLogin() },
                 style = InterLogo,
                 fontSize = FontSmall,
                 color = Accent,
