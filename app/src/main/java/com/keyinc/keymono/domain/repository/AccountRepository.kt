@@ -6,7 +6,11 @@ import com.keyinc.keymono.domain.entity.RegistrationRequest
 
 interface AccountRepository {
 
+    fun clearToken()
+
     suspend fun getProfile(): ProfileResponse
+
+    suspend fun getUserRole(): String
 
     suspend fun getRegistrationStatus(): String
 

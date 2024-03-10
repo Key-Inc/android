@@ -9,10 +9,10 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/vpn_key"
         android:label="@string/app_name"
         android:usesCleartextTraffic="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/vpn_key"
         android:supportsRtl="true"
         android:theme="@style/Theme.KeyMono"
         tools:targetApi="31">
