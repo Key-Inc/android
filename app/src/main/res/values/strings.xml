@@ -74,4 +74,11 @@
     <string name="edit_profile_label">Хотите перемен? Мы вам поможем</string>
     <string name="edit_profile_successful">Профиль успешно обновлен</string>
 
+    <!-- Strings used for bottom bar elements -->
+    <string name="current_requests">Current requests</string>
+    <string name="new_request">New request</string>
+    <string name="profile">Profile</string>
+    <string name="key_transfer">Key transfer</string>
+    <string name="incoming_requests">Incoming requests</string>
+
 </resources>
