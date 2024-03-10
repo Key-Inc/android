@@ -5,7 +5,7 @@ import com.keyinc.keymono.domain.entity.ValidationResult
 class ValidatePasswordUseCase : BaseValidationUseCase {
 
     private companion object {
-        const val MIN_PASSWORD_LENGTH = 8
+        const val MIN_PASSWORD_LENGTH = 2
     }
 
     override operator fun invoke(validationProperty: String, errorId: Int?): ValidationResult {

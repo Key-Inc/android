@@ -42,7 +42,7 @@ import com.keyinc.keymono.presentation.viewModel.LoginViewModel
 
 @Composable
 fun LoginScreen(
-    // TODO change to onNavigateToRequests
+    onNavigateToRequest: () -> Unit,
     onNavigateToClassroomChoice: () -> Unit,
     onNavigateToRegister: () -> Unit,
     modifier: Modifier = Modifier,
@@ -95,6 +95,11 @@ fun LoginScreen(
 
 
         when (loginUiState) {
+
+            is LoginUiState.RegistrationPassed -> {
+                viewModel.getRegistrationStatus()
+            }
+
             is LoginUiState.Initial -> {
                 buttonClick = { viewModel.loginUser() }
             }
@@ -110,11 +115,24 @@ fun LoginScreen(
             }
 
             is LoginUiState.Success -> {
-
+                onNavigateToClassroomChoice()
             }
 
             is LoginUiState.Error -> {
                 loginError = (loginUiState as LoginUiState.Error).message
+                buttonClick = { viewModel.loginUser() }
+            }
+
+            is LoginUiState.InConsideration -> {
+                onNavigateToRequest()
+            }
+
+            is LoginUiState.Accepted -> {
+                viewModel.getUserRole()
+            }
+
+            is LoginUiState.WrongRole -> {
+                loginError = stringResource(id = R.string.wrong_role_error)
                 buttonClick = { viewModel.loginUser() }
             }
 
@@ -128,11 +146,11 @@ fun LoginScreen(
         ) {
             AccentButton(
                 enabled = loginState.validationIsPassed,
-                onClick = {
-                    viewModel.loginUser()
-                },
+                onClick = buttonClick,
                 text = stringResource(id = R.string.log_in_short)
-            )
+            ) {
+                buttonContent?.invoke()
+            }
             AnimatedVisibility(visible = loginError != null) {
                 Text(
                     modifier = Modifier.padding(top = PaddingSmall),

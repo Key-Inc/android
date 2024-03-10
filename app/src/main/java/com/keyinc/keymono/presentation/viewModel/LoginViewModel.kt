@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.keyinc.keymono.R
 import com.keyinc.keymono.domain.entity.LoginRequest
+import com.keyinc.keymono.domain.usecase.account.GetUserRequestStatus
+import com.keyinc.keymono.domain.usecase.account.GetUserRoleUseCase
 import com.keyinc.keymono.domain.usecase.account.LoginUserUseCase
+import com.keyinc.keymono.domain.usecase.account.LogoutUserUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateEmailUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidatePasswordUseCase
 import com.keyinc.keymono.presentation.ui.errorHandler.RequestExceptionHandler
@@ -21,7 +24,10 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUserUseCase: LoginUserUseCase,
+    private val getUserRole: GetUserRoleUseCase,
+    private val logoutUserUseCase: LogoutUserUseCase,
     private val validateEmailUseCase: ValidateEmailUseCase,
+    private val registrationStatusUse: GetUserRequestStatus,
     private val validatePasswordUseCase: ValidatePasswordUseCase
 ) : ViewModel() {
 
@@ -53,7 +59,35 @@ class LoginViewModel @Inject constructor(
                     password = _loginState.value.password
                 )
             )
-            _loginUiState.value = LoginUiState.Success
+            _loginUiState.value = LoginUiState.RegistrationPassed
+        }
+    }
+
+    fun getRegistrationStatus() {
+        _loginUiState.value = LoginUiState.Loading
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
+            val registrationStatus = registrationStatusUse.invoke()
+            when (registrationStatus) {
+                true -> _loginUiState.value = LoginUiState.Accepted
+                false -> _loginUiState.value = LoginUiState.InConsideration
+            }
+        }
+    }
+
+    fun logoutUser() {
+        logoutUserUseCase.execute()
+    }
+
+    fun getUserRole() {
+        _loginUiState.value = LoginUiState.Loading
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
+            val userRole = getUserRole.execute()
+            if (userRole != "Teacher" && userRole != "Student") {
+                _loginUiState.value = LoginUiState.WrongRole
+            } else {
+                _loginUiState.value = LoginUiState.Success
+            }
+
         }
     }
 

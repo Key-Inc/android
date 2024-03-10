@@ -45,6 +45,11 @@ fun ApplicationNavHost(
                 },
                 onNavigateToRegister = {
                     navController.navigateBackOrToAvoidingBackStack(Routes.FirstRegistrationScreen.route)
+                },
+                onNavigateToRequest = {
+                    navController.navigate(Routes.RequestWaitingScreen.route) {
+                        clearAllBackStack(navController)
+                    }
                 }
             )
         }
