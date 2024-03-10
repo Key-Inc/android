@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import com.keyinc.keymono.data.TokenStorage
 import com.keyinc.keymono.data.api.AccountApi
 import com.keyinc.keymono.data.api.ClassroomApi
+import com.keyinc.keymono.data.api.KeyApi
 import com.keyinc.keymono.data.api.NetworkConstants
 import com.keyinc.keymono.data.api.NetworkConstants.CONNECT_TIMEOUT
 import com.keyinc.keymono.data.api.NetworkConstants.READ_TIMEOUT
@@ -65,6 +66,11 @@ object DataModule {
     @Provides
     fun provideRequestApi(retrofit: Retrofit): RequestApi {
         return retrofit.create(RequestApi::class.java)
+    }
+
+    @Provides
+    fun provideKeyApi(retrofit: Retrofit): KeyApi {
+        return retrofit.create(KeyApi::class.java)
     }
 
 }

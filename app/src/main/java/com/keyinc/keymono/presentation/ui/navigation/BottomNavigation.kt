@@ -9,16 +9,19 @@ import com.keyinc.keymono.presentation.ui.screen.newrequest.DateTimeChoiceScreen
 import com.keyinc.keymono.presentation.ui.screen.newrequest.SendRequestScreen
 import com.keyinc.keymono.presentation.ui.screen.profile.EditProfileScreen
 import com.keyinc.keymono.presentation.ui.screen.profile.ProfileScreen
+import com.keyinc.keymono.presentation.ui.screen.transferrequests.TransferRequestsScreen
 import com.keyinc.keymono.presentation.ui.userRequest.UserRequestScreen
 import com.keyinc.keymono.presentation.viewModel.NewRequestViewModel
 import com.keyinc.keymono.presentation.viewModel.ProfileViewModel
+import com.keyinc.keymono.presentation.viewModel.TransferRequestsViewModel
 
 @Composable
 fun BottomNavigation(
     bottomNavigationNavController: NavHostController,
     rootNavController: NavHostController,
     newRequestViewModel: NewRequestViewModel,
-    profileViewModel: ProfileViewModel
+    profileViewModel: ProfileViewModel,
+    transferRequestsViewModel: TransferRequestsViewModel
 ) {
     NavHost(
         navController = bottomNavigationNavController,
@@ -71,6 +74,12 @@ fun BottomNavigation(
                 onNavigateBack = {
                     bottomNavigationNavController.popBackStack()
                 }
+            )
+        }
+
+        composable(Routes.TransferRequestsScreen.route) {
+            TransferRequestsScreen(
+                viewModel = transferRequestsViewModel
             )
         }
     }

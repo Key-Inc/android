@@ -26,13 +26,15 @@ import com.keyinc.keymono.presentation.ui.theme.BottomNavigationBackground
 import com.keyinc.keymono.presentation.ui.theme.BottomNavigationContent
 import com.keyinc.keymono.presentation.viewModel.NewRequestViewModel
 import com.keyinc.keymono.presentation.viewModel.ProfileViewModel
+import com.keyinc.keymono.presentation.viewModel.TransferRequestsViewModel
 
 @Composable
 fun BottomNavigationWrapper(
     rootNavController: NavHostController,
     onCloseApp: () -> Unit,
     profileViewModel: ProfileViewModel = hiltViewModel(),
-    newRequestViewModel: NewRequestViewModel = hiltViewModel()
+    newRequestViewModel: NewRequestViewModel = hiltViewModel(),
+    transferRequestsViewModel: TransferRequestsViewModel = hiltViewModel()
 ) {
     val bottomNavigationNavController = rememberNavController()
 
@@ -61,7 +63,8 @@ fun BottomNavigationWrapper(
                 bottomNavigationNavController = bottomNavigationNavController,
                 rootNavController = rootNavController,
                 newRequestViewModel = newRequestViewModel,
-                profileViewModel = profileViewModel
+                profileViewModel = profileViewModel,
+                transferRequestsViewModel = transferRequestsViewModel
             )
         }
     }

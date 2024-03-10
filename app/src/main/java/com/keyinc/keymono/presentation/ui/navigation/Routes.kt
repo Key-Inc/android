@@ -13,4 +13,5 @@ sealed class Routes(val route: String) {
     data object SendRequestScreen : Routes("send_request_screen")
     data object ProfileScreen : Routes("profile_screen")
     data object EditProfileScreen : Routes("edit_profile_screen")
+    data object TransferRequestsScreen : Routes("transfer_requests_screen")
 }

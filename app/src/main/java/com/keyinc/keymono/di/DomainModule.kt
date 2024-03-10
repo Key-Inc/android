@@ -3,12 +3,15 @@ package com.keyinc.keymono.di
 import com.keyinc.keymono.data.TokenStorage
 import com.keyinc.keymono.data.api.AccountApi
 import com.keyinc.keymono.data.api.ClassroomApi
+import com.keyinc.keymono.data.api.KeyApi
 import com.keyinc.keymono.data.api.RequestApi
 import com.keyinc.keymono.data.repository.AccountRepositoryImpl
 import com.keyinc.keymono.data.repository.ClassroomRepositoryImpl
+import com.keyinc.keymono.data.repository.KeyRepositoryImpl
 import com.keyinc.keymono.data.repository.RequestRepositoryImpl
 import com.keyinc.keymono.domain.repository.AccountRepository
 import com.keyinc.keymono.domain.repository.ClassroomRepository
+import com.keyinc.keymono.domain.repository.KeyRepository
 import com.keyinc.keymono.domain.repository.RequestRepository
 import dagger.Module
 import dagger.Provides
@@ -37,5 +40,11 @@ object DomainModule {
     @Singleton
     fun provideRequestRepository(tokenStorage: TokenStorage, requestApi: RequestApi): RequestRepository {
         return RequestRepositoryImpl(tokenStorage, requestApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideKeyRepository(tokenStorage: TokenStorage, keyApi: KeyApi): KeyRepository {
+        return KeyRepositoryImpl(keyApi, tokenStorage)
     }
 }
