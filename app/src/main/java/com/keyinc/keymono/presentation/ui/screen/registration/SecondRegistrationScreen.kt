@@ -1,5 +1,6 @@
 package com.keyinc.keymono.presentation.ui.screen.registration
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -105,11 +106,11 @@ fun SecondRegistrationScreen(
                 var buttonContent: @Composable (() -> Unit)? = null
 
                 when (registrationState) {
-                    RegistrationState.Initial -> {
+                    is RegistrationState.Initial -> {
                         buttonClick = { registrationViewModel.registerUser() }
                     }
 
-                    RegistrationState.Loading -> {
+                    is RegistrationState.Loading -> {
                         buttonContent = {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(PaddingMedium),
@@ -119,18 +120,15 @@ fun SecondRegistrationScreen(
                         }
                     }
 
-                    RegistrationState.Success -> {
-                       onNavigateToRequestWaiting()
+                    is RegistrationState.Success -> {
+                        onNavigateToRequestWaiting()
                     }
 
                     is RegistrationState.Error -> {
                         registrationError = (registrationState as RegistrationState.Error).message
-
+                        buttonClick = { registrationViewModel.registerUser() }
                     }
 
-                    is RegistrationState.UnauthorizedError -> {
-
-                    }
                 }
 
                 Column(
@@ -140,19 +138,22 @@ fun SecondRegistrationScreen(
                     AccentButton(
                         onClick = buttonClick,
                         text = stringResource(id = R.string.onboard_button),
-                        enabled = true,
+                        enabled = uiState.secondSectionPassed,
                     ) {
                         buttonContent?.invoke()
                     }
-                    if (registrationError != null) {
+
+                    AnimatedVisibility(visible = registrationError != null) {
                         Text(
                             modifier = Modifier.padding(top = PaddingSmall),
-                            text = registrationError,
+                            text = registrationError ?: "",
                             style = InterLogo,
                             fontSize = FontSmall,
                             color = Color.Red,
                         )
                     }
+
+
                 }
 
 

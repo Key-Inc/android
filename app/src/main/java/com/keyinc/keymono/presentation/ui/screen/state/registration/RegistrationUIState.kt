@@ -10,6 +10,14 @@ data class RegistrationUIState(
     var phoneNumber: String = EMPTY_STRING,
     var password: String = EMPTY_STRING,
     var confirmPassword: String = EMPTY_STRING,
+    var fullNameValidation: ValidationResult = ValidationResult(
+        successful = false,
+        errorId = null
+    ),
+    var phoneNumberValidation: ValidationResult = ValidationResult(
+        successful = false,
+        errorId = null
+    ),
     var passwordValidation: ValidationResult = ValidationResult(
         successful = false,
         errorId = null
@@ -22,10 +30,16 @@ data class RegistrationUIState(
         successful = false,
         errorId = null
     ),
-    var firstSectionPassed: Boolean = false
+    var firstSectionPassed: Boolean = false,
+    var secondSectionPassed: Boolean = false
 )
 
 fun RegistrationUIState.firstValidationIsPassed() {
     firstSectionPassed =
         emailValidation.successful && passwordValidation.successful && confirmPasswordValidation.successful
+}
+
+fun RegistrationUIState.secondValidationIsPassed() {
+    secondSectionPassed =
+        birthDate.isNotEmpty() && fullNameValidation.successful && phoneNumberValidation.successful
 }

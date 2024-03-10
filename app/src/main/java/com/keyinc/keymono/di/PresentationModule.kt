@@ -9,7 +9,9 @@ import com.keyinc.keymono.domain.usecase.request.CreateNewKeyRequestUseCase
 import com.keyinc.keymono.domain.usecase.request.GetScheduleUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateConfirmPasswordUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateEmailUseCase
+import com.keyinc.keymono.domain.usecase.validation.ValidateFullNameUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidatePasswordUseCase
+import com.keyinc.keymono.domain.usecase.validation.ValidatePhoneNumberUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +21,12 @@ import dagger.hilt.android.components.ViewModelComponent
 @Module
 @InstallIn(ViewModelComponent::class)
 object PresentationModule {
+
+    @Provides
+    fun provideValidateFullNameUseCase() = ValidateFullNameUseCase()
+
+    @Provides
+    fun provideValidatePhoneNumberUseCase() = ValidatePhoneNumberUseCase()
 
     @Provides
     fun provideValidatePasswordUseCase() = ValidatePasswordUseCase()
