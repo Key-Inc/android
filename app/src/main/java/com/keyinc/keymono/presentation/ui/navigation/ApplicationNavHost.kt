@@ -68,6 +68,9 @@ fun ApplicationNavHost(
             OnBoardingScreen(
                 onNavigateToRegistration = {
                     navController.navigate(Routes.FirstRegistrationScreen.route)
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LoginScreen.route)
                 }
             )
         }

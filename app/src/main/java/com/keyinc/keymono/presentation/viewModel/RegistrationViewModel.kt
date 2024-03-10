@@ -17,14 +17,11 @@ import com.keyinc.keymono.presentation.ui.screen.state.registration.Registration
 import com.keyinc.keymono.presentation.ui.screen.state.registration.firstValidationIsPassed
 import com.keyinc.keymono.presentation.ui.screen.state.registration.secondValidationIsPassed
 import com.keyinc.keymono.presentation.ui.util.DateConverterUtil
-import com.keyinc.keymono.presentation.ui.util.NetworkErrorCodes
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,32 +55,8 @@ class RegistrationViewModel @Inject constructor(
         }
     )
 
-
-    val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-        when (exception) {
-            is HttpException -> when (exception.code()) {
-                NetworkErrorCodes.UNAUTHORIZED -> _registrationState.value =
-                    RegistrationState.Error("Ошибка авторизации")
-
-                NetworkErrorCodes.BAD_REQUEST -> {
-                    val errorResponse = exception.response()?.errorBody()?.string()
-                    if (errorResponse != null) {
-                        if (errorResponse.contains("User")) _registrationState.value =
-                            RegistrationState.Error("Пользователь с таким email уже существует")
-                    } else _registrationState.value = RegistrationState.Error("Неизвестная ошибка")
-                }
-
-                else -> _registrationState.value = RegistrationState.Error("Неизвестная ошибка")
-            }
-
-            else -> _registrationState.value = RegistrationState.Error("Неизвестная ошибка")
-
-        }
-    }
-
-
     fun registerUser() {
-        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
             _registrationState.value = RegistrationState.Loading
             registrationUseCase(
                 RegistrationRequest(
@@ -155,7 +128,6 @@ class RegistrationViewModel @Inject constructor(
             )
         )
         _uiState.value.secondValidationIsPassed()
-        Log.d("RegistrationViewModel", _uiState.value.secondSectionPassed.toString())
     }
 
     fun onPhoneNumberChanged(phoneNumber: String) {
@@ -167,6 +139,5 @@ class RegistrationViewModel @Inject constructor(
             )
         )
         _uiState.value.secondValidationIsPassed()
-        Log.d("RegistrationViewModel", _uiState.value.secondSectionPassed.toString())
     }
 }
