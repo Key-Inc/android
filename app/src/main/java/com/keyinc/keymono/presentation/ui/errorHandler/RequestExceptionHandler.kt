@@ -17,18 +17,18 @@ class RequestExceptionHandler(
     val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         when (exception) {
             is HttpException -> when (exception.code()) {
-                NetworkErrorCodes.UNAUTHORIZED -> onUnauthorizedException
+                NetworkErrorCodes.UNAUTHORIZED -> onUnauthorizedException()
                 NetworkErrorCodes.BAD_REQUEST -> {
                     if (exception.message()
                             .contains(BAD_REGISTRATION_REQUEST_MARK)
-                    ) onBadRegistrationRequest
+                    ) onBadRegistrationRequest()
                     else onBaseException
                 }
 
-                else -> onBaseException
+                else -> onBaseException()
             }
 
-            else -> onBaseException
+            else -> onBaseException()
 
         }
     }
