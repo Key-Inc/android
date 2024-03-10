@@ -2,6 +2,7 @@ package com.keyinc.keymono.data.api
 
 import com.keyinc.keymono.data.api.NetworkConstants.REQUEST_SERVICE_URL
 import com.keyinc.keymono.domain.entity.KeyRequestCreateDto
+import com.keyinc.keymono.domain.entity.RequestDTO
 import com.keyinc.keymono.domain.entity.ScheduleElementDto
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,6 +20,12 @@ interface RequestApi {
         @Query("classroomId") classroomId: UUID,
         @Query("date") date: LocalDate
     ): List<ScheduleElementDto>
+
+
+    @GET("$REQUEST_SERVICE_URL/my")
+    suspend fun getMyRequest(
+        @Header("Authorization") token: String,
+    ): List<RequestDTO>
 
     @POST(REQUEST_SERVICE_URL)
     suspend fun createNewKeyRequest(

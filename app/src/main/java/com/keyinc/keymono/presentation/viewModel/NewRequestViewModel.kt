@@ -42,6 +42,7 @@ class NewRequestViewModel @Inject constructor(
     private val createNewKeyRequestUseCase: CreateNewKeyRequestUseCase
 ) : ViewModel() {
 
+
     var scheduleElementMinTime: LocalTime? = null
         private set
     var scheduleElementMaxTime: LocalTime? = null

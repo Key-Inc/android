@@ -3,6 +3,7 @@ package com.keyinc.keymono.data.repository
 import com.keyinc.keymono.data.TokenStorage
 import com.keyinc.keymono.data.api.RequestApi
 import com.keyinc.keymono.domain.entity.KeyRequestCreateDto
+import com.keyinc.keymono.domain.entity.RequestDTO
 import com.keyinc.keymono.domain.entity.ScheduleElementDto
 import com.keyinc.keymono.domain.repository.RequestRepository
 import java.time.LocalDate
@@ -18,6 +19,9 @@ class RequestRepositoryImpl @Inject constructor(
         val token = tokenStorage.getToken()
         return "Bearer $token"
     }
+
+    override suspend fun getUserRequest(): List<RequestDTO> =
+        requestApi.getMyRequest(getBearerToken())
 
     override suspend fun getSchedule(classroomId: UUID, date: LocalDate): List<ScheduleElementDto> =
         requestApi.getSchedule(getBearerToken(), classroomId, date)
