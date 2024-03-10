@@ -1,4 +1,4 @@
-package com.keyinc.keymono.presentation.ui.userRequest
+package com.keyinc.keymono.presentation.ui.screen.userRequest
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

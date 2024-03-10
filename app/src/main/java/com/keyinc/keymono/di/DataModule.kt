@@ -6,11 +6,13 @@ import com.google.gson.GsonBuilder
 import com.keyinc.keymono.data.TokenStorage
 import com.keyinc.keymono.data.api.AccountApi
 import com.keyinc.keymono.data.api.ClassroomApi
+import com.keyinc.keymono.data.api.KeyApi
 import com.keyinc.keymono.data.api.NetworkConstants
 import com.keyinc.keymono.data.api.NetworkConstants.CONNECT_TIMEOUT
 import com.keyinc.keymono.data.api.NetworkConstants.READ_TIMEOUT
 import com.keyinc.keymono.data.api.NetworkConstants.WRITE_TIMEOUT
 import com.keyinc.keymono.data.api.RequestApi
+import com.keyinc.keymono.data.api.UserApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,6 +57,16 @@ object DataModule {
     @Provides
     fun provideAccountApi(retrofit: Retrofit): AccountApi {
         return retrofit.create(AccountApi::class.java)
+    }
+
+    @Provides
+    fun provideKeyApi(retrofit: Retrofit): KeyApi {
+        return retrofit.create(KeyApi::class.java)
+    }
+
+    @Provides
+    fun provideUserApi(retrofit: Retrofit): UserApi {
+        return retrofit.create(UserApi::class.java)
     }
 
     @Provides
