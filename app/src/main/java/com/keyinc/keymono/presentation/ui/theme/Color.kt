@@ -22,3 +22,6 @@ val LightBlue = Color(0xFFD9EDFF)
 val Gray82 = Color(0xFFD9D9D9)
 
 val LightGray = Color(0xFFF4F1F1)
+
+val BottomNavigationBackground = Color(0xFFEDECEC)
+val BottomNavigationContent = Color(0xFF575757)
