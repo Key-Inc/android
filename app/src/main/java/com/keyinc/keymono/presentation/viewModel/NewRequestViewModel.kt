@@ -243,11 +243,15 @@ class NewRequestViewModel @Inject constructor(
     fun onCreateNewKeyRequest() {
         _newRequestUiState.value = NewRequestUiState.Loading
         viewModelScope.launch(Dispatchers.IO + newRequestExceptionHandler) {
+            var endDateOfRecurrence: String? = null
+            if (_isRecurringAllowed.value) {
+                endDateOfRecurrence = DateConverterUtil.convertDateToServerFormat(_newRequestState.value.endDateOfRecurrence ?: EMPTY_STRING)
+            }
             createNewKeyRequestUseCase(
                 KeyRequestCreateDto(
                     startDate = toServerLocalDateTime(_newRequestState.value.startDate ?: ERROR_LOCAL_DATE_TIME),
                     endDate = toServerLocalDateTime(_newRequestState.value.endDate ?: ERROR_LOCAL_DATE_TIME),
-                    endDateOfRecurrence = DateConverterUtil.convertDateToServerFormat(_newRequestState.value.endDateOfRecurrence ?: EMPTY_STRING),
+                    endDateOfRecurrence = endDateOfRecurrence,
                     classroomId = _newRequestState.value.classroomId.toString()
                 )
             )
