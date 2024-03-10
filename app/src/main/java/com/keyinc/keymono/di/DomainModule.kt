@@ -59,9 +59,5 @@ object DomainModule {
         return RequestRepositoryImpl(tokenStorage, requestApi)
     }
 
-    @Provides
-    @Singleton
-    fun provideKeyRepository(tokenStorage: TokenStorage, keyApi: KeyApi): KeyRepository {
-        return KeyRepositoryImpl(keyApi, tokenStorage)
-    }
+
 }

@@ -22,8 +22,7 @@ object BottomNavItems {
         BottomNavItem(
             labelId = R.string.key_transfer,
             iconId = R.drawable.ic_transfer,
-            // TODO real route
-            route = Routes.UserRequestScreen.route
+            route = Routes.UserKeysScreen.route
         ),
         BottomNavItem(
             labelId = R.string.profile,

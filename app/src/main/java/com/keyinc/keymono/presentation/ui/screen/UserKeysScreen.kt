@@ -111,7 +111,7 @@ private fun KeysCard(
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
-            .noRippleClickable { onClick(classroomName) }
+            .noRippleClickable { onClick(id); }
             .padding(bottom = 16.dp, top = 16.dp, end = 32.dp, start = 32.dp),
         colors = CardDefaults.cardColors(
 

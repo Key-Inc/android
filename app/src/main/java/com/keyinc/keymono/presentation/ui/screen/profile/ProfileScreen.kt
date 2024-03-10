@@ -29,7 +29,8 @@ import com.keyinc.keymono.presentation.viewModel.ProfileViewModel
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel,
-    onNavigateToEditProfile: () -> Unit
+    onNavigateToEditProfile: () -> Unit,
+    onNavigateToLogin: () -> Unit,
 ) {
     val profileState by viewModel.profileState.collectAsStateWithLifecycle()
 
@@ -71,8 +72,8 @@ fun ProfileScreen(
 
         SecondaryButton(
             modifier = Modifier.padding(horizontal = PaddingLarge),
-            text = stringResource(id = R.string.request_history),
-            onClick = { /* TODO */ }
+            text = stringResource(id = R.string.logout),
+            onClick = { viewModel.logoutUser(); onNavigateToLogin() },
         )
     }
 }

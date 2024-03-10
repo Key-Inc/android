@@ -1,5 +1,6 @@
 package com.keyinc.keymono.domain.repository
 
+import com.keyinc.keymono.domain.entity.TransferRequests
 import com.keyinc.keymono.domain.entity.UserKeyDto
 import com.keyinc.keymono.domain.entity.UserPagedListDto
 

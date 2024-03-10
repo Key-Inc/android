@@ -79,9 +79,4 @@ object DataModule {
         return retrofit.create(RequestApi::class.java)
     }
 
-    @Provides
-    fun provideKeyApi(retrofit: Retrofit): KeyApi {
-        return retrofit.create(KeyApi::class.java)
-    }
-
 }
