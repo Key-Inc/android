@@ -3,6 +3,7 @@ package com.keyinc.keymono.di
 import com.keyinc.keymono.domain.repository.AccountRepository
 import com.keyinc.keymono.domain.repository.ClassroomRepository
 import com.keyinc.keymono.domain.repository.RequestRepository
+import com.keyinc.keymono.domain.usecase.account.GetUserRoleUseCase
 import com.keyinc.keymono.domain.usecase.account.LoginUserUseCase
 import com.keyinc.keymono.domain.usecase.classroom.GetClassroomsUseCase
 import com.keyinc.keymono.domain.usecase.request.CreateNewKeyRequestUseCase
@@ -53,4 +54,7 @@ object PresentationModule {
     fun provideCreateNewKeyRequestUseCase(requestRepository: RequestRepository)
         = CreateNewKeyRequestUseCase(requestRepository)
 
+    @Provides
+    fun provideGetUserRoleUseCase(accountRepository: AccountRepository)
+        = GetUserRoleUseCase(accountRepository)
 }

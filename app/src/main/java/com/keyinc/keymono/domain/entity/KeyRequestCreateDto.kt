@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class KeyRequestCreateDto(
     val startDate: String,
     val endDate: String,
-    val isRecurring: Boolean,
+    val endDateOfRecurrence: String?,
     val classroomId: String
 )

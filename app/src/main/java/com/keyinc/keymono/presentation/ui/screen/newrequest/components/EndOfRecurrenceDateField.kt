@@ -19,7 +19,7 @@ import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
 import com.keyinc.keymono.presentation.ui.theme.RequestFieldText
 
 @Composable
-fun IsRecurringField(
+fun EndOfRecurrenceDateField(
     isRecurring: Boolean,
     onChangeRecurring: () -> Unit,
     modifier: Modifier = Modifier

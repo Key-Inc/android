@@ -23,6 +23,7 @@ import com.keyinc.keymono.presentation.ui.component.PhoneTextField
 import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationUIState
 import com.keyinc.keymono.presentation.ui.theme.Padding20
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
+import java.time.LocalDate
 
 @Composable
 fun RegistrationFirstSection(
@@ -102,7 +103,9 @@ fun RegistrationSecondSection(
         },
             onDateChange = {
                 registrationViewModel.onBirthDateChanged(it)
-            }
+            },
+            minYear = LocalDate.now().year - 100,
+            maxYear = LocalDate.now().year
         )
     }
 }
