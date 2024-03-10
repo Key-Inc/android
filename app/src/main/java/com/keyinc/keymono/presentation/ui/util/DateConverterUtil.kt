@@ -1,9 +1,11 @@
 package com.keyinc.keymono.presentation.ui.util
 
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 object DateConverterUtil {
 
@@ -19,10 +21,27 @@ object DateConverterUtil {
         } ?: ""
     }
 
+    fun convertDateToStringReversed(date: LocalDate?): String {
+        return date?.let {
+            val day = it.dayOfMonth.toString().padStart(2, '0')
+            val month = it.monthValue.toString().padStart(2, '0')
+            val year = it.year.toString()
+            "$year.$month.$day"
+        } ?: ""
+    }
+
 
     fun convertDateToServerFormat(date: String): String {
         val dateParts = date.split(".")
         return "${dateParts[2]}-${dateParts[1]}-${dateParts[0]}"
+    }
+
+    fun convertDateToUiFormat(serverDate: String): String {
+        val serverDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
+
+        val date = serverDateFormat.parse(serverDate)
+        return outputDateFormat.format(date!!)
     }
 
     // Converts "HH:mm:ss" to "HH:mm"

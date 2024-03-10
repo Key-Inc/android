@@ -5,6 +5,7 @@ import com.keyinc.keymono.data.api.AccountApi
 import com.keyinc.keymono.domain.entity.LoginRequest
 import com.keyinc.keymono.domain.entity.ProfileResponse
 import com.keyinc.keymono.domain.entity.RegistrationRequest
+import com.keyinc.keymono.domain.entity.UserEditDto
 import com.keyinc.keymono.domain.repository.AccountRepository
 import javax.inject.Inject
 
@@ -32,6 +33,10 @@ class AccountRepositoryImpl @Inject constructor(
 
     override suspend fun getProfile(): ProfileResponse {
         return accountApi.getProfile(getBearerToken())
+    }
+
+    override suspend fun editProfile(profile: UserEditDto) {
+        return accountApi.editProfile(getBearerToken(), profile)
     }
 
     override suspend fun getTokenFromStorage(): String {
