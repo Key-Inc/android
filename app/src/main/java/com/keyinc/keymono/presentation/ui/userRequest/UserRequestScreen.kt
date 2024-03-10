@@ -58,6 +58,7 @@ fun UserRequestScreen(
         content = {
             when (requestState) {
                 is UserRequestState.Initial -> userRequestViewModel.getUserRequest()
+
                 is UserRequestState.NoRequest -> {
                     NoRequest()
                 }
