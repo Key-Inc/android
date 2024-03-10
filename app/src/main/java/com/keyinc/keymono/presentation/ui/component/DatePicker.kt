@@ -11,19 +11,27 @@ import java.time.LocalDate
 
 
 @Composable
-fun DatePicker(onCloseSelection: () -> Unit, onDateChange: (String) -> Unit) {
+fun DatePicker(
+    onCloseSelection: () -> Unit,
+    onDateChange: (String) -> Unit,
+    isInReversedFormat: Boolean = false,
+    maxYear: Int,
+    minYear: Int
+) {
     DatePickerTheme() {
         DateTimeDialog(
             state = rememberUseCaseState(visible = true, onCloseRequest = { onCloseSelection() }),
             selection = DateTimeSelection.Date { newDate ->
-                onDateChange(DateConverterUtil.convertDateToString(newDate))
+                if (isInReversedFormat) {
+                    onDateChange(DateConverterUtil.convertDateToStringReversed(newDate))
+                } else {
+                    onDateChange(DateConverterUtil.convertDateToString(newDate))
+                }
             },
-
             config = DateTimeConfig(
-                maxYear = LocalDate.now().year,
-                minYear = LocalDate.now().year - 100
+                maxYear = maxYear,
+                minYear = minYear
             )
-
         )
     }
 }

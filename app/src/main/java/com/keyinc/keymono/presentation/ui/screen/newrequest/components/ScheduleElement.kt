@@ -20,10 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.keyinc.keymono.R
-import com.keyinc.keymono.data.MockSchedule
 import com.keyinc.keymono.domain.entity.ScheduleStatus
 import com.keyinc.keymono.presentation.model.ScheduleElement
 import com.keyinc.keymono.presentation.ui.theme.Accent
@@ -32,13 +30,13 @@ import com.keyinc.keymono.presentation.ui.theme.LightGray
 import com.keyinc.keymono.presentation.ui.theme.Padding24
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
-import com.keyinc.keymono.presentation.ui.theme.Title
+import com.keyinc.keymono.presentation.ui.theme.ScheduleTitle
 import com.keyinc.keymono.presentation.ui.util.noRippleClickable
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun ScheduleElement(
     scheduleElement: ScheduleElement,
+    onScheduleElementClick: (ScheduleElement) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val isAvailable = scheduleElement.status == ScheduleStatus.Available
@@ -48,7 +46,16 @@ fun ScheduleElement(
         modifier = modifier
             .fillMaxWidth()
             .height(100.dp)
-            .noRippleClickable { /* TODO */ }
+            .then(
+                if (isAvailable) {
+                    Modifier.noRippleClickable {
+                        onScheduleElementClick(scheduleElement)
+                    }
+                } else {
+                    Modifier
+                }
+            )
+
     ) {
         Box(
             modifier = Modifier
@@ -60,7 +67,7 @@ fun ScheduleElement(
                 .then(
                     if (isAvailable) {
                         Modifier.clickable {
-                            // TODO to NewRequestScreen
+                            onScheduleElementClick(scheduleElement)
                         }
                     } else {
                         Modifier
@@ -73,8 +80,8 @@ fun ScheduleElement(
                     horizontal = Padding24
                 ),
                 isAvailable = isAvailable,
-                startTime = scheduleElement.startTime,
-                endTime = scheduleElement.endTime
+                startTime = scheduleElement.startTimeDisplay,
+                endTime = scheduleElement.endTimeDisplay
             )
         }
 
@@ -88,7 +95,9 @@ fun ScheduleElement(
                     .align(Alignment.TopEnd)
             ) {
                 IconButton(
-                    onClick = { /* TODO */ }
+                    onClick = {
+                        onScheduleElementClick(scheduleElement)
+                    }
                 ) {
                     Icon(
                         modifier = Modifier.size(Padding24),
@@ -119,23 +128,7 @@ private fun ScheduleElementText(
     Text(
         modifier = modifier,
         text = text,
-        style = Title,
+        style = ScheduleTitle,
         color = textColor
-    )
-}
-
-@Preview
-@Composable
-fun ScheduleElementPreview() {
-    val formatter = DateTimeFormatter.ofPattern("H:mm")
-    val scheduleElementDto = MockSchedule.schedule[0]
-    val scheduleElement = ScheduleElement(
-        startTime = scheduleElementDto.startDate.format(formatter),
-        endTime = scheduleElementDto.endDate.format(formatter),
-        status = scheduleElementDto.status
-    )
-
-    ScheduleElement(
-        scheduleElement = scheduleElement
     )
 }

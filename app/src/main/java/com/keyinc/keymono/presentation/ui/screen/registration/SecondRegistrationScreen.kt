@@ -1,5 +1,6 @@
 package com.keyinc.keymono.presentation.ui.screen.registration
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -30,9 +31,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
-import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationState
 import com.keyinc.keymono.presentation.ui.component.AccentButton
 import com.keyinc.keymono.presentation.ui.screen.registration.firstpage.RegistrationSecondSection
+import com.keyinc.keymono.presentation.ui.screen.state.registration.RegistrationState
 import com.keyinc.keymono.presentation.ui.theme.Accent
 import com.keyinc.keymono.presentation.ui.theme.FontSmall
 import com.keyinc.keymono.presentation.ui.theme.InterLabelBold
@@ -50,6 +51,7 @@ fun SecondRegistrationScreen(
     onNavigateToBack: () -> Unit,
     onNavigateToRequestWaiting: () -> Unit,
     onNavigateToLogin: () -> Unit,
+    onUnauthorizedError: () -> Unit,
     registrationViewModel: RegistrationViewModel
 ) {
     val focusManager = LocalFocusManager.current
@@ -104,11 +106,11 @@ fun SecondRegistrationScreen(
                 var buttonContent: @Composable (() -> Unit)? = null
 
                 when (registrationState) {
-                    RegistrationState.Initial -> {
+                    is RegistrationState.Initial -> {
                         buttonClick = { registrationViewModel.registerUser() }
                     }
 
-                    RegistrationState.Loading -> {
+                    is RegistrationState.Loading -> {
                         buttonContent = {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(PaddingMedium),
@@ -118,20 +120,15 @@ fun SecondRegistrationScreen(
                         }
                     }
 
-                    RegistrationState.Success -> {
-                       onNavigateToRequestWaiting()
+                    is RegistrationState.Success -> {
+                        onNavigateToRequestWaiting()
                     }
 
-                    else -> {
-
-                        registrationError = when (registrationState) {
-                            is RegistrationState.Error -> {
-                                (registrationState as RegistrationState.Error).message
-                            }
-
-                            else -> null
-                        }
+                    is RegistrationState.Error -> {
+                        registrationError = (registrationState as RegistrationState.Error).message
+                        buttonClick = { registrationViewModel.registerUser() }
                     }
+
                 }
 
                 Column(
@@ -140,19 +137,23 @@ fun SecondRegistrationScreen(
                 ) {
                     AccentButton(
                         onClick = buttonClick,
-                        text = stringResource(id = R.string.onboard_button)
+                        text = stringResource(id = R.string.onboard_button),
+                        enabled = uiState.secondSectionPassed,
                     ) {
                         buttonContent?.invoke()
                     }
-                    if (registrationError != null) {
+
+                    AnimatedVisibility(visible = registrationError != null) {
                         Text(
                             modifier = Modifier.padding(top = PaddingSmall),
-                            text = registrationError,
+                            text = registrationError ?: "",
                             style = InterLogo,
                             fontSize = FontSmall,
                             color = Color.Red,
                         )
                     }
+
+
                 }
 
 

@@ -1,9 +1,10 @@
 package com.keyinc.keymono.domain.entity
 
-import java.time.LocalDateTime
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ScheduleElementDto(
-    val startDate: LocalDateTime,
-    val endDate: LocalDateTime,
+    val startDate: String,
+    val endDate: String,
     val status: ScheduleStatus
 )

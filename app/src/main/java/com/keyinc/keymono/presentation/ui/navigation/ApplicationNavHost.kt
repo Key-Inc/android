@@ -11,16 +11,25 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.keyinc.keymono.presentation.ui.screen.login.LoginScreen
 import com.keyinc.keymono.presentation.ui.screen.newrequest.ClassroomChoiceScreen
+import com.keyinc.keymono.presentation.ui.screen.newrequest.DateTimeChoiceScreen
+import com.keyinc.keymono.presentation.ui.screen.newrequest.SendRequestScreen
 import com.keyinc.keymono.presentation.ui.screen.onboarding.OnBoardingScreen
+import com.keyinc.keymono.presentation.ui.screen.profile.EditProfileScreen
+import com.keyinc.keymono.presentation.ui.screen.profile.ProfileScreen
 import com.keyinc.keymono.presentation.ui.screen.registration.FirstRegistrationScreen
 import com.keyinc.keymono.presentation.ui.screen.registration.SecondRegistrationScreen
 import com.keyinc.keymono.presentation.ui.screen.request.RequestWaitingScreen
 import com.keyinc.keymono.presentation.ui.screen.splash.SplashScreen
+import com.keyinc.keymono.presentation.ui.userRequest.UserRequestScreen
+import com.keyinc.keymono.presentation.viewModel.NewRequestViewModel
+import com.keyinc.keymono.presentation.viewModel.ProfileViewModel
 import com.keyinc.keymono.presentation.viewModel.RegistrationViewModel
 
 @Composable
 fun ApplicationNavHost(
     registrationViewModel: RegistrationViewModel,
+    newRequestViewModel: NewRequestViewModel,
+    profileViewModel: ProfileViewModel,
     navController: NavHostController = rememberNavController()
 ) {
     NavHost(navController = navController, startDestination = Routes.SplashScreen.route) {
@@ -37,10 +46,15 @@ fun ApplicationNavHost(
         composable(Routes.LoginScreen.route) {
             LoginScreen(
                 onNavigateToClassroomChoice = {
-                    navController.navigate(Routes.ClassroomChoiceScreen.route)
+                    navController.navigate(Routes.UserRequestScreen.route)
                 },
                 onNavigateToRegister = {
                     navController.navigateBackOrToAvoidingBackStack(Routes.FirstRegistrationScreen.route)
+                },
+                onNavigateToRequest = {
+                    navController.navigate(Routes.RequestWaitingScreen.route) {
+                        clearAllBackStack(navController)
+                    }
                 }
             )
         }
@@ -60,10 +74,23 @@ fun ApplicationNavHost(
             )
         }
 
+        composable(Routes.UserRequestScreen.route) {
+            UserRequestScreen(
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LoginScreen.route) {
+                        clearAllBackStack(navController = navController)
+                    }
+                }
+            )
+        }
+
         composable(Routes.OnBoardingScreen.route) {
             OnBoardingScreen(
                 onNavigateToRegistration = {
                     navController.navigate(Routes.FirstRegistrationScreen.route)
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LoginScreen.route)
                 }
             )
         }
@@ -72,6 +99,11 @@ fun ApplicationNavHost(
             RequestWaitingScreen(
                 onNavigateToClassroomChoice = {
                     navController.navigate(Routes.ClassroomChoiceScreen.route)
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LoginScreen.route) {
+                        clearAllBackStack(navController = navController)
+                    }
                 }
             )
         }
@@ -89,12 +121,55 @@ fun ApplicationNavHost(
                 },
                 onNavigateToLogin = {
                     navController.navigate(Routes.LoginScreen.route)
+                },
+                onUnauthorizedError = {
+                    navController.navigate(Routes.LoginScreen.route) {
+                        clearAllBackStack(navController = navController)
+                    }
                 }
             )
         }
 
         composable(Routes.ClassroomChoiceScreen.route) {
-            ClassroomChoiceScreen()
+            ClassroomChoiceScreen(
+                viewModel = newRequestViewModel,
+                onNavigateToDateTimeChoice = {
+                    navController.navigate(Routes.DateTimeChoiceScreen.route)
+                }
+            )
+        }
+
+        composable(Routes.DateTimeChoiceScreen.route) {
+            DateTimeChoiceScreen(
+                viewModel = newRequestViewModel,
+                onNavigateToSendRequest = {
+                    navController.navigate(Routes.SendRequestScreen.route)
+                }
+            )
+        }
+
+        composable(Routes.SendRequestScreen.route) {
+            SendRequestScreen(
+                viewModel = newRequestViewModel
+            )
+        }
+
+        composable(Routes.ProfileScreen.route) {
+            ProfileScreen(
+                viewModel = profileViewModel,
+                onNavigateToEditProfile = {
+                    navController.navigate(Routes.EditProfileScreen.route)
+                }
+            )
+        }
+
+        composable(Routes.EditProfileScreen.route) {
+            EditProfileScreen(
+                viewModel = profileViewModel,
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

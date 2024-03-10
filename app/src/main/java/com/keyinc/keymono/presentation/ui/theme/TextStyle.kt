@@ -32,3 +32,15 @@ val RequestFieldText = TextStyle(
     fontFamily = Inter,
     fontWeight = FontWeight.SemiBold
 )
+
+val ScheduleTitle = TextStyle(
+    fontSize = FontScheduleTitle,
+    fontFamily = Inter,
+    fontWeight = FontWeight.SemiBold
+)
+
+val ProfileRegular = TextStyle(
+    fontSize = FontNormal,
+    fontFamily = Inter,
+    fontWeight = FontWeight.Medium
+)

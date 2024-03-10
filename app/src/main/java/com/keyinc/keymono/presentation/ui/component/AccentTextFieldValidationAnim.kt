@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.keyinc.keymono.domain.entity.ValidationResult
 import com.keyinc.keymono.presentation.ui.theme.FontSmall
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
 import com.keyinc.keymono.presentation.ui.theme.PaddingSmall
@@ -16,8 +17,8 @@ import com.keyinc.keymono.presentation.ui.theme.Tomato
 
 
 @Composable
-fun AccentTextFieldValidationAnim(errorId: Int?) {
-    if (errorId != null) {
+fun AccentTextFieldValidationAnim(validationState: ValidationResult?) {
+    if (validationState?.errorId != null) {
         AnimatedVisibility(
             modifier = Modifier.padding(top = PaddingSmall),
             visible = true,
@@ -30,7 +31,12 @@ fun AccentTextFieldValidationAnim(errorId: Int?) {
                 animationSpec = tween(durationMillis = 400)
             )
         ) {
-            Text(text = stringResource(id = errorId), style = InterLogo, fontSize = FontSmall, color = Tomato)
+            Text(
+                text = stringResource(id = validationState.errorId),
+                style = InterLogo,
+                fontSize = FontSmall,
+                color = Tomato
+            )
         }
     }
 }

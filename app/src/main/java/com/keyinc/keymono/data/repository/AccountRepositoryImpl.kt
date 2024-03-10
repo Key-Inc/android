@@ -22,8 +22,20 @@ class AccountRepositoryImpl @Inject constructor(
         return accountApi.getRegistrationStatus(getBearerToken())
     }
 
+    override suspend fun getUserRole(): String {
+        return accountApi.getUserRole(getBearerToken())
+    }
+
+    override fun clearToken() {
+        tokenStorage.deleteToken()
+    }
+
     override suspend fun getProfile(): ProfileResponse {
         return accountApi.getProfile(getBearerToken())
+    }
+
+    override suspend fun editProfile(profile: UserEditDto) {
+        return accountApi.editProfile(getBearerToken(), profile)
     }
 
     override suspend fun getTokenFromStorage(): String {

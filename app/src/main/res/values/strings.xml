@@ -6,6 +6,7 @@
     <string name="company_logo">Company logo</string>
     <string name="app_label">KeyMono.</string>
 
+
     <!-- Common strings used for registration, login and onBoarding screen -->
     <string name="onboard_button">Зарегистрироваться</string>
     <string name="already_have_account">Вы уже с нами?</string>
@@ -27,7 +28,13 @@
     <string name="password_error">Пароль должен содержать в себе от 8-ми символов</string>
     <string name="email_error">Почта должна соотвествовать стандарту</string>
     <string name="confirm_password_error">Пароли не совпадают</string>
+    <string name="fullname_error">Имя должно содержать в себе более 2-х символов</string>
+    <string name="phone_number_error">Телефон должен соотвествовать международному формату</string>
 
+
+    <!-- Strings used for registration -->
+    <string name="wrong_role_error">Функционал пользователей с вашей ролью не доступен в приложении, пожалуйста воспользуйтесь веб-клиентом</string>
+    <string name="unexpected_error">Неизвестная ошибка</string>
     <!-- Strings used for button description in registrations screen -->
     <string name="navigate_back_button_description">Кнопка для навигации назад</string>
 
@@ -42,7 +49,7 @@
 
     <!-- Strings used for classrooms and request creating -->
     <string name="new_classroom_booking_request">Новая заявка на бронирование аудитории</string>
-    <string name="classroom_short_desc">%1$d ауд.</string>
+    <string name="classroom_short_desc">%1$d (%2$d) ауд.</string>
     <string name="choose_classroom">Выбрать аудиторию</string>
     <string name="time_range">%1$s - %2$s</string>
     <string name="available">Свободно</string>
@@ -56,7 +63,15 @@
     <string name="recurring">Повторяющаяся</string>
     <string name="send_a_request">Отправить заявку</string>
     <string name="log_in_short">Войти</string>
+    <string name="request_successfully_created">Заявка была успешно создана!</string>
 
-
+    <!-- Strings used for profile screen -->
+    <string name="your_profile">Ваш профиль</string>
+    <string name="profile_greetings">Здравствуйте, \n%1$s</string>
+    <string name="change_data">Изменить данные</string>
+    <string name="update_data">Обновить данные</string>
+    <string name="request_history">История заявок</string>
+    <string name="edit_profile_label">Хотите перемен? Мы вам поможем</string>
+    <string name="edit_profile_successful">Профиль успешно обновлен</string>
 
 </resources>

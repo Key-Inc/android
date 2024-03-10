@@ -13,6 +13,8 @@ internal val FontNormal = 20.sp
 internal val FontRegular = 18.sp
 internal val FontSmall = 16.sp
 
+internal val FontScheduleTitle = 23.sp
+
 val Inter = FontFamily(
     Font(R.font.inter_semibold, FontWeight.SemiBold),
     Font(R.font.inter_medium, FontWeight.Medium),

@@ -2,9 +2,12 @@ package com.keyinc.keymono.domain.usecase.validation
 
 import com.keyinc.keymono.domain.entity.ValidationResult
 
-class ValidateEmailUseCase  : BaseValidationUseCase {
+class ValidateEmailUseCase : BaseValidationUseCase {
 
-    private val emailPattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+    private companion object {
+        const val emailPattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+    }
+
 
     override operator fun invoke(validationProperty: String, errorId: Int?): ValidationResult {
 

@@ -18,7 +18,7 @@ import com.keyinc.keymono.presentation.ui.theme.InterLogo
 @Composable
 fun AccentButton(
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    enabled: Boolean,
     text: String,
     onClick: () -> Unit = {},
     content: @Composable () -> Unit = {}
@@ -26,10 +26,10 @@ fun AccentButton(
 
     Button(
         onClick = onClick,
+        enabled = enabled,
         modifier = modifier
             .fillMaxWidth()
             .height(61.dp),
-        enabled = enabled,
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Accent,
@@ -45,7 +45,5 @@ fun AccentButton(
             style = InterLogo,
             fontSize = FontMedium
         )
-
-
     }
 }
