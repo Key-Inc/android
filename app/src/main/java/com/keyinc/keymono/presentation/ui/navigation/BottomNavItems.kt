@@ -12,8 +12,7 @@ object BottomNavItems {
         BottomNavItem(
             labelId = R.string.incoming_requests,
             iconId = R.drawable.ic_inbox,
-            // TODO real route
-            route = Routes.UserRequestScreen.route
+            route = Routes.TransferRequestsScreen.route
         ),
         BottomNavItem(
             labelId = R.string.new_request,

@@ -9,4 +9,11 @@ interface KeyRepository {
     suspend fun getUserList(name: String): UserPagedListDto
 
     suspend fun transferKeyForUser(id: String, userId: String)
+
+    suspend fun getTransferRequests(
+        status: String?,
+        page: Int?,
+        size: Int?
+    ): TransferRequests
+
 }

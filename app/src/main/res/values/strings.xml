@@ -35,6 +35,7 @@
     <!-- Strings used for registration -->
     <string name="wrong_role_error">Функционал пользователей с вашей ролью не доступен в приложении, пожалуйста воспользуйтесь веб-клиентом</string>
     <string name="unexpected_error">Неизвестная ошибка</string>
+    <string name="unauthorized_error">Ошибка авторизации</string>
     <!-- Strings used for button description in registrations screen -->
     <string name="navigate_back_button_description">Кнопка для навигации назад</string>
 

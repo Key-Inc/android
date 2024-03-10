@@ -5,6 +5,7 @@ import com.keyinc.keymono.data.api.KeyApi
 import com.keyinc.keymono.data.api.UserApi
 import com.keyinc.keymono.domain.entity.UserKeyDto
 import com.keyinc.keymono.domain.entity.UserPagedListDto
+import com.keyinc.keymono.domain.entity.TransferRequests
 import com.keyinc.keymono.domain.repository.KeyRepository
 import javax.inject.Inject
 
@@ -32,6 +33,19 @@ class KeyRepositoryImpl @Inject constructor(
     override suspend fun transferKeyForUser(id: String, userId: String) {
         val token = getBearerToken()
         keyApi.transferKeyForUser(token, id, userId)
+    }
+
+    override suspend fun getTransferRequests(
+        status: String?,
+        page: Int?,
+        size: Int?
+    ): TransferRequests {
+        return keyApi.getTransferRequests(
+            getBearerToken(),
+            status,
+            page,
+            size
+        )
     }
 
 }
