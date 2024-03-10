@@ -74,7 +74,7 @@ class ProfileViewModel @Inject constructor(
 
     fun editProfile() {
         _profileUiState.value = ProfileUiState.Loading
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
             editProfileUseCase(
                 profile = with (_profileState.value) {
                     UserEditDto(
