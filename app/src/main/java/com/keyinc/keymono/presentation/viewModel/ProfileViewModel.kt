@@ -6,6 +6,7 @@ import com.keyinc.keymono.R
 import com.keyinc.keymono.domain.entity.UserEditDto
 import com.keyinc.keymono.domain.usecase.account.EditProfileUseCase
 import com.keyinc.keymono.domain.usecase.account.GetProfileUseCase
+import com.keyinc.keymono.domain.usecase.account.LogoutUserUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidateEmailUseCase
 import com.keyinc.keymono.domain.usecase.validation.ValidatePhoneNumberUseCase
 import com.keyinc.keymono.presentation.ui.errorHandler.RequestExceptionHandler
@@ -24,6 +25,7 @@ class ProfileViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
     private val editProfileUseCase: EditProfileUseCase,
     private val validateEmailUseCase: ValidateEmailUseCase,
+    private val logoutUserUseCase: LogoutUserUseCase,
     private val validatePhoneNumberUseCase: ValidatePhoneNumberUseCase
 ) : ViewModel() {
 
@@ -52,6 +54,13 @@ class ProfileViewModel @Inject constructor(
 
     init {
         loadUserProfile()
+    }
+
+
+    fun logoutUser() {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
+            logoutUserUseCase.execute()
+        }
     }
 
     private fun loadUserProfile() {

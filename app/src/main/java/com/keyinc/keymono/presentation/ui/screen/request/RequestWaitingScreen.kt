@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -162,6 +163,7 @@ fun RequestWaitingScreen(
                         )
                         Text(
                             text = stringResource(id = R.string.log_in),
+                            modifier = Modifier.clickable { onNavigateToLogin(); requestWaitingViewModel.logout() },
                             style = InterLogo,
                             fontSize = FontSmall,
                             color = Accent,
@@ -180,7 +182,10 @@ fun RequestWaitingScreen(
                         animationSpec = tween(durationMillis = 400)
                     )
                 ) {
-                    RequestAlert(text = stringResource(id = R.string.request_is_under_consideration))
+                    RequestAlert(
+                        text = requestError
+                            ?: stringResource(id = R.string.request_is_under_consideration)
+                    )
                     LaunchedEffect(key1 = requestError) {
                         delay(3000L)
                         requestError = null

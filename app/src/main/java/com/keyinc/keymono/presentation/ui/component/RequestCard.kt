@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.theme.Accent
@@ -33,7 +34,7 @@ import com.keyinc.keymono.presentation.ui.util.DateConverterUtil.convertToReques
 fun RequestCard(
     classRoomName: String = "220 (2) аудитория",
     requestType: String? = null,
-    requestDate: String = "29.03.2024",
+    requestDate: String = "2024-03-11T15:30:00",
     requestTime: String = "9:45 - 20:45",
     requestStatus: String = "В рассмотрении"
 ) {
@@ -119,5 +120,11 @@ fun RequestCard(
             Text(text = status, modifier = Modifier.padding(8.dp), color = Color.White)
         }
     }
+}
+
+@Preview
+@Composable
+private fun RequestCardPreview() {
+    RequestCard()
 }
 

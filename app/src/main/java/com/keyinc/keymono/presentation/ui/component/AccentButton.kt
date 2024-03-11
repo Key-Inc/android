@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.keyinc.keymono.presentation.ui.theme.Accent
 import com.keyinc.keymono.presentation.ui.theme.FontMedium
 import com.keyinc.keymono.presentation.ui.theme.InterLogo
+import com.keyinc.keymono.presentation.ui.theme.Tomato
 
 @Composable
 fun AccentButton(
@@ -33,6 +34,40 @@ fun AccentButton(
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Accent,
+            contentColor = Color.White
+        )
+    ) {
+        content()
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = text,
+            textAlign = TextAlign.Center,
+            color = Color.White,
+            style = InterLogo,
+            fontSize = FontMedium
+        )
+    }
+}
+
+
+@Composable
+fun TomatoAccentButton(
+    modifier: Modifier = Modifier,
+    enabled: Boolean,
+    text: String,
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit = {}
+) {
+
+    Button(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(61.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Tomato,
             contentColor = Color.White
         )
     ) {

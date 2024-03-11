@@ -39,6 +39,7 @@ import com.keyinc.keymono.presentation.ui.theme.Padding64
 import com.keyinc.keymono.presentation.ui.theme.PaddingLarge
 import com.keyinc.keymono.presentation.ui.theme.Title
 import com.keyinc.keymono.presentation.viewModel.ProfileViewModel
+import java.time.LocalDate
 
 @Composable
 fun EditProfileScreen(
@@ -112,6 +113,7 @@ fun EditProfileScreen(
                     CircularProgressIndicator()
                 }
             }
+
             ProfileUiState.Success -> {
                 Toast.makeText(
                     LocalContext.current,
@@ -120,6 +122,7 @@ fun EditProfileScreen(
                 ).show()
                 // TODO remove toast (or add one-time event) and navigate to main screen
             }
+
             is ProfileUiState.Error -> {
                 // TODO
                 Log.e("EditProfileScreen", (profileUiState as ProfileUiState.Error).message)
@@ -132,7 +135,9 @@ fun EditProfileScreen(
                 isDatePickerOpened = false
             },
             onDateChange = viewModel::onDateOfBirthChanged,
-            isInReversedFormat = true
+            isInReversedFormat = true,
+            maxYear = LocalDate.now().year,
+            minYear = LocalDate.now().year - 100
         )
     }
 }

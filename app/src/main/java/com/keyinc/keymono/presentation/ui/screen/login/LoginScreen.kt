@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.keyinc.keymono.R
 import com.keyinc.keymono.presentation.ui.component.AccentButton
+import com.keyinc.keymono.presentation.ui.component.AccentPasswordTextField
 import com.keyinc.keymono.presentation.ui.component.AccentTextField
 import com.keyinc.keymono.presentation.ui.screen.state.login.LoginUiState
 import com.keyinc.keymono.presentation.ui.theme.Accent
@@ -85,7 +86,7 @@ fun LoginScreen(
                 onValueChange = viewModel::onEmailChanged
             )
             Spacer(modifier = Modifier.padding(20.dp))
-            AccentTextField(
+            AccentPasswordTextField(
                 textFieldValue = loginState.password,
                 label = stringResource(id = R.string.password),
                 errorId = loginState.passwordValidation,

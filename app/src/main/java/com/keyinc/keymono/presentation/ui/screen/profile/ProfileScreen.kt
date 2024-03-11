@@ -27,9 +27,10 @@ import com.keyinc.keymono.presentation.viewModel.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
+    modifier: Modifier = Modifier,
     viewModel: ProfileViewModel,
     onNavigateToEditProfile: () -> Unit,
-    modifier: Modifier = Modifier
+    onNavigateToLogin: () -> Unit,
 ) {
     val profileState by viewModel.profileState.collectAsStateWithLifecycle()
 
@@ -61,7 +62,6 @@ fun ProfileScreen(
         )
 
         AccentButton(
-            enabled = true,
             modifier = Modifier.padding(horizontal = PaddingLarge),
             text = stringResource(id = R.string.change_data),
             onClick = onNavigateToEditProfile,
@@ -72,8 +72,8 @@ fun ProfileScreen(
 
         SecondaryButton(
             modifier = Modifier.padding(horizontal = PaddingLarge),
-            text = stringResource(id = R.string.request_history),
-            onClick = { /* TODO */ }
+            text = stringResource(id = R.string.logout),
+            onClick = { viewModel.logoutUser(); onNavigateToLogin() },
         )
     }
 }

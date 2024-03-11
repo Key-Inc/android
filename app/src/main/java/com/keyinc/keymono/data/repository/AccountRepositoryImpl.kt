@@ -5,6 +5,7 @@ import com.keyinc.keymono.data.api.AccountApi
 import com.keyinc.keymono.domain.entity.LoginRequest
 import com.keyinc.keymono.domain.entity.ProfileResponse
 import com.keyinc.keymono.domain.entity.RegistrationRequest
+import com.keyinc.keymono.domain.entity.UserEditDto
 import com.keyinc.keymono.domain.repository.AccountRepository
 import javax.inject.Inject
 
@@ -22,7 +23,7 @@ class AccountRepositoryImpl @Inject constructor(
         return accountApi.getRegistrationStatus(getBearerToken())
     }
 
-    override suspend fun getUserRole(): String {
+    override suspend fun getUserRole(): String? {
         return accountApi.getUserRole(getBearerToken())
     }
 

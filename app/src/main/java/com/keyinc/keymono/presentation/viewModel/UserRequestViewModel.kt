@@ -43,8 +43,10 @@ class UserRequestViewModel @Inject constructor(private val getUserRequestUseCase
             val content = getUserRequestUseCase.invoke()
             if (content.isEmpty()) {
                 _requestState.value = UserRequestState.NoRequest
+            } else {
+                _requestState.value = UserRequestState.Content(content)
             }
-            _requestState.value = UserRequestState.Content(getUserRequestUseCase.invoke())
+
         }
     }
 
