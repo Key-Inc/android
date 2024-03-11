@@ -100,7 +100,7 @@ fun RootNavigation(
         composable(Routes.RequestWaitingScreen.route) {
             RequestWaitingScreen(
                 onNavigateToClassroomChoice = {
-                    navController.navigate(Routes.ClassroomChoiceScreen.route)
+                    navController.navigate(Routes.UserRequestScreen.route)
                 },
                 onNavigateToLogin = {
                     navController.navigate(Routes.LoginScreen.route) {

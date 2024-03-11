@@ -82,7 +82,7 @@ class LoginViewModel @Inject constructor(
         _loginUiState.value = LoginUiState.Loading
         viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
             val userRole = getUserRole.execute()
-            if (userRole != "Teacher" && userRole != "Student") {
+            if (userRole != "Teacher" && userRole != "Student" && userRole == null) {
                 _loginUiState.value = LoginUiState.WrongRole
             } else {
                 _loginUiState.value = LoginUiState.Success

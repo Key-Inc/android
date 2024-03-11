@@ -6,6 +6,7 @@ import com.keyinc.keymono.domain.entity.UserKeyDto
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -14,7 +15,6 @@ interface KeyApi {
     @GET("$KEY_SERVICE_URL/transfer-requests")
     suspend fun getTransferRequests(
         @Header("Authorization") token: String,
-        @Query("status") status: String?,
         @Query("page") page: Int?,
         @Query("size") size: Int?,
     ): TransferRequests
@@ -28,6 +28,18 @@ interface KeyApi {
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Path("userId") userId: String
+    )
+
+    @PUT("$KEY_SERVICE_URL/{id}/approve-transfer")
+    suspend fun approveTransfer(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    )
+
+    @PUT("$KEY_SERVICE_URL/{id}/reject-transfer")
+    suspend fun rejectTransfer(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
     )
 
 }

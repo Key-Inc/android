@@ -51,9 +51,15 @@ fun TransferRequestsScreen(
                 CircularProgressIndicator()
             }
         }
-        is TransferRequestsUiState.Error -> Log.e("TransferRequestsScreen", (transferRequestsUiState as TransferRequestsUiState.Error).message)
+
+        is TransferRequestsUiState.Error -> Log.e(
+            "TransferRequestsScreen",
+            (transferRequestsUiState as TransferRequestsUiState.Error).message
+        )
+
         is TransferRequestsUiState.Success -> {
-            val transferRequests = (transferRequestsUiState as TransferRequestsUiState.Success).content
+            val transferRequests =
+                (transferRequestsUiState as TransferRequestsUiState.Success).content
 
             LazyColumn(
                 modifier = modifier
@@ -74,10 +80,13 @@ fun TransferRequestsScreen(
                         Spacer(modifier = Modifier.height(Padding64))
                     }
 
-                    items(transferRequests.items) {
+                    items(transferRequests.items) { it ->
                         TransferRequestCard(
                             classRoomName = "${it.key.classroom.number} (${it.key.classroom.building}) аудитория",
-                            applicantName = it.applicantName
+                            applicantName = it.applicantName,
+                            onApprove = { viewModel.approveTransfer(it.key.id) },
+                            onReject = { viewModel.rejectTransfer(it.key.id) },
+                            keyId = it.key.id
                         )
                     }
                 } else {

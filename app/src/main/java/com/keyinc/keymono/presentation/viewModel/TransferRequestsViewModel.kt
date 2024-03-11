@@ -37,6 +37,21 @@ class TransferRequestsViewModel @Inject constructor(
         getTransferRequests()
     }
 
+
+    fun approveTransfer(id: String) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
+            getTransferRequestsUseCase.approveTransfer(id)
+            getTransferRequests()
+        }
+    }
+
+    fun rejectTransfer(id: String) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
+            getTransferRequestsUseCase.rejectTransfer(id)
+            getTransferRequests()
+        }
+    }
+
     private fun getTransferRequests() {
         _transferRequestsUiState.value = TransferRequestsUiState.Loading
         viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {

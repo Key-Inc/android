@@ -13,7 +13,7 @@ interface AccountRepository {
 
     suspend fun editProfile(profile: UserEditDto)
 
-    suspend fun getUserRole(): String
+    suspend fun getUserRole(): String?
 
     suspend fun getRegistrationStatus(): String
 

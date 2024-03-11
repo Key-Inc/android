@@ -5,6 +5,11 @@ import com.keyinc.keymono.domain.entity.UserKeyDto
 import com.keyinc.keymono.domain.entity.UserPagedListDto
 
 interface KeyRepository {
+
+    suspend fun rejectTransfer(id: String)
+
+    suspend fun approveTransfer(id: String)
+
     suspend fun getUserAvailableKeys(): List<UserKeyDto>
 
     suspend fun getUserList(name: String): UserPagedListDto

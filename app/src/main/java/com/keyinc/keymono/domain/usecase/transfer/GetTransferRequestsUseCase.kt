@@ -7,11 +7,14 @@ class GetTransferRequestsUseCase @Inject constructor(
     private val keyRepository: KeyRepository
 ) {
 
+    suspend fun approveTransfer(id: String) = keyRepository.approveTransfer(id)
+
+    suspend fun rejectTransfer(id: String) = keyRepository.rejectTransfer(id)
+
     suspend operator fun invoke(
-        status: String? = null,
+        status: String? = "UnderConsideration",
         page: Int? = 1,
         size: Int? = 5
-    )
-        = keyRepository.getTransferRequests(status, page, size)
+    ) = keyRepository.getTransferRequests(status, page, size)
 
 }

@@ -3,9 +3,9 @@ package com.keyinc.keymono.data.repository
 import com.keyinc.keymono.data.TokenStorage
 import com.keyinc.keymono.data.api.KeyApi
 import com.keyinc.keymono.data.api.UserApi
+import com.keyinc.keymono.domain.entity.TransferRequests
 import com.keyinc.keymono.domain.entity.UserKeyDto
 import com.keyinc.keymono.domain.entity.UserPagedListDto
-import com.keyinc.keymono.domain.entity.TransferRequests
 import com.keyinc.keymono.domain.repository.KeyRepository
 import javax.inject.Inject
 
@@ -18,6 +18,14 @@ class KeyRepositoryImpl @Inject constructor(
     private fun getBearerToken(): String {
         val token = tokenStorage.getToken()
         return "Bearer $token"
+    }
+
+    override suspend fun rejectTransfer(id: String) {
+        keyApi.rejectTransfer(getBearerToken(), id)
+    }
+
+    override suspend fun approveTransfer(id: String) {
+        keyApi.approveTransfer(getBearerToken(), id)
     }
 
     override suspend fun getUserAvailableKeys(): List<UserKeyDto> {
@@ -42,7 +50,6 @@ class KeyRepositoryImpl @Inject constructor(
     ): TransferRequests {
         return keyApi.getTransferRequests(
             getBearerToken(),
-            status,
             page,
             size
         )

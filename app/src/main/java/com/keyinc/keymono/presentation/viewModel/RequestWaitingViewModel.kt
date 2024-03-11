@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.keyinc.keymono.R
 import com.keyinc.keymono.domain.usecase.account.GetUserRequestStatus
 import com.keyinc.keymono.domain.usecase.account.GetUserRoleUseCase
+import com.keyinc.keymono.domain.usecase.account.LogoutUserUseCase
 import com.keyinc.keymono.presentation.ui.errorHandler.RequestExceptionHandler
 import com.keyinc.keymono.presentation.ui.screen.state.requestWaiting.RequestWaitingState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RequestWaitingViewModel @Inject constructor(
     private val getUserRequestStatus: GetUserRequestStatus,
+    private val logoutUserUseCase: LogoutUserUseCase,
     private val getUserRoleUseCase: GetUserRoleUseCase
 ) :
     ViewModel() {
@@ -36,6 +38,13 @@ class RequestWaitingViewModel @Inject constructor(
                 RequestWaitingState.Error(R.string.unexpected_error)
         }
     )
+
+
+    fun logout() {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler.coroutineExceptionHandler) {
+            logoutUserUseCase.execute()
+        }
+    }
 
     fun getUserRole() {
         _requestState.value = RequestWaitingState.Loading
